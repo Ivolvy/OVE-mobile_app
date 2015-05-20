@@ -11,6 +11,10 @@ app.Mission = Backbone.Model.extend({
 		title: '',
 		date: '19/03',
 		category: '',
+		sense: '',
+		frequency: '',
+		interaction: '',
+		genre: '',
 		completed: false
 	},
 

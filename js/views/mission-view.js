@@ -25,6 +25,8 @@ var app = app || {};
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
 			this.listenTo(this.model, 'visible', this.toggleVisible);
+
+
 		},
 
 		// Re-render the titles of the mission item.
@@ -39,6 +41,10 @@ var app = app || {};
 			}
 
 			this.$el.html(this.template(this.model.toJSON()));
+			
+			//add the icons' images for the mission
+			this.addIcon();
+
 			this.$el.toggleClass('completed', this.model.get('completed'));
 			return this;
 		},
@@ -53,6 +59,25 @@ var app = app || {};
 			app.MissionFilter === 'completed';
 		},
 
+		addIcon: function(){
+			//select the icons' id for the actual mission
+			this.$icons = this.$('#mission-icons');
+			
+			//if the frequency exists, display the associate image
+			if(this.model.get('frequency')){
+				this.$icons.append('<img src="img/mission-picto/'+this.model.get('frequency')+'"/>');
+			}
+			if(this.model.get('sense')){
+				this.$icons.append('<img src="img/mission-picto/'+this.model.get('sense')+'"/>');
+			}
+			if(this.model.get('interaction')){
+				this.$icons.append('<img src="img/mission-picto/'+this.model.get('interaction')+'"/>');
+			}
+			if(this.model.get('genre')){
+				//TODO - select different color
+			}
+		},
+		
 		// Toggle the `"completed"` state of the model.
 		toggleCompleted: function () {
 			this.model.toggle();

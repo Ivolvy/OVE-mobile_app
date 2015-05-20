@@ -15,6 +15,7 @@ html, body{
     position: relative;
     background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
     background-size: cover;
+    overflow: hidden;
 }
 
 #ove-app h1 {
@@ -27,7 +28,8 @@ html, body{
 
 #main {
     position: relative;
-    border-top: 1px solid #e6e6e6;
+    overflow: auto;
+    height: 415px;
 }
 
 #mission-list {
@@ -39,10 +41,13 @@ html, body{
 #mission-list li {
     position: relative;
     height: 74px;
+    line-height: 74px;
     font-size: 12px;
     margin-bottom: 2px;
     background-color: #ababab;
     background:rgba(255,255,255,0.6);
+    box-sizing: border-box;
+    border-right: 6px solid #2f5b7f;
 }
 
 #mission-list li:last-child {
@@ -127,13 +132,13 @@ html, body{
 
 #mission-date{
     color: #000;
-    padding-top: 20px;
     font-size: 12px;
-    padding-bottom: 10px;
+    padding-bottom: 2px;
 }
 
 #mission-title{
     color: #492c66;
+    font-weight: 700;
     font-size: 18px;
 }
 
@@ -141,7 +146,7 @@ html, body{
     height: 38px;
     line-height: 38px;
     background-color: #878787;
-    background:rgba(255,255,255,0.6);
+    background:rgba(255,255,255,0.3);
     text-align: right;
 }
 #sort span{
@@ -160,4 +165,16 @@ html, body{
     padding-right: 7px;
     margin-right: 3px;
     padding-left: 9px;
+}
+
+#mission-list .view, #mission-list #mission-icons{
+    display: inline-block;
+    vertical-align: middle;
+}
+#mission-list #mission-icons{
+    margin-left: 45px;
+}
+#mission-list #mission-icons img{
+    padding-left: 5px;
+    vertical-align: middle;
 }
