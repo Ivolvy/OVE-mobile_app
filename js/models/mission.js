@@ -6,7 +6,7 @@ var app = app || {};
 
 
 app.Mission = Backbone.Model.extend({
-	// Default attributes for the mission
+// Default attributes for the mission
 	defaults: {
 		title: '',
 		date: '19/03',
@@ -15,6 +15,7 @@ app.Mission = Backbone.Model.extend({
 		frequency: '',
 		interaction: '',
 		genre: '',
+		shared: '0',
 		completed: false
 	},
 

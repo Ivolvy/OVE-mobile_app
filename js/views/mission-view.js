@@ -62,19 +62,34 @@ var app = app || {};
 		addIcon: function(){
 			//select the icons' id for the actual mission
 			this.$icons = this.$('#mission-icons');
-			
+			this.$shared = this.$('#mission-share');
+
 			//if the frequency exists, display the associate image
 			if(this.model.get('frequency')){
 				this.$icons.append('<img src="img/mission-picto/'+this.model.get('frequency')+'"/>');
 			}
+			else{
+				this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');
+			}
 			if(this.model.get('sense')){
 				this.$icons.append('<img src="img/mission-picto/'+this.model.get('sense')+'"/>');
+			}
+			else{
+				this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');
 			}
 			if(this.model.get('interaction')){
 				this.$icons.append('<img src="img/mission-picto/'+this.model.get('interaction')+'"/>');
 			}
+			else{
+				this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');
+			}
 			if(this.model.get('genre')){
-				//TODO - select different color
+				//3 choices: game, fun, sensibility
+				this.$el.toggleClass(this.model.get('genre')+'-light');
+				this.$shared.toggleClass(this.model.get('genre')+'-dark');
+			}
+			if(this.model.get('shared') == 1) {
+				this.$shared.toggleClass('hidden');
 			}
 		},
 		
