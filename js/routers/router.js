@@ -1,10 +1,12 @@
 /*global Backbone */
-var app = app || {};
+//var app = app || {};
 
 // Mission Router
 
-var MissionRouter = Backbone.Router.extend({
+app.Router = Backbone.Router.extend({
 	routes: {
+		'missionPage': 'missionPage',
+		'': 'home',
 		'*filter': 'setFilter'
 	},
 
@@ -15,9 +17,16 @@ var MissionRouter = Backbone.Router.extend({
 		// Trigger a collection filter event, causing hiding/unhiding
 		// of Mission view items
 		app.missions.trigger('filter');
+	},
+	home: function () {
+		var view = new app.Views.Home();
+		app.instance.goto(view);
+	},
+	missionPage: function () {
+		var view = new app.Views.MissionPageView();
+		app.instance.goto(view);
 	}
 });
-
-app.MissionRouter = new MissionRouter();
-Backbone.history.start();
+//app.Router = new Router();
+//Backbone.history.start();
 

@@ -1,5 +1,5 @@
 /*global Backbone */
-var app = app || {};
+//var app = app || {};
 
 // Mission Collection
 
@@ -34,5 +34,5 @@ var Missions = Backbone.Firebase.Collection.extend({
 });
 
 // Create our global collection of **Missions**.
-app.missions = new Missions();
+
 

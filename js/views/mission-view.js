@@ -1,11 +1,11 @@
 /*global Backbone, jQuery, _, ENTER_KEY, ESC_KEY */
-var app = app || {};
+//var app = app || {};
 
 	// Mission Item View
 	// --------------
 
 	// The DOM element for a mission item...
-	app.MissionView = Backbone.View.extend({
+	app.Views.MissionView = app.Extensions.View.extend({
 		//... is a list tag.
 		tagName:  'li',
 

@@ -1,0 +1,389 @@
+/*Custom stylesheet*/
+
+html, body{
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    /* add fixed to pos of body and set width & height */
+    position: fixed;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;  /* hack temp.. should be 100% w/ margin or padding to offset footer - originally 80%*/
+    /* scrolling */
+    /*  overflow-y: scroll; /* has to be scroll */
+    /*  -webkit-overflow-scrolling: touch;*/
+}
+
+.home {
+    color: white;
+    background: #F2CF66;
+}
+
+.hidden {
+    display: none;
+}
+
+
+#ove-app {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    height: 100%;
+    /*position: relative;*/
+    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+}
+
+#ove-app h1 {
+    width: 100%;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    color: #FFF;
+}
+
+#main {
+    position: relative;
+    overflow: auto;
+    height: 415px;
+}
+
+#mission-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#mission-list li {
+    position: relative;
+    height: 74px;
+    line-height: 74px;
+    font-size: 12px;
+    margin-bottom: 2px;
+    background-color: #ababab;
+    background:rgba(255,255,255,0.6);
+    box-sizing: border-box;
+}
+
+#mission-list li:last-child {
+    border-bottom: none;
+}
+
+#mission-list li #date {
+    padding-bottom: 0;
+}
+#mission-list li #title {
+    padding-top: 5px;
+}
+
+#mission-list li label {
+    display: block;
+    margin-left: 15px;
+    line-height: 1.2;
+}
+
+
+#navigation {
+    color: #FFF;
+    text-align: center;
+    background-color: #4d3267;
+    opacity: 0.9;
+    height: 46px;
+    line-height: 45px;
+    font-size: 11px;
+}
+
+
+#filters {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    right: 0;
+    left: 0;
+}
+
+#filters li {
+    display: inline-block;
+    border-right: 1px solid #654e7c;
+    opacity: 0.8;
+    width: 32%;
+}
+
+#filters li a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+
+#filters li a.selected {
+    border-bottom: 1px solid #FFF;
+    padding-bottom: 4px;
+}
+
+#filters li:last-child {
+    border-right: none;
+}
+
+#ove-app header{
+    height: 42px;
+    width: 100%;
+    background-color: #cd522a;
+    opacity: 0.9;
+    display: inline-block;
+}
+
+#left-menu{
+    background-color: #0000FF;
+}
+#ove-logo{
+    background-color: #0000FF;
+}
+
+#mission-date{
+    color: #000;
+    font-size: 12px;
+    padding-bottom: 2px;
+}
+
+#mission-title{
+    color: #492c66;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+#sort{
+    height: 38px;
+    line-height: 38px;
+    background-color: #878787;
+    background:rgba(255,255,255,0.3);
+    text-align: right;
+}
+#sort span{
+    font-weight: 300;
+    font-size: 14px;
+}
+#sort select{
+    background: none;
+    border: 0;
+    outline:none;
+}
+#sort #list{
+    color: #492c66;
+    font-weight: 700;
+    font-size: 14px;
+    padding-right: 7px;
+    margin-right: 3px;
+    padding-left: 9px;
+}
+
+#mission-list .view,{
+    max-width: 170px;
+}
+#mission-list .view, #mission-list #mission-icons{
+    display: inline-block;
+    vertical-align: middle;
+}
+#mission-list #mission-icons{
+    position: absolute;
+    right: 0;
+    margin-right: 70px;
+}
+#mission-list #mission-icons img{
+    padding-left: 5px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+#mission-share{
+    width: 57px;
+    height: 100%;
+    float: right;
+    text-align: center;
+}
+#mission-share img{
+    width: 30px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*Three genre of mission - light and dark*/
+.game-light{  
+    border-right: 6px solid #c9603e;
+}
+.fun-light{
+    border-right: 6px solid #983554;
+}
+.sensibility-light{
+    border-right: 6px solid #2f5b7f;
+}
+.game-dark{
+    background-color: #b98e80;
+}
+.fun-dark{
+    background-color: #a8808d;
+}
+.sensibility-dark{
+    background-color: #768a9b;
+}
+
+
+
+/*ALL ANIMATIONS FOR PAGE TRANSITIONS*/
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.animated.infinite {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}
+
+@-webkit-keyframes iosFadeLeft {
+    0%  {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+        opacity: 0.9;
+    }
+}
+
+@keyframes iosFadeLeft {
+    0%  {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px);
+        opacity: 0.8;
+    }
+}
+
+.iosFadeLeft {
+    -webkit-animation-name: iosFadeLeft;
+    animation-name: iosFadeLeft;
+    -webkit-animation-timing-function: cubic-bezier(.1, .7, .1, 1);
+    animation-timing-function: cubic-bezier(.1, .7, .1, 1);
+    -webkit-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+
+
+@-webkit-keyframes iosSlideInRight {
+    0% {
+        opacity: 0.7;
+        -webkit-transform: translateX(2000px);
+        -ms-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes iosSlideInRight {
+    0% {
+        opacity: 0.7;
+        -webkit-transform: translateX(2000px);
+        -ms-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+.iosSlideInRight {
+    -webkit-animation-name: iosSlideInRight;
+    animation-name: iosSlideInRight;
+    -webkit-animation-timing-function: cubic-bezier(.1, .7, .1, 1);
+    animation-timing-function: cubic-bezier(.1, .7, .1, 1);
+    -webkit-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+
+@-webkit-keyframes slideOutRight {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translateX(2000px);
+        -ms-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+}
+
+.slideOutRight {
+    -webkit-animation-name: slideOutRight;
+    animation-name: slideOutRight;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}

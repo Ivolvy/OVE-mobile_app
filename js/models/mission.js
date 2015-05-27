@@ -1,5 +1,5 @@
 /*global Backbone */
-var app = app || {};
+//var app = app || {};
 
 // Mission Model
 // ----------
