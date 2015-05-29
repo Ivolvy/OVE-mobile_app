@@ -11,6 +11,8 @@ window.app = {
     Views: {},
     Extensions: {},
     Router: {},
+    Collections: {},
+    Model: {},
 
     init: function () {
         // get an instance of the root App view
@@ -25,11 +27,9 @@ window.app = {
     getInstance: function() {
         // creates a new instance of the root App
         // or returns the instance if it already exists
-        if (!this.instance) {
-
+        if (!this.instance) {            
             this.instance = new app.Views.AppView();
         }
-
         return this.instance;
     }
 

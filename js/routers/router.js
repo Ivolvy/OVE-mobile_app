@@ -19,14 +19,24 @@ app.Router = Backbone.Router.extend({
 		app.missions.trigger('filter');
 	},
 	home: function () {
-		var view = new app.Views.Home();
-		app.instance.goto(view);
+		// make the Home view persist in memory and on the DOM
+		if (!this.homeView) {
+			this.homeView = new app.Views.Home();
+		}
+		app.getInstance().goto(this.homeView);
 	},
 	missionPage: function () {
 		var view = new app.Views.MissionPageView();
-		app.instance.goto(view);
+		app.getInstance().goto(view);
+		
+		/*put this fix if I can't resolve the bug when we reload the page
+		(the data doesn't display again)*/
+		 /*if (!this.pageView) {
+		 this.pageView = new app.Views.MissionPageView();
+		 }
+		 app.getInstance().goto(this.pageView);
+		 */
 	}
 });
-//app.Router = new Router();
-//Backbone.history.start();
+
 

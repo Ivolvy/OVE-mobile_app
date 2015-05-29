@@ -57,8 +57,8 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// of the app doesn't change.
 	onRender: function () {
 
-		var completed = app.missions.completed().length;
-		var remaining = app.missions.remaining().length;
+		var completed =app.missions.completed().length;
+		var remaining =app.missions.remaining().length;
 
 		if (app.missions.length) {
 			this.$main.show();

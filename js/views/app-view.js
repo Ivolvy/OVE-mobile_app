@@ -11,7 +11,7 @@ app.Views.AppView = app.Extensions.View.extend({
         // cache the current view and the new view
         var previous = this.currentPage || null;
         var next = view;
-        alert("check if we don't create several home view!!!");
+
         if (previous) {
             previous.transitionOut(function () {
                 // only remove the old view if its not the Home view
