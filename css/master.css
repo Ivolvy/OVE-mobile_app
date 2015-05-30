@@ -6,7 +6,6 @@ html, body{
 }
 
 body {
-    /* add fixed to pos of body and set width & height */
     position: fixed;
 }
 
@@ -29,7 +28,13 @@ body {
 }
 
 
-#ove-app {
+
+
+/*----------------------------------------------*/
+/*--------------MISSION PAGE VIEW---------------*/
+/*----------------------------------------------*/
+
+#mission-page {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     height: 100%;
@@ -39,12 +44,13 @@ body {
     overflow: hidden;
 }
 
-#ove-app h1 {
-    width: 100%;
+#mission-page h1, #mission-explication h1 {
     font-weight: 700;
     font-size: 18px;
     text-align: center;
     color: #FFF;
+    display: inline-block;
+    margin-left: -38px;
 }
 
 #main {
@@ -88,7 +94,7 @@ body {
 }
 
 
-#navigation {
+.navigation {
     color: #FFF;
     text-align: center;
     background-color: #4d3267;
@@ -99,7 +105,7 @@ body {
 }
 
 
-#filters {
+.filters {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -107,41 +113,49 @@ body {
     left: 0;
 }
 
-#filters li {
+.filters li {
     display: inline-block;
     border-right: 1px solid #654e7c;
     opacity: 0.8;
     width: 32%;
 }
 
-#filters li a {
+.filters li a {
     color: #FFF;
     text-decoration: none;
 }
 
 
-#filters li a.selected {
+.filters li a.selected {
     border-bottom: 1px solid #FFF;
     padding-bottom: 4px;
 }
 
-#filters li:last-child {
+.filters li:last-child {
     border-right: none;
 }
 
-#ove-app header{
+#mission-page header{
     height: 42px;
     width: 100%;
     background-color: #cd522a;
     opacity: 0.9;
     display: inline-block;
+    text-align: center;
 }
 
 #left-menu{
-    background-color: #0000FF;
+    width: 36px;
+    height: 33px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    cursor: pointer;
 }
 #ove-logo{
     background-color: #0000FF;
+    display: inline-block;
 }
 
 #mission-date{
@@ -233,7 +247,173 @@ body {
 
 
 
-/*ALL ANIMATIONS FOR PAGE TRANSITIONS*/
+/*----------------------------------------------*/
+/*-----------MISSION PROPOSITION VIEW-----------*/
+/*----------------------------------------------*/
+
+#mission-proposition{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    height: 100%;
+    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    color: #FFF;
+}
+
+#mission-proposition header{
+    margin-top: 30px;
+    height: 124px;
+    width: 100%;
+    background:rgba(184,77,43,0.9); /*#b84d2b*/
+    opacity: 0.9;
+    text-align: center;
+}
+
+#mission-proposition h2{
+    font-weight: 300;
+    font-size: 19px;
+    margin: 0;
+    padding-top: 22px;
+}
+#mission-proposition h1{
+    font-size: 41px;
+    margin: 0;
+    padding-top: 5px;
+}
+
+#mission-proposition footer, #mission-explication footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.button{
+    width: 48%;
+    height: 70px;
+    background:rgba(70,43,96,0.9); /*#462b60*/
+    display: inline-block;
+    text-align: center;
+    font-size: 25px;
+    line-height: 70px;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #FFF;
+}
+#mission-proposition .accept{
+    float: right;
+}
+#mission-explication footer{
+    text-align: center;
+}
+
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/*----------------------------------------------*/
+/*-----------MISSION EXPLICATION VIEW-----------*/
+/*----------------------------------------------*/
+
+#mission-explication{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    height: 100%;
+    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    color: #FFF;
+}
+
+#mission-explication header{
+    height: 42px;
+    width: 100%;
+    background:rgba(184,77,43,0.9); /*#b84d2b*/
+    opacity: 0.9;
+    text-align: center;
+}
+
+#mission-explication h1 {
+    margin-left: 0;
+}
+
+#googleMap{
+    width: 100%;
+    height: 86%;
+}
+
+/*----------------------------------------------*/
+/*------------------PANEL MENU------------------*/
+/*----------------------------------------------*/
+
+nav.slide-menu-left {
+    position: fixed;
+    z-index: 20;
+    background-color: #462b60;
+    overflow: hidden;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+nav.slide-menu-left ul {
+    list-style-type: none;
+    padding: 0;
+}
+nav.slide-menu-left {
+    font-weight: 300;
+    color: #fff;
+}
+
+nav.slide-menu-left {
+    top: 42px; /*put this dynamically ?*/
+    width: 90%;
+    height: 100%;
+}
+nav.slide-menu-left li {
+    display: block;
+    text-align: left;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+nav.slide-menu-left li:first-child {
+    border-top: none;
+}
+nav.slide-menu-left li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+nav.slide-menu-left a {
+    text-decoration: none;
+    color: #FFF;
+}
+nav.slide-menu-left {
+    left: -90%;
+}
+.page-body.sml-open nav.slide-menu-left {
+    left: 0;
+}
+
+.hamburger{
+    background: url("../img/menu/hamburger-menu.png");
+    background-size: cover;
+}
+.close{
+    background: url("../img/menu/close-menu.png");
+    background-size: cover;
+}
+
+/*----------------------------------------------*/
+/*-----ALL ANIMATIONS FOR PAGE TRANSITIONS------*/
+/*----------------------------------------------*/
 .animated {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;

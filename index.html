@@ -9,60 +9,146 @@
 		<link rel="stylesheet" href="css/normalise.css">
 
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+		<script src="http://maps.googleapis.com/maps/api/js"></script>
+
 	</head>
-	<body>
+	<body class="no-select">
 
 	<script type="text/template" name="home">
 		<h1>Home</h1>
 		<p><a href="#/missionPage">Detail &rarr;</a></p>
 	</script>
-	<!-- passer section en script et modifier dans mission-page-view pour que ça marche-->
-	<script type="text/template" id="ove-app" name="ove-app">
-			<header id="header">
-				<div id="left-menu"></div>
+
+	<script type="text/template" id="mission-page" name="mission-page">
+			<header>
+				<div id="left-menu" class="hamburger"></div>
 				<h1 id="title">MISSIONS</h1>
 				<div id="ove-logo"></div>
 			</header>
 			
-			<section id="navigation"></section>
+			<section class="page-body">
 			
-			<div id="sort">
-				<span>Afficher par :</span>
-				<select name="list" id="list">
-					<option>DATE</option>
-					<option>NOM</option>
-				</select>
-			</div>
-
-			<input id="new-mission" placeholder="Add mission" autofocus>
-
-			<section id="main">
-				<ul id="mission-list"></ul>
+				<section class="navigation"></section>
+				
+				<div id="sort">
+					<span>Afficher par :</span>
+					<select name="list" id="list">
+						<option>DATE</option>
+						<option>NOM</option>
+					</select>
+				</div>
+				<!--
+				<input id="new-mission" placeholder="Add mission" autofocus>
+				-->
+				<section id="main">
+					<ul id="mission-list"></ul>
+				</section>
 			</section>
 	</script>
-		<script type="text/template" id="item-template">
-			<div class="view">
-				<label id="mission-date">fin <%- date %></label>
-				<label id="mission-title"><%- title %></label>
-			</div>
-			<ul id="mission-icons"></ul>
-			<div id="mission-share">
-				<img src="img/share.png"/>
-			</div>
-		</script>
-		<script type="text/template" id="stats-template">
-			<ul id="filters">
-				<li>
-					<a href="#/completed">PASSÉES</a>
-				</li>
-				<li>
-					<a class="selected" href="#/">ACTUALITÉS</a> <!--(all)-->
-				</li>
-				<li>
-					<a href="#/active">EN COURS</a>
-				</li>
+	
+	<script type="text/template" id="item-template">
+		<div class="view">
+			<label id="mission-date">fin <%- date %></label>
+			<label id="mission-title"><%- title %></label>
+		</div>
+		<ul id="mission-icons"></ul>
+		<div id="mission-share">
+			<img src="img/share.png"/>
+		</div>
+	</script>
+	<script type="text/template" id="mission-nav-list">
+		<ul class="filters">
+			<li>
+				<a href="#/completed">PASSÉES</a>
+			</li>
+			<li>
+				<a class="selected" href="#/">ACTUALITÉS</a> <!--(all)-->
+			</li>
+			<li>
+				<a href="#/active">EN COURS</a>
+			</li>
+		</ul>
+	</script>
+	
+	<script type="text/template" id="explication-nav">
+		<ul class="filters">
+			<li>
+				<a href="#/completed">EXPLICATION</a>
+			</li>
+			<li>
+				<a class="selected" href="#/">MISSION</a>
+			</li>
+			<li>
+				<a href="#/active">TERMINER</a>
+			</li>
+		</ul>
+	</script>
+
+	<script type="text/template" id="mission-proposition" name="mission-proposition">
+		<header class="header">
+			<h2 class="title">NOUVELLE MISSION</h2>
+			<h1 class="mission-title">ombres</h1>
+		</header>
+		
+
+		<footer>
+			<div class="button">REFUSER</div>
+			<div class="button accept">ACCEPTER</div>
+		</footer>
+		
+	</script>
+
+	<script type="text/template" id="mission-explication" name="mission-explication">
+		<header>
+			<h1>OMBRES</h1>
+		</header>
+
+		<section class="navigation"></section>
+		
+
+		<div id="googleMap"></div>
+		
+		<footer>
+			<div class="begin button">COMMENCER</div>
+		</footer>
+	</script>
+	
+	
+
+	<script type="text/template" id="menu-template" name="menu-template">
+		<nav id="panel-menu" class="slide-menu-left">
+			<ul>
+				<li><a href="#/missionPage">MISSION</a></li>
+				<li>PROFIL</li>
+				<li>AIDE</li>
+				<li>À PROPOS</li>
+				<li>PARAMÈTRES</li>
 			</ul>
-		</script>
+		</nav>
+	</script>
+
+	<!--THIS IS THE MAP-->
+	<script type="text/javascript">
+		function initialize() {
+			var mapOptions = {
+				center: {lat: 45.8992470, lng: 6.1293840},
+				//center: new google.maps.LatLng(-34.397, 150.644)
+				zoom:16,
+				mapTypeId:google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false,
+				panControl: false,
+				zoomControl: true,
+				zoomControlOptions: {
+					position: google.maps.ControlPosition.TOP_RIGHT
+				},
+				streetViewControl: false
+			};
+			var map = new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+		}
+	</script>
+	
+	
+	
 		<script src="js/vendor/json2-min.js"></script>
 		<script src="js/vendor/zepto-min.js"></script>
 		<script src="js/vendor/underscore-min.js"></script>
@@ -81,6 +167,8 @@
 		<script src="js/views/home-view.js"></script>
 		<script src="js/views/mission-view.js"></script>
 		<script src="js/views/mission-page-view.js"></script>
+		<script src="js/views/mission-proposition-view.js"></script>
+		<script src="js/views/mission-explication-view.js"></script>
 		<script src="js/routers/router.js"></script>
 		<script src="js/app2.js"></script>
 

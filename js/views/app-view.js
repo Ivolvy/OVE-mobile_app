@@ -15,12 +15,12 @@ app.Views.AppView = app.Extensions.View.extend({
         if (previous) {
             previous.transitionOut(function () {
                 // only remove the old view if its not the Home view
-                if (previous.$el.hasClass('home')) {
-                    console.log('Previous view is Home; not removing for it should persist');
-                } else {
+               // if (previous.$el.hasClass('home')) {
+                 //   console.log('Previous view is Home; not removing for it should persist');
+                //} else {
                     // otherwise cleanup all other views since we dont want them to persist
                     previous.remove();
-                }
+                //}
             });
         }
 

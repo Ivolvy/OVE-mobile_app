@@ -9,14 +9,16 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 	/* Instead of generating a new element, bind to the existing skeleton of
 	 the App already present in the HTML.*/
-	id: 'ove-app',
+	id: 'mission-page',
 
-	// Our template for the line of statistics at the bottom of the app.
-	statsTemplate: _.template($('#stats-template').html()),
+	statsTemplate: _.template($('#mission-nav-list').html()),
+
+	menuTemplate: _.template($('#menu-template').html()),
 
 	// Delegated events for creating new items, and clearing completed ones.
 	events: {
-		'keypress #new-mission': 'createOnEnter'
+		'keypress #new-mission': 'createOnEnter',
+		'click #left-menu': 'toggleMenu'
 	},
 
 	// At initialization we bind to the relevant events on the `Missions`
@@ -26,16 +28,16 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.animateIn = 'iosSlideInRight';
 		this.animateOut = 'slideOutRight';
 
-		this.template = _.template($('script[name=ove-app]').html());
+		this.template = _.template($('script[name=mission-page]').html());
 
 		this.$el.html(this.template());
 
-		//this.allCheckbox = this.$('#toggle-all')[0];
 		this.$input = this.$('#new-mission');
-		this.$navigation = this.$('#navigation');
-		this.$footer = this.$('#footer');
+		this.$navigation = this.$('.navigation');
 		this.$main = this.$('#main');
 		this.$list = this.$('#mission-list');
+		this.$pageBody = this.$('.page-body');
+		this.$menu = this.$('#left-menu');
 
 		app.missions = new Missions();
 
@@ -50,7 +52,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		// event is triggered at the end of the fetch.
 		app.missions.fetch({reset: true});
 
-		return this;//usefull?
+		return this;
 	},
 
 	// Re-rendering the App just means refreshing the statistics -- the rest
@@ -63,22 +65,23 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		if (app.missions.length) {
 			this.$main.show();
 			this.$navigation.show();
-
+			
 			this.$navigation.html(this.statsTemplate({
 				completed: completed,
 				remaining: remaining
 			}));
 
-			this.$('#filters li a')
+			this.$pageBody.append(this.menuTemplate());
+
+			this.$('.filters li a')
 				.removeClass('selected')
 				.filter('[href="#/' + (app.MissionFilter || '') + '"]')
 				.addClass('selected');
 		} else {
 			this.$main.hide();
-			this.$footer.hide();
 		}
 
-		return this; //usefull?
+		return this;
 	},
 
 	// Add a single mission item to the list by creating a view for it, and
@@ -118,6 +121,18 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			app.missions.create(this.newAttributes());
 			this.$input.val('');
 		}
+	},
+	//display or not the panel menu
+	toggleMenu: function () {
+		if(this.$pageBody.hasClass('sml-open')){
+			this.$pageBody.removeClass('sml-open');
+			this.$menu.addClass('hamburger');
+			this.$menu.removeClass('close');
+		}
+		else {
+			this.$pageBody.addClass('sml-open');
+			this.$menu.removeClass('hamburger');
+			this.$menu.addClass('close');
+		}
 	}
-
 });
