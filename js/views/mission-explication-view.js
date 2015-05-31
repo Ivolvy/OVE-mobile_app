@@ -8,7 +8,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     statsTemplate: _.template($('#explication-nav').html()),
 
     events: {
-        'click .begin': 'beginMission'
+     //   'click .begin': 'beginMission',
+        'click .begin': 'takePicture'
     },
 
     
@@ -39,6 +40,11 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     loadScript: function () {
         google.maps.event.addDomListener(window, 'load', initialize);
+    },
+    
+    takePicture: function(){
+        navigator.geolocation.getCurrentPosition(placePictureMarker, null);
+        
     }
     
   
