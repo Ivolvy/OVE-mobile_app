@@ -1,9 +1,5 @@
-/*global Backbone */
-//var app = app || {};
-
 // Mission Model
 // ----------
-
 
 app.Mission = Backbone.Model.extend({
 // Default attributes for the mission

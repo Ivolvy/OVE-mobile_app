@@ -1,4 +1,6 @@
 var map;
+var direction;
+var marker;
 
 function initialize() {
     var previousPosition = null;
@@ -26,7 +28,7 @@ function initialize() {
         //watch periodically the position
         //	var watchId = navigator.geolocation.watchPosition(successCallback, null, {enableHighAccuracy: true});
     }else{
-        alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+        alert("We can't geotag you");
     }
 
     function successCallback(position) {
@@ -55,74 +57,88 @@ function initialize() {
              }
              previousPosition = position;*/
         }
-    };
-
-
-    
-    function traceItinerary(origin, destination){
-
-        if(origin && destination){
-
-            var request = {
-                origin      : origin,
-                destination : destination,
-                travelMode  : google.maps.DirectionsTravelMode.WALKING // Type de transport
-            };
-            var directionsService = new google.maps.DirectionsService(); // Service de calcul d'itinéraire
-            directionsService.route(request, function(response, status){ // Envoie de la requête pour calculer le parcours
-                if(status == google.maps.DirectionsStatus.OK){
-                    direction.setDirections(response); // Trace l'itinéraire sur la carte et les différentes étapes du parcours
-                }
-            });
-        }
-    };
-
-    /* set the address with lat and long coordinates*/
-    function setAddress(lat, lng, position){
-        var latlng = new google.maps.LatLng(lat, lng);
-        geocoder = new google.maps.Geocoder();
-        geoOptions = {
-            "latLng" : latlng
-        };
-        geocoder.geocode( geoOptions, function(results, status) {
-            /* Si les coordonnées ont pu être geolocalisées */
-            if (status == google.maps.GeocoderStatus.OK) {
-                if(position == 'origin'){
-                    origin = results[0].formatted_address;
-                }
-                else if(position == 'destination'){
-                    destination = results[0].formatted_address;
-                    traceItinerary(origin, destination);
-                }
-
-
-            } else {
-                alert("Les nouvelles coordonnées n'ont pu être géocodées avec succès.");
-            }
-        });
     }
+     
 
     map = new google.maps.Map(document.getElementById("googleMap"),mapOptions);
 
-    var direction = new google.maps.DirectionsRenderer({
+    direction = new google.maps.DirectionsRenderer({
         map   : map
     });
 
-    setAddress(45.89925, 6.12938, 'origin');
-    setAddress(45.90432, 6.12586, 'destination');
-
 }
 
-function placePictureMarker(position){
+
+function initItineray(originLat, originLng, destinationLat, destinationLng){
+    setAddress(originLat, originLng, 'origin');
+    setAddress(destinationLat, destinationLng, 'destination');
+}
+
+/* set the address with lat and long coordinates*/
+function setAddress(lat, lng, position){
+    var latlng = new google.maps.LatLng(lat, lng);
+
+    geocoder = new google.maps.Geocoder();
+    geoOptions = {
+        "latLng" : latlng
+    };
+    geocoder.geocode( geoOptions, function(results, status) {
+        /* Si les coordonnées ont pu être geolocalisées */
+        if (status == google.maps.GeocoderStatus.OK) {
+            if(position == 'origin'){
+                origin = results[0].formatted_address;
+            }
+            else if(position == 'destination'){
+                destination = results[0].formatted_address;
+                traceItinerary(origin, destination);
+            }
+
+        } else {
+            alert("Les nouvelles coordonnées n'ont pu être géocodées avec succès.");
+        }
+    });
+}
+
+function traceItinerary(origin, destination){
+
+    if(origin && destination){
+
+        var request = {
+            origin      : origin,
+            destination : destination,
+            travelMode  : google.maps.DirectionsTravelMode.WALKING // Type de transport
+        };
+        var directionsService = new google.maps.DirectionsService(); // Service de calcul d'itinéraire
+        directionsService.route(request, function(response, status){ // Envoie de la requête pour calculer le parcours
+            if(status == google.maps.DirectionsStatus.OK){
+                direction.setDirections(response); // Trace l'itinéraire sur la carte et les différentes étapes du parcours
+            }
+        });
+    }
+}
+
+
+function placePictureMarker(position, positionLat, positionLng){
+    var lat;
+    var lng;
+    
+    if(positionLat && positionLng){
+        lat = positionLat;
+        lng = positionLng;
+    }
+    else{
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
+    }
+   
     //center the map on the new coordinates
-    map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    map.panTo(new google.maps.LatLng(lat, lng));
     //place a marker to the exact position
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
         map: map
     });
-
-
+    
     var contentString = '<div id="infoWindow">' +
         'This is an info windows</div>';
     
@@ -134,4 +150,13 @@ function placePictureMarker(position){
     google.maps.event.addListener(marker, 'click', function(){
         infowindow.open(map,marker);
     });
+
+}
+
+function getMarkerLat(position){
+    alert(marker.position.A);
+    return marker.position.A; //latitude
+}
+function getMarkerLng(){
+    return marker.position.B; //longitude
 }

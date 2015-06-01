@@ -1,6 +1,3 @@
-/*global Backbone */
-//var app = app || {};
-
 // Mission Collection
 
 /*We use Firebase to store the datas*/

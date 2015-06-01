@@ -41,6 +41,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		app.missions = new Missions();
 
+		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
 		this.listenTo(app.missions, 'reset', this.addAll);
 		this.listenTo(app.missions, 'change:completed', this.filterOne);
@@ -122,6 +123,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			this.$input.val('');
 		}
 	},
+	
 	//display or not the panel menu
 	toggleMenu: function () {
 		if(this.$pageBody.hasClass('sml-open')){
