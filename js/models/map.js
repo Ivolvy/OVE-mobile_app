@@ -1,7 +1,7 @@
 // Mission Map
 // ----------
 
-app.Map = Backbone.Model.extend({
+app.MissionMap = Backbone.Model.extend({
 
 // Default attributes for the map
     defaults: {

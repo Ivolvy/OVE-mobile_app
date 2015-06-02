@@ -82,6 +82,10 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			this.$main.hide();
 		}
 
+
+
+
+		
 		return this;
 	},
 

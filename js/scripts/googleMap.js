@@ -1,6 +1,5 @@
 var map;
 var direction;
-var marker;
 
 function initialize() {
     var previousPosition = null;
@@ -26,21 +25,21 @@ function initialize() {
 
     if (navigator.geolocation) {
         //watch periodically the position
-        //	var watchId = navigator.geolocation.watchPosition(successCallback, null, {enableHighAccuracy: true});
+       // var watchId = navigator.geolocation.watchPosition(successCallback, null, {enableHighAccuracy: true});
     }else{
         alert("We can't geotag you");
     }
 
     function successCallback(position) {
         //don't take in considération when gps lost the signal
-        if (position.coords.accuracy < 100) {
+       // if (position.coords.accuracy < 100) {
             //center the map on the new coordinates
             map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
             //place a marker to the exact position
-            var marker = new google.maps.Marker({
+           /* var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                 map: map
-            });
+            });*/
             //draw a line between the previous position and the actual
             /*if (previousPosition) {
              var newLineCoordinates = [
@@ -56,9 +55,10 @@ function initialize() {
              newLine.setMap(map);
              }
              previousPosition = position;*/
-        }
+      //  }
     }
      
+
 
     map = new google.maps.Map(document.getElementById("googleMap"),mapOptions);
 
@@ -66,7 +66,11 @@ function initialize() {
         map   : map
     });
 
+    //display the map init where the user is
+    navigator.geolocation.getCurrentPosition(successCallback, null);
+
 }
+
 
 
 function initItineray(originLat, originLng, destinationLat, destinationLng){
@@ -117,7 +121,7 @@ function traceItinerary(origin, destination){
     }
 }
 
-
+//place a marker on the map
 function placePictureMarker(position, positionLat, positionLng){
     var lat;
     var lng;
@@ -139,8 +143,20 @@ function placePictureMarker(position, positionLat, positionLng){
         map: map
     });
     
-    var contentString = '<div id="infoWindow">' +
-        'This is an info windows</div>';
+    //the content displayed in the marker
+   /* var contentString = '<div id="infoWindow" style="height: 250px;width: 150px">' +
+        '<div class="owl-carousel">' +
+        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '</div></div>';*/
+
+    var contentString = '<div id="infoWindow" style="width:150px">' +
+        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '</div>';
+    
     
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
@@ -150,13 +166,9 @@ function placePictureMarker(position, positionLat, positionLng){
     google.maps.event.addListener(marker, 'click', function(){
         infowindow.open(map,marker);
     });
-
-}
-
-function getMarkerLat(position){
-    alert(marker.position.A);
-    return marker.position.A; //latitude
-}
-function getMarkerLng(){
-    return marker.position.B; //longitude
+    
+    //display the carousel when infowindow is created
+    google.maps.event.addListener(infowindow, 'domready', function(){
+        $('#infoWindow').slick();
+    });
 }

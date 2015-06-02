@@ -1,9 +1,9 @@
 // Mission Collection
 
 /*We use Firebase to store the datas*/
-var Maps = Backbone.Firebase.Collection.extend({
+var MapsCollection = Backbone.Firebase.Collection.extend({
     // Reference to this collection's model.
-    model: app.Map,
+    model: app.MissionMap,
     url: 'https://ove.firebaseio.com/maps',
     autoSync: true
 

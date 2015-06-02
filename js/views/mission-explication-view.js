@@ -40,20 +40,20 @@ initialize: function (missionId) {
         this.$camera = this.$('.camera');
     
                 
-        app.maps = new Maps();
-        //app.maps.create(this.newAttributes(missionId));
+        app.missionsMaps = new MapsCollection();
+        //app.missionsMaps.create(this.newAttributes(missionId));
 
        
         //select the map model linked to the mission model
-        app.maps.fetch({
+        app.missionsMaps.fetch({
             success: function(model, response) {  
                 //get list of maps models where his missionId 
                 // = the mission model id - here only one
-                var plop = app.maps.where({'title': missionId});
+                var plop = app.missionsMaps.where({'title': missionId});
                 //select the only one map model's id
                 var mapId = plop[0].id;
                 //get the map model froms maps collection
-                item = app.maps.get(mapId);
+                item = app.missionsMaps.get(mapId);
                 //display the title from the map model's id
                 //alert(item.get('origin'));
 
@@ -106,16 +106,20 @@ initialize: function (missionId) {
     },
 
     loadScript: function () {
+
         //google.maps.event.addDomListener(window, 'load', initialize);
         if (!map) {
             //launch the map
             initialize();
+
             //trace itineray if exists
             if(originLat && originLng && destinationLat && destinationLng) {
                 initItineray(originLat, originLng, destinationLat, destinationLng);
             }
             //place marker if exists
-            placePictureMarker(null, markerLat, markerLng);
+            if(markerLat && markerLng) {
+                placePictureMarker(null, markerLat, markerLng);
+            }
         }
     },
     
