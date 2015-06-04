@@ -2,15 +2,15 @@
 // Mission Item View
 // --------------
 
-// The DOM element for a mission item...
+// The DOM element for a mission itemMap...
 app.Views.MissionView = app.Extensions.View.extend({
 	//... is a list tag.
 	tagName:  'li',
 
-	// Cache the template function for a single item.
+	// Cache the template function for a single itemMap.
 	template: _.template($('#item-template').html()),
 
-	// The DOM events specific to an item.
+	// The DOM events specific to an itemMap.
 	events: {
 		'click .toggle': 'toggleCompleted',
 		'click .item-content': 'toggleMission'
@@ -26,7 +26,7 @@ app.Views.MissionView = app.Extensions.View.extend({
 		this.listenTo(this.model, 'visible', this.toggleVisible);
 	},
 
-	// Re-render the titles of the mission item.
+	// Re-render the titles of the mission itemMap.
 	render: function () {
 		// Backbone LocalStorage is adding `id` attribute instantly after
 		// creating a model.  This causes our MissionView to render twice. Once

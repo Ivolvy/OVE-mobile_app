@@ -31,5 +31,3 @@ var Missions = Backbone.Firebase.Collection.extend({
 });
 
 // Create our global collection of **Missions**.
-
-

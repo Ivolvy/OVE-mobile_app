@@ -2,7 +2,9 @@ var originLat;
 var originLng;
 var destinationLat;
 var destinationLng;
-var item;
+var itemMap;
+var itemPicture;
+var picsArray = Array;
 var markerLat;
 var markerLng;
 
@@ -16,7 +18,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     explicationTemplate: _.template($('#missionExplication-template').html()),
 
     events: {
-     //   'click .begin': 'beginMission',
+        'click .upload': 'uploadPicture',
         'click .begin': 'takePicture'
     },
 
@@ -39,31 +41,45 @@ initialize: function (missionId) {
         this.$map = this.$('#googleMap');
         this.$camera = this.$('.camera');
     
-                
         app.missionsMaps = new MapsCollection();
-        //app.missionsMaps.create(this.newAttributes(missionId));
+        app.missionsPictures = new PicturesCollection();
 
-       
+        //app.missionsMaps.create(this.newAttributesMap(missionId));
+        app.missionsPictures.create(this.newAttributesPicture(missionId));
+
         //select the map model linked to the mission model
         app.missionsMaps.fetch({
             success: function(model, response) {  
                 //get list of maps models where his missionId 
                 // = the mission model id - here only one
-                var plop = app.missionsMaps.where({'title': missionId});
+                var mapCollection = app.missionsMaps.where({'missionId': missionId});
                 //select the only one map model's id
-                var mapId = plop[0].id;
+                var mapId = mapCollection[0].id;
                 //get the map model froms maps collection
-                item = app.missionsMaps.get(mapId);
+                itemMap = app.missionsMaps.get(mapId);
                 //display the title from the map model's id
-                //alert(item.get('origin'));
+                //alert(itemMap.get('origin'));
 
-                originLat = item.get('originLat');
-                originLng = item.get('originLng');
-                destinationLat = item.get('destinationLat');
-                destinationLng = item.get('destinationLng');
+                originLat = itemMap.get('originLat');
+                originLng = itemMap.get('originLng');
+                destinationLat = itemMap.get('destinationLat');
+                destinationLng = itemMap.get('destinationLng');
                 
-                markerLat = item.get('markerLat');
-                markerLng = item.get('markerLng');
+                markerLat = itemMap.get('markerLat');
+                markerLng = itemMap.get('markerLng');
+            }   
+        });
+
+        app.missionsPictures.fetch({
+            success: function(model, response) {  
+               
+                var pictureCollection = app.missionsPictures.where({'missionId': missionId});
+              
+                var pictureId = pictureCollection[0].id;
+                itemPicture = app.missionsPictures.get(pictureId);
+                //alert(itemMap.get('origin'));
+
+                picsArray = itemPicture.get('picsArray');
             }   
         });
 
@@ -74,8 +90,7 @@ initialize: function (missionId) {
 
         this.$navigation.html(this.statsTemplate());
         this.$explication.html(this.explicationTemplate());
-
-
+        
         return this;
     },
 
@@ -101,10 +116,6 @@ initialize: function (missionId) {
     },
     
 
-    beginMission: function () {
-      //  Backbone.history.navigate('#/missionPage', true);
-    },
-
     loadScript: function () {
 
         //google.maps.event.addDomListener(window, 'load', initialize);
@@ -124,26 +135,47 @@ initialize: function (missionId) {
     },
     
     takePicture: function(){
-        navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
+        if(cameraApp.takePicture()) {
+            navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
+        }
+    },
+    uploadPicture: function(){
+        cameraApp.uploadPicture(this);
     },
 
+    savePicturesInDatabase: function(fileArray){
+        var imageNameArray = new Array;
+        for(var i=0;i < fileArray.length;i++){
+            imageNameArray.push(fileArray[i].substr(fileArray[i].lastIndexOf('/') + 1));
+            itemPicture.set({'picsArray': imageNameArray});
+
+            if(i == fileArray.length - 1){
+                return true;
+            }
+        }
+    },
+    
+    //place a marker on the map and save his coordinates to database
     placeAndSaveMarker: function(position){
         if(placePictureMarker(position)){
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
 
-            item.set({'markerLat': lat, 'markerLng': lng});
+            itemMap.set({'markerLat': lat, 'markerLng': lng});
         }
     },
-    // Generate the attributes for a new Mission map item.
-    newAttributes: function (missionId) {
+    // Generate the attributes for a new Mission map itemMap.
+    newAttributesMap: function (missionId) {
         return {
-            title: missionId
+            missionId: missionId
+        };
+    },
+    // Generate the attributes for a new Mission picture itemMap.
+    newAttributesPicture: function (missionId) {
+        return {
+            missionId: missionId
         };
     }
-    
-  
 
-    
     
 });

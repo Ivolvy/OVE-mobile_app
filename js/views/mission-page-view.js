@@ -43,7 +43,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
-		this.listenTo(app.missions, 'reset', this.addAll);
+		this.listenTo(app.missions, 'reset', this.addAll); 	//listen sur le sync
 		this.listenTo(app.missions, 'change:completed', this.filterOne);
 		this.listenTo(app.missions, 'filter', this.filterAll);
 		this.listenTo(app.missions, 'all', _.debounce(this.render, 0));
@@ -52,6 +52,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		// from being re-rendered for every model. Only renders when the 'reset'
 		// event is triggered at the end of the fetch.
 		app.missions.fetch({reset: true});
+		
 
 		return this;
 	},
@@ -89,7 +90,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		return this;
 	},
 
-	// Add a single mission item to the list by creating a view for it, and
+	// Add a single mission itemMap to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
 	addOne: function (mission) {
 		var view = new app.Views.MissionView({ model: mission });
@@ -110,7 +111,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		app.missions.each(this.filterOne, this);
 	},
 
-	// Generate the attributes for a new Mission item.
+	// Generate the attributes for a new Mission itemMap.
 	newAttributes: function () {
 		return {
 			title: this.$input.val().trim(),

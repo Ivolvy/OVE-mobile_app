@@ -146,9 +146,9 @@ function placePictureMarker(position, positionLat, positionLng){
     //the content displayed in the marker
    /* var contentString = '<div id="infoWindow" style="height: 250px;width: 150px">' +
         '<div class="owl-carousel">' +
-        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '<div class="item"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div class="itemMap"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div class="itemMap"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
+        '<div class="itemMap"><img style="height: 250px;width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
         '</div></div>';*/
 
     var contentString = '<div id="infoWindow" style="width:150px">' +
