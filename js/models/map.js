@@ -10,8 +10,7 @@ app.MissionMap = Backbone.Model.extend({
         originLng: '',
         destinationLat: '',
         destinationLng: '',
-        markerLat: '',
-        markerLng: ''
+        markerArray: '0'
     }
 
 });

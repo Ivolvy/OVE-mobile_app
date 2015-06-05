@@ -22,7 +22,7 @@ var cameraApp = {
         //console.log(navigator.camera);
     },
 
-    takePicture: function(){
+    takePicture: function(missionExplication){
         navigator.camera.getPicture(onSuccess, onFail, {
             quality: 50,
             destinationType: Camera.DestinationType.FILE_URI
@@ -30,10 +30,8 @@ var cameraApp = {
         function onSuccess(imageURI) {
             // var image = document.getElementById('imgH');
             var fileURL = imageURI;
-            
             fileArray.push(fileURL); //add image path in the array
-
-            return true;
+            missionExplication.getPicturePosition();
         }
         function onFail(message) {
             // alert('Failed because: ' + message);

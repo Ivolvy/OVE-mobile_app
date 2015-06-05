@@ -43,7 +43,9 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
-		this.listenTo(app.missions, 'reset', this.addAll); 	//listen sur le sync
+		//listen on the sync and not the reset
+		//->permit to keep the datas when we quit and re-launch the page
+		this.listenTo(app.missions, 'sync', this.addAll);
 		this.listenTo(app.missions, 'change:completed', this.filterOne);
 		this.listenTo(app.missions, 'filter', this.filterAll);
 		this.listenTo(app.missions, 'all', _.debounce(this.render, 0));
@@ -51,7 +53,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		// Suppresses 'add' events with {reset: true} and prevents the app view
 		// from being re-rendered for every model. Only renders when the 'reset'
 		// event is triggered at the end of the fetch.
-		app.missions.fetch({reset: true});
+		app.missions.fetch({});
 		
 
 		return this;
