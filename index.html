@@ -68,7 +68,7 @@
 				<a href="#/filterMissions/completed">PASSÉES</a>
 			</li>
 			<li>
-				<a class="selected" href="#/">ACTUALITÉS</a> <!--(all)-->
+				<a class="selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
 			</li>
 			<li>
 				<a href="#/filterMissions/active">EN COURS</a>
@@ -79,10 +79,10 @@
 	<script type="text/template" id="explication-nav">
 		<ul class="filters">
 			<li>
-				<a href="#/filterDetails/explication">EXPLICATION</a>
+				<a class="selected" href="#/filterDetails/explication">EXPLICATION</a>
 			</li>
 			<li>
-				<a class="selected" href="#/filterDetails/mission">MISSION</a>
+				<a href="#/filterDetails/mission">MISSION</a>
 			</li>
 			<li>
 				<a href="#/filterDetails/terminate">TERMINER</a>
@@ -110,25 +110,86 @@
 
 		<section class="navigation"></section>
 		
-		<div class="body" style="width:100%;height:100%">
+		<div class="body" style="width:100%;height:100%;margin-top:33px">
 			<div class="explication"></div>
-			<div class="camera hidden">Appareil photo</div>
+			<div class="actual camera hidden"></div>
 			<div id="googleMap"></div>
+			<div id="buttonsMap" class="hidden">
+				<div class="finish button">FINIR</div>
+				<div class="resume button">
+					<a href="#/filterDetails/mission">REPRENDRE</a>
+				</div>
+			</div>
 		</div>
-		<!--to remove later-->
-		<div class="upload" style="width:100px;height:100px;background-color:red;margin-top:-500px;">upload Picture</div>
-		<footer>
-			<div class="begin button">take picture</div>
-		</footer>
+	
+	
 	</script>
 
 	<script type="text/template" id="missionExplication-template">
-		<div class="view">
-			missionExplication-template
-		</div>
-	</script>	
+		<div class="background"></div>
+		<div id="explicationView">
+			<h1>capture les belles ombres</h1>
+			<div class="tips">3 photos minimum pour valider la mission</div>
 
+			<div class="description">
+				<p>
+					Le soleil tape aujourd'hui, <br/>les ombres sont de sortie.
+				</p>
+				<p>
+					L'occasion de faire quelques beaux <br/>clichés avant
+					qu'elles ne disparaissent.
+				</p>
+			</div>
+
+			<footer>
+				<div id="begin" class="button">
+					<a href="#/filterDetails/mission">COMMENCER</a>
+				</div>
+			</footer>
+		</div>
+	</script>
+
+	<script type="text/template" id="missionActual-template">
+		<div class="background"></div>
+		<div id="actualView">
+			<!-- upload to remove later-->
+			<div class="upload" style="width:100px;height:100px;background-color:red;margin-top:100px;position:absolute">upload Picture</div>
+			
+			<div id="takePicture">
+				<img class="picto" src="img/picto_camera_action.png"/>
+				<p>PRENDRE UNE PHOTO</p>
+			</div>
+			
+			<div id="totalPicture"></div>
 	
+		</div>
+	</script>
+
+	<script type="text/template" id="image-selection-template" name="image-selection-template">
+		<div id="image-selection">
+			<div class="background"></div>
+			<header>
+				<h1>OMBRES</h1>
+			</header>
+			<div class="title">
+				<p>SÉLECTIONNE LES PHOTOS QUE TU SOUHAITES PARTAGER</p>
+			</div>
+			
+			<div id="gallery">
+				
+			</div>
+
+			<div id="buttonsSelection">
+				<div class="send button">
+					<a href="#/">ENVOYER</a>
+				</div>
+				<div class="cancel button">
+					<a href="#/filterDetails/mission">ANNULER</a>
+				</div>
+			</div>
+			
+		</div>
+	</script>
 
 	<script type="text/template" id="menu-template" name="menu-template">
 		<nav id="panel-menu" class="slide-menu-left">
@@ -182,7 +243,8 @@
 		<script src="js/views/mission-page-view.js"></script>
 		<script src="js/views/mission-proposition-view.js"></script>
 		<script src="js/views/mission-explication-view.js"></script>
-	
+		<script src="js/views/image-selection-view.js"></script>
+
 		<!--ROUTERS-->
 		<script src="js/routers/router.js"></script>
 	

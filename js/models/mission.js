@@ -12,6 +12,9 @@ app.Mission = Backbone.Model.extend({
 		interaction: '',
 		genre: '',
 		shared: '0',
+		actualPics: '0',
+		totalPics: '',
+		picsArray: '',
 		completed: false
 	},
 

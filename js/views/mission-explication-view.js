@@ -4,10 +4,12 @@ var destinationLat;
 var destinationLng;
 var itemMap;
 var itemPicture;
+var itemMission;
 var imageNameArray = new Array;
 var markerArray = new Array;
-var markerLat;
-var markerLng;
+var actualPics;
+var totalPics;
+
 
 app.Views.MissionExplicationView = app.Extensions.View.extend({
 
@@ -18,13 +20,18 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     explicationTemplate: _.template($('#missionExplication-template').html()),
 
+    actualTemplate: _.template($('#missionActual-template').html()),
+    
     events: {
         'click .upload': 'uploadPicture',
-        'click .begin': 'takePicture'
+        'click #takePicture': 'takePicture',
+        'click .finish': 'toggleFinish'
     },
 
 
     initialize: function (missionId) {
+        var that = this;
+        
         this.animateIn = 'iosSlideInRight';
         this.animateOut = 'slideOutRight';
 
@@ -39,14 +46,33 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
         this.$navigation = this.$('.navigation');
         this.$explication = this.$('.explication');
+        this.$actual = this.$('.actual');
         this.$map = this.$('#googleMap');
         this.$camera = this.$('.camera');
+        this.$buttonsMap = this.$('#buttonsMap');
 
+        app.missions = new Missions();
         app.missionsMaps = new MapsCollection();
         app.missionsPictures = new PicturesCollection();
 
         //app.missionsMaps.create(this.newAttributesMap(missionId));
-        app.missionsPictures.create(this.newAttributesPicture(missionId));
+        //app.missionsPictures.create(this.newAttributesPicture(missionId));
+
+
+        app.missions.fetch({
+            success: function(model, response) {
+
+                var missionCollection = app.missions.where({'id': missionId});
+
+                var missionModelId = missionCollection[0].id;
+                itemMission = app.missions.get(missionModelId);
+
+                actualPics = itemMission.get('actualPics');
+                totalPics = itemMission.get('totalPics');
+
+                that.updateNbOfPics();
+            }
+        });
 
         //select the map model linked to the mission model
         app.missionsMaps.fetch({
@@ -94,30 +120,45 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
         this.$navigation.html(this.statsTemplate());
         this.$explication.html(this.explicationTemplate());
+        this.$actual.html(this.actualTemplate());
+
 
         return this;
     },
 
     toggleVisible: function () {
-
+        var visible;
         if(app.DetailFilter == 'explication'){
+            visible = 1;
             this.$explication.toggleClass('hidden', false);
             this.$camera.toggleClass('hidden', true);
             this.$map.toggleClass('hidden', true);
+            this.$buttonsMap.toggleClass('hidden', true);
         }
         else if(app.DetailFilter == 'mission'){
+            visible = 2;
             this.$explication.toggleClass('hidden', true);
             this.$camera.toggleClass('hidden', false);
             this.$map.toggleClass('hidden', true);
+            this.$buttonsMap.toggleClass('hidden', true);
         }
-        else if(app.DetailFilter == 'terminate'){
+        else if(app.DetailFilter == 'terminate'){  
+            visible = 3;
             this.$explication.toggleClass('hidden', true);
             this.$camera.toggleClass('hidden', true);
             this.$map.toggleClass('hidden', false);
+            this.$buttonsMap.toggleClass('hidden', false);
 
             this.loadScript();
         }
-
+        for(var i=1;i<=3;i++) {
+            if(i == visible) {
+                this.$('.filters li:nth-child('+i+') a').addClass('selected');
+            }
+            else{
+                this.$('.filters li:nth-child('+i+') a').removeClass('selected');
+            }
+       }
     },
 
 
@@ -144,6 +185,9 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     takePicture: function(){
         cameraApp.takePicture(this);
+        actualPics+=1;
+        itemPicture.save({'actualPics': actualPics});
+        this.updateNbOfPics();
     },
     getPicturePosition: function(){
         navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
@@ -180,6 +224,9 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         setInfoWindowOnMarker(3);
     },
     
+    updateNbOfPics: function(){
+        this.$('#totalPicture').html(actualPics+'/'+totalPics);        
+    },
     
     // Generate the attributes for a new Mission map itemMap.
     newAttributesMap: function (missionId) {
@@ -192,6 +239,11 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         return {
             missionId: missionId
         };
+    },
+    //display image selection
+    toggleFinish: function () {
+        var missionId = itemMission.get('id');
+        Backbone.history.navigate('#/imageSelection/'+missionId, true);
     }
 
 });

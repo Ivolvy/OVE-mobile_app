@@ -40,7 +40,8 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.$menu = this.$('#left-menu');
 
 		app.missions = new Missions();
-
+		app.MissionFilter = 'actuality';
+		
 		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
 		//listen on the sync and not the reset
@@ -79,14 +80,11 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 			this.$('.filters li a')
 				.removeClass('selected')
-				.filter('[href="#/' + (app.MissionFilter || '') + '"]')
+				.filter('[href="#/filterMissions/' + (app.MissionFilter || '') + '"]')
 				.addClass('selected');
 		} else {
 			this.$main.hide();
 		}
-
-
-
 
 		
 		return this;

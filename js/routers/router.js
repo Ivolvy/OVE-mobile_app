@@ -8,7 +8,8 @@ app.Router = Backbone.Router.extend({
 		'missionProposition': 'missionProposition',
 		'missionExplication/:id': 'missionExplication',
 		'filterMissions/*action': 'setFilterMissions',
-		'filterDetails/*action': 'setFilterDetails'
+		'filterDetails/*action': 'setFilterDetails',
+		'imageSelection/:id': 'imageSelection'
 	},
 
 	setFilterMissions: function (param) {
@@ -55,6 +56,10 @@ app.Router = Backbone.Router.extend({
 	},
 	missionExplication: function(id){
 		var view = new app.Views.MissionExplicationView(id);
+		app.getInstance().goto(view);
+	},
+	imageSelection: function(id){
+		var view = new app.Views.ImageSelectionView(id);
 		app.getInstance().goto(view);
 	}
 });

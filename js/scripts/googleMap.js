@@ -7,6 +7,73 @@ function initialize() {
     var address = null;
     var origin;
     var destination;
+    
+    
+    var styles = [
+        {
+            "featureType": "road",
+            "elementType": "labels.icon",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "road",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "road",
+            "elementType": "geometry.fill",
+            "stylers": [
+                { "color": "#ffffff" }
+            ]
+        },{
+            "featureType": "landscape",
+            "elementType": "labels",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "poi",
+            "elementType": "labels",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                { "color": "#a59ebd" }
+            ]
+        },{
+            "featureType": "landscape",
+            "elementType": "geometry.fill",
+            "stylers": [
+                { "color": "#e7dfee" }
+            ]
+        },{
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "transit",
+            "elementType": "labels.icon",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },{
+            "featureType": "poi.park",
+            "elementType": "geometry.fill",
+            "stylers": [
+                { "visibility": "on" }
+            ]
+        },{
+            "featureType": "poi.medical"  }
+
+        ];
 
     var mapOptions = {
         center: {lat: 45.8992470, lng: 6.1293840},
@@ -58,10 +125,12 @@ function initialize() {
          previousPosition = position;*/
         //  }
     }
-
-
+    //custom map
+    var styledMap = new google.maps.StyledMapType(styles);
     map = new google.maps.Map(document.getElementById("googleMap"),mapOptions);
-
+    map.mapTypes.set('map_style', styledMap);
+    map.setMapTypeId('map_style');
+    
     direction = new google.maps.DirectionsRenderer({
         map   : map
     });

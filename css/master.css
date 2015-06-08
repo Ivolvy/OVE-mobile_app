@@ -9,6 +9,15 @@ body {
     position: fixed;
 }
 
+header{
+    background: url("../img/backgrounds/header.png") no-repeat center center;
+    background-size: cover;
+    height: 54px;
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+}
+
 .page {
     position: absolute;
     width: 100%;
@@ -98,10 +107,12 @@ body {
     color: #FFF;
     text-align: center;
     background-color: #4d3267;
-    opacity: 0.9;
-    height: 46px;
     line-height: 45px;
     font-size: 11px;
+    position: relative;
+    top: 33px;
+    padding-top: 18px;
+    z-index: 9;
 }
 
 
@@ -115,7 +126,6 @@ body {
 
 .filters li {
     display: inline-block;
-    border-right: 1px solid #654e7c;
     opacity: 0.8;
     width: 32%;
 }
@@ -136,10 +146,6 @@ body {
 }
 
 #mission-page header{
-    height: 42px;
-    width: 100%;
-    background-color: #cd522a;
-    opacity: 0.9;
     display: inline-block;
     text-align: center;
 }
@@ -284,21 +290,26 @@ body {
 
 #mission-proposition footer, #mission-explication footer{
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    padding-top: 66px;
 }
 .button{
     width: 48%;
-    height: 70px;
-    background:rgba(70,43,96,0.9); /*#462b60*/
+    height: 43px;
+    background: rgba(70,43,96,1);
     display: inline-block;
     text-align: center;
-    font-size: 25px;
-    line-height: 70px;
+    font-size: 18px;
+    line-height: 43px;
     vertical-align: middle;
     cursor: pointer;
     color: #FFF;
+    margin-bottom: 12px;
 }
+.button a{
+    color: #FFF;
+    text-decoration: none;
+}
+
 #mission-proposition .accept{
     float: right;
 }
@@ -325,33 +336,137 @@ body {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     height: 100%;
-    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
-    background-size: cover;
     overflow: hidden;
     color: #FFF;
+
+    background: url("../img/backgrounds/bg_ombre.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
 }
 
 #mission-explication header{
-    height: 42px;
-    width: 100%;
-    background:rgba(184,77,43,0.9); /*#b84d2b*/
-    opacity: 0.9;
     text-align: center;
+    z-index: 10;
 }
 
-#mission-explication h1 {
+#mission-explication header h1 {
     margin-left: 0;
+    color: #086294;
 }
+
+#mission-explication .explication,
+#mission-explication .actual{
+    height: 100%;
+}
+
+#mission-explication .explication .background{
+    background: url("../img/backgrounds/bg_mission-explication-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+}
+#mission-explication .actual .background{
+    background: url("../img/backgrounds/bg_mission-action-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+}
+
+#explicationView{
+    position: relative;    
+}
+
+#explicationView h1{
+    font-size: 26px;
+    text-align: center;
+    width: 161px;
+    padding-top: 73px;
+    margin: auto;
+    display: block;
+}
+#explicationView .tips{
+    width: 143px;
+    font-size: 14px;
+    margin: auto;
+    padding-top: 13px;
+}
+#explicationView .description{
+    padding-top: 48px;
+    width: 260px;
+    font-style: italic;
+    margin: auto;
+}
+#explicationView .description p:first-child{
+    font-weight: 700;
+    margin-bottom: 0;
+}
+#explicationView .description p:last-child{
+    font-weight: 300;
+    margin-top: 0;
+}
+
+#actualView{
+    position: relative;
+}
+
 
 #googleMap{
     width: 100%;
     height: 86%;
 }
 
-.begin{
+#begin{
     min-width: 185px;
 }
 
+#takePicture{
+    width: 175px;
+    height: 175px;
+    margin: auto;
+    padding-top: 102px;
+    padding-left: 7px;
+}
+#takePicture .picto{
+    width: 70px;
+    padding-top: 27px;
+}
+#takePicture p{
+    width: 95px;
+    margin: auto;
+    font-size: 14px;
+}
+#totalPicture{
+    color: #086294;
+    font-size: 30px;
+    font-weight: 700;
+    padding-top: 15px;
+}
+#buttonsMap{
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 10px;
+}
+#buttonsMap .button{
+    display: block;
+    margin: auto;
+}
+#buttonsMap .finish{
+    width: 190px;
+    margin-bottom: 10px;
+}
+#buttonsMap .resume{
+    width: 155px;
+}
 
 /*----------------------------------------------*/
 /*------------------GOOGLE MAP------------------*/
@@ -362,6 +477,78 @@ body {
 }
 #googleMap .gm-style-iw > div > div{
     overflow:hidden!important;
+}
+
+/*----------------------------------------------*/
+/*---------------IMAGE SELECTION----------------*/
+/*----------------------------------------------*/
+
+#image-selection {
+    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+}
+#image-selection .title{
+    position: relative;
+    padding-top: 63px;
+    color: #FFF;
+    width: 100%;
+}
+#image-selection .title p{
+    font-weight: 300;
+    font-size: 14px;
+    width: 224px;
+    margin: auto;
+}
+
+#image-selection .background{
+    background: url("../img/backgrounds/bg_mission-choix-partage-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+}
+
+#image-selection header h1 {
+    color: #086294;
+    font-size: 26px;
+    padding-top: 0;
+    margin-top: 8px;
+}
+
+#buttonsSelection{
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 10px;
+}
+#buttonsSelection .button{
+    display: block;
+    margin: auto;
+}
+#buttonsSelection .send{
+    width: 190px;
+    margin-bottom: 10px;
+}
+#buttonsSelection .cancel{
+    width: 155px;
+}
+
+#gallery{
+    padding-top: 15px;
+}
+#gallery img{
+    width: 150px;
+    height: 150px;
+    margin: 4px;
 }
 
 
