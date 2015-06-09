@@ -516,6 +516,21 @@ header{
     top: 0;
     z-index: 0;
 }
+#image-selection .top{
+    background: url("../img/backgrounds/bg_mission-choix-partage-bleu-haut.png") no-repeat center center;
+    background-size: cover;
+    height: 160px;
+    position: absolute;
+    width: 100%;
+}
+#image-selection .bottom{
+    background: url("../img/backgrounds/bg_mission-choix-partage-bleu-bas.png") no-repeat center center;
+    background-size: cover;
+    height: 237px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
 
 #image-selection header h1 {
     color: #086294;
@@ -544,6 +559,7 @@ header{
 
 #gallery{
     padding-top: 15px;
+    height: 260px;
 }
 #gallery img{
     width: 150px;

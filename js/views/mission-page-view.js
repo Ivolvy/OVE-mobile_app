@@ -41,7 +41,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		app.missions = new Missions();
 		app.MissionFilter = 'actuality';
-		
+
 		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
 		//listen on the sync and not the reset
@@ -55,7 +55,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		// from being re-rendered for every model. Only renders when the 'reset'
 		// event is triggered at the end of the fetch.
 		app.missions.fetch({});
-		
+
 
 		return this;
 	},
@@ -70,7 +70,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		if (app.missions.length) {
 			this.$main.show();
 			this.$navigation.show();
-			
+
 			this.$navigation.html(this.statsTemplate({
 				completed: completed,
 				remaining: remaining
@@ -86,7 +86,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			this.$main.hide();
 		}
 
-		
+
 		return this;
 	},
 
@@ -128,7 +128,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			this.$input.val('');
 		}
 	},
-	
+
 	//display or not the panel menu
 	toggleMenu: function () {
 		if(this.$pageBody.hasClass('sml-open')){

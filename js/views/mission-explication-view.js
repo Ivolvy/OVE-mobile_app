@@ -13,7 +13,6 @@ var totalPics;
 
 app.Views.MissionExplicationView = app.Extensions.View.extend({
 
-
     id: 'mission-explication',
 
     statsTemplate: _.template($('#explication-nav').html()),
@@ -21,9 +20,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     explicationTemplate: _.template($('#missionExplication-template').html()),
 
     actualTemplate: _.template($('#missionActual-template').html()),
-    
+
     events: {
-        'click .upload': 'uploadPicture',
         'click #takePicture': 'takePicture',
         'click .finish': 'toggleFinish'
     },
@@ -31,7 +29,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     initialize: function (missionId) {
         var that = this;
-        
+
         this.animateIn = 'iosSlideInRight';
         this.animateOut = 'slideOutRight';
 
@@ -79,7 +77,13 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             success: function(model, response) {
                 //get list of maps models where his missionId 
                 // = the mission model id - here only one
+
+                var exists = app.missionsMaps.where({'missionId': missionId});
+                if(exists == "" || exists == undefined){
+                    app.missionsMaps.create(that.newAttributesMap(missionId));
+                }
                 var mapCollection = app.missionsMaps.where({'missionId': missionId});
+
                 //select the only one map model's id
                 var mapId = mapCollection[0].id;
                 //get the map model froms maps collection
@@ -102,13 +106,19 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         app.missionsPictures.fetch({
             success: function(model, response) {
 
+                var exists = app.missionsPictures.where({'missionId': missionId});
+
+                if(exists == "" || exists == undefined){
+                    alert("create picture");
+                    app.missionsPictures.create(that.newAttributesPicture(missionId));
+                }
+
                 var pictureCollection = app.missionsPictures.where({'missionId': missionId});
 
                 var pictureId = pictureCollection[0].id;
                 itemPicture = app.missionsPictures.get(pictureId);
                 //alert(itemMap.get('origin'));
 
-                imageNameArray = itemPicture.get('picsArray');
             }
         });
 
@@ -142,7 +152,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             this.$map.toggleClass('hidden', true);
             this.$buttonsMap.toggleClass('hidden', true);
         }
-        else if(app.DetailFilter == 'terminate'){  
+        else if(app.DetailFilter == 'terminate'){
             visible = 3;
             this.$explication.toggleClass('hidden', true);
             this.$camera.toggleClass('hidden', true);
@@ -158,7 +168,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             else{
                 this.$('.filters li:nth-child('+i+') a').removeClass('selected');
             }
-       }
+        }
     },
 
 
@@ -167,14 +177,14 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         if (!map) {
             //launch the map
             initialize();
-
+          
             //trace itineray if exists
             if(originLat && originLng && destinationLat && destinationLng) {
                 initItineray(originLat, originLng, destinationLat, destinationLng);
             }
-
+        
             //place marker if exists
-            if(markerArray.length) {
+            if(markerArray.length != 0) {
                 for(var i=0;i < markerArray.length;i++){
                     placePictureMarker(markerArray[i], [i]);
                 }
@@ -186,25 +196,11 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     takePicture: function(){
         cameraApp.takePicture(this);
         actualPics+=1;
-        itemPicture.save({'actualPics': actualPics});
+        itemMission.save({'actualPics': actualPics});
         this.updateNbOfPics();
     },
     getPicturePosition: function(){
         navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
-    },
-    uploadPicture: function(){
-        cameraApp.uploadPicture(this);
-    },
-
-    savePicturesInDatabase: function(fileArray){
-        for(var i=0;i < fileArray.length;i++){
-            imageNameArray.push(fileArray[i].substr(fileArray[i].lastIndexOf('/') + 1));
-            itemPicture.save({'picsArray': imageNameArray});
-
-            if(i == fileArray.length - 1){
-                return true;
-            }
-        }
     },
 
     //place a marker on the map and save his coordinates to database
@@ -221,13 +217,13 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     //set info window in a marker on the map
     setInfoWindow: function(){
-        setInfoWindowOnMarker(3);
+        setInfoWindowOnMarker(0);//the id is the place in markerArray
     },
-    
+
     updateNbOfPics: function(){
-        this.$('#totalPicture').html(actualPics+'/'+totalPics);        
+        this.$('#totalPicture').html(actualPics+'/'+totalPics);
     },
-    
+
     // Generate the attributes for a new Mission map itemMap.
     newAttributesMap: function (missionId) {
         return {

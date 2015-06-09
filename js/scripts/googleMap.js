@@ -205,12 +205,17 @@ function placePictureMarker(markerLatLngPosition, idMarker){
 //set an info window on the selected marker
 function setInfoWindowOnMarker(idMarker){
     //the content displayed in the marker
-    var contentString = '<div id="infoWindow" style="width:150px">' +
+    var contentString = "";
+        
+        /*'<div id="infoWindow" style="width:150px">' +
         '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
         '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
         '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '</div>';
-
+        '</div>';*/
+    //TODO - improve
+    for(var i=0;i < fileArray.length;i++){
+        contentString.append('<img style="width:150px" src='+fileArray[i]+'>');
+    }
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,

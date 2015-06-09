@@ -1,4 +1,4 @@
-var fileArray = new Array; //faire un tableau pour stocker le chemin de toutes les images
+var fileArray = new Array; //store the path to all taken images
 
 var cameraApp = {
 
@@ -39,13 +39,12 @@ var cameraApp = {
     },
 
     //upload a picture on the server
-    uploadPicture: function(missionExplication){
+    uploadPicture: function(imageSelection, imageToSendArray){
 
         function win(i){
-
-            if(missionExplication.savePicturesInDatabase(fileArray)){
-                if(i == fileArray.length - 1){
-                    fileArray.splice(0,fileArray.length); //empty the array
+            if(imageSelection.savePicturesInDatabase(imageToSendArray)){
+                if(i == imageToSendArray.length - 1){
+                    imageToSendArray.splice(0,imageToSendArray.length); //empty the array
                 }
             }
         }
@@ -56,14 +55,14 @@ var cameraApp = {
             console.log("upload error target " + error.target);
         };
 
-        for(var i=0;fileArray.length;i++){
+        for(var i=0;imageToSendArray.length;i++){
             var options = new FileUploadOptions();
             options.fileKey = "file";
-            options.fileName = fileArray[i].substr(fileArray[i].lastIndexOf('/') + 1);
+            options.fileName = imageToSendArray[i].substr(imageToSendArray[i].lastIndexOf('/') + 1);
             options.mimeType = "text/plain";
 
             var ft = new FileTransfer();
-            ft.upload(fileArray[i], encodeURI("http://michaelgenty.com/upload.php"), win(i), fail, options);
+            ft.upload(imageToSendArray[i], encodeURI("http://michaelgenty.com/upload.php"), win(i), fail, options);
         }
     }
 

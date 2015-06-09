@@ -1,255 +1,246 @@
 <!doctype html>
 <html lang="en" data-framework="backbonejs">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=320"> <!-- or device-width-->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=320"> <!-- or device-width-->
 
-		<title>OVE Project</title>
-		<link rel="stylesheet" href="css/master.css">
-		<link rel="stylesheet" href="css/normalise.css">
-		<link rel="stylesheet" href="css/slick.css">
-		<link rel="stylesheet" href="css/slick-theme.css">
+	<title>OVE Project</title>
+	<link rel="stylesheet" href="css/master.css">
+	<link rel="stylesheet" href="css/normalise.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="css/slick-theme.css">
 
-		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-		<script src="http://maps.googleapis.com/maps/api/js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
 
-		<script src="cordova.js" type="text/javascript"></script>
+	<script src="cordova.js" type="text/javascript"></script>
 
-	</head>
-	<body class="no-select">
-	<script type="text/template" name="home">
-		<h1>Home</h1>
-		<p><a href="#/missionPage">Detail &rarr;</a></p>
-	</script>
+</head>
+<body class="no-select">
+<script type="text/template" name="home">
+	<h1>Home</h1>
+	<p><a href="#/missionPage">Detail &rarr;</a></p>
+</script>
 
-	<script type="text/template" id="mission-page" name="mission-page">
-			<header>
-				<div id="left-menu" class="hamburger"></div>
-				<h1 id="title">MISSIONS</h1>
-				<div id="ove-logo"></div>
-			</header>
-			
-			<section class="page-body">
-			
-				<section class="navigation"></section>
+<script type="text/template" id="mission-page" name="mission-page">
+	<header>
+		<div id="left-menu" class="hamburger"></div>
+		<h1 id="title">MISSIONS</h1>
+		<div id="ove-logo"></div>
+	</header>
 
-				<div id="sort">
-					<span>Afficher par :</span>
-					<select name="list" id="list">
-						<option>DATE</option>
-						<option>NOM</option>
-					</select>
-				</div>
-				<!--
-				<input id="new-mission" placeholder="Add mission" autofocus>
-				-->
-				<section id="main">
-					<ul id="mission-list"></ul>
-				</section>
-			</section>
-	</script>
-	
-	<script type="text/template" id="item-template">
-		<div class="item-content">
-			<div class="view">
-				<label id="mission-date">fin <%- date %></label>
-				<label id="mission-title"><%- title %></label>
-			</div>
-			<ul id="mission-icons"></ul>
-			<div id="mission-share">
-				<img src="img/share.png"/>
+	<section class="page-body">
+
+		<section class="navigation"></section>
+
+		<div id="sort">
+			<span>Afficher par :</span>
+			<select name="list" id="list">
+				<option>DATE</option>
+				<option>NOM</option>
+			</select>
+		</div>
+		<!--
+        <input id="new-mission" placeholder="Add mission" autofocus>
+        -->
+		<section id="main">
+			<ul id="mission-list"></ul>
+		</section>
+	</section>
+</script>
+
+<script type="text/template" id="item-template">
+	<div class="item-content">
+		<div class="view">
+			<label id="mission-date">fin <%- date %></label>
+			<label id="mission-title"><%- title %></label>
+		</div>
+		<ul id="mission-icons"></ul>
+		<div id="mission-share">
+			<img src="img/share.png"/>
+		</div>
+	</div>
+</script>
+
+<script type="text/template" id="mission-nav-list">
+	<ul class="filters">
+		<li>
+			<a href="#/filterMissions/completed">PASSÉES</a>
+		</li>
+		<li>
+			<a class="selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
+		</li>
+		<li>
+			<a href="#/filterMissions/active">EN COURS</a>
+		</li>
+	</ul>
+</script>
+
+<script type="text/template" id="explication-nav">
+	<ul class="filters">
+		<li>
+			<a class="selected" href="#/filterDetails/explication">EXPLICATION</a>
+		</li>
+		<li>
+			<a href="#/filterDetails/mission">MISSION</a>
+		</li>
+		<li>
+			<a href="#/filterDetails/terminate">TERMINER</a>
+		</li>
+	</ul>
+</script>
+
+<script type="text/template" id="mission-proposition" name="mission-proposition">
+	<header class="header">
+		<h2 class="title">NOUVELLE MISSION</h2>
+		<h1 class="mission-title">ombres</h1>
+	</header>
+
+
+	<footer>
+		<div class="button">REFUSER</div>
+		<div class="button accept">ACCEPTER</div>
+	</footer>
+</script>
+
+<script type="text/template" id="mission-explication" name="mission-explication">
+	<header>
+		<h1>OMBRES</h1>
+	</header>
+
+	<section class="navigation"></section>
+
+	<div class="body" style="width:100%;height:100%;margin-top:33px">
+		<div class="explication"></div>
+		<div class="actual camera hidden"></div>
+		<div id="googleMap"></div>
+		<div id="buttonsMap" class="hidden">
+			<div class="finish button">FINIR</div>
+			<div class="resume button">
+				<a href="#/filterDetails/mission">REPRENDRE</a>
 			</div>
 		</div>
-	</script>
-	
-	<script type="text/template" id="mission-nav-list">
-		<ul class="filters">
-			<li>
-				<a href="#/filterMissions/completed">PASSÉES</a>
-			</li>
-			<li>
-				<a class="selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
-			</li>
-			<li>
-				<a href="#/filterMissions/active">EN COURS</a>
-			</li>
-		</ul>
-	</script>
-	
-	<script type="text/template" id="explication-nav">
-		<ul class="filters">
-			<li>
-				<a class="selected" href="#/filterDetails/explication">EXPLICATION</a>
-			</li>
-			<li>
-				<a href="#/filterDetails/mission">MISSION</a>
-			</li>
-			<li>
-				<a href="#/filterDetails/terminate">TERMINER</a>
-			</li>
-		</ul>
-	</script>
+	</div>
 
-	<script type="text/template" id="mission-proposition" name="mission-proposition">
-		<header class="header">
-			<h2 class="title">NOUVELLE MISSION</h2>
-			<h1 class="mission-title">ombres</h1>
-		</header>
-		
-		
+
+</script>
+
+<script type="text/template" id="missionExplication-template">
+	<div class="background"></div>
+	<div id="explicationView">
+		<h1>capture les belles ombres</h1>
+		<div class="tips">3 photos minimum pour valider la mission</div>
+
+		<div class="description">
+			<p>
+				Le soleil tape aujourd'hui, <br/>les ombres sont de sortie.
+			</p>
+			<p>
+				L'occasion de faire quelques beaux <br/>clichés avant
+				qu'elles ne disparaissent.
+			</p>
+		</div>
+
 		<footer>
-			<div class="button">REFUSER</div>
-			<div class="button accept">ACCEPTER</div>
+			<div id="begin" class="button">
+				<a href="#/filterDetails/mission">COMMENCER</a>
+			</div>
 		</footer>
-	</script>
+	</div>
+</script>
 
-	<script type="text/template" id="mission-explication" name="mission-explication">
+<script type="text/template" id="missionActual-template">
+	<div class="background"></div>
+	<div id="actualView">
+		<div id="takePicture">
+			<img class="picto" src="img/picto_camera_action.png"/>
+			<p>PRENDRE UNE PHOTO</p>
+		</div>
+
+		<div id="totalPicture"></div>
+	</div>
+</script>
+
+<script type="text/template" id="image-selection-template" name="image-selection-template">
+	<div id="image-selection">
+		<div class="top"></div>
+		<div class="bottom"></div>
 		<header>
 			<h1>OMBRES</h1>
 		</header>
-
-		<section class="navigation"></section>
-		
-		<div class="body" style="width:100%;height:100%;margin-top:33px">
-			<div class="explication"></div>
-			<div class="actual camera hidden"></div>
-			<div id="googleMap"></div>
-			<div id="buttonsMap" class="hidden">
-				<div class="finish button">FINIR</div>
-				<div class="resume button">
-					<a href="#/filterDetails/mission">REPRENDRE</a>
-				</div>
-			</div>
+		<div class="title">
+			<p>SÉLECTIONNE LES PHOTOS QUE TU SOUHAITES PARTAGER</p>
 		</div>
-	
-	
-	</script>
 
-	<script type="text/template" id="missionExplication-template">
-		<div class="background"></div>
-		<div id="explicationView">
-			<h1>capture les belles ombres</h1>
-			<div class="tips">3 photos minimum pour valider la mission</div>
+		<div id="gallery"></div>
 
-			<div class="description">
-				<p>
-					Le soleil tape aujourd'hui, <br/>les ombres sont de sortie.
-				</p>
-				<p>
-					L'occasion de faire quelques beaux <br/>clichés avant
-					qu'elles ne disparaissent.
-				</p>
-			</div>
-
-			<footer>
-				<div id="begin" class="button">
-					<a href="#/filterDetails/mission">COMMENCER</a>
-				</div>
-			</footer>
+		<div id="buttonsSelection">
+			<div class="send button">ENVOYER</div>
+			<div class="cancel button">ANNULER</div>
 		</div>
-	</script>
 
-	<script type="text/template" id="missionActual-template">
-		<div class="background"></div>
-		<div id="actualView">
-			<!-- upload to remove later-->
-			<div class="upload" style="width:100px;height:100px;background-color:red;margin-top:100px;position:absolute">upload Picture</div>
-			
-			<div id="takePicture">
-				<img class="picto" src="img/picto_camera_action.png"/>
-				<p>PRENDRE UNE PHOTO</p>
-			</div>
-			
-			<div id="totalPicture"></div>
-	
-		</div>
-	</script>
+	</div>
+</script>
 
-	<script type="text/template" id="image-selection-template" name="image-selection-template">
-		<div id="image-selection">
-			<div class="background"></div>
-			<header>
-				<h1>OMBRES</h1>
-			</header>
-			<div class="title">
-				<p>SÉLECTIONNE LES PHOTOS QUE TU SOUHAITES PARTAGER</p>
-			</div>
-			
-			<div id="gallery">
-				
-			</div>
+<script type="text/template" id="menu-template" name="menu-template">
+	<nav id="panel-menu" class="slide-menu-left">
+		<ul>
+			<li><a href="#/missionPage">MISSION</a></li>
+			<li>PROFIL</li>
+			<li>AIDE</li>
+			<li>À PROPOS</li>
+			<li>PARAMÈTRES</li>
+		</ul>
+	</nav>
+</script>
 
-			<div id="buttonsSelection">
-				<div class="send button">
-					<a href="#/">ENVOYER</a>
-				</div>
-				<div class="cancel button">
-					<a href="#/filterDetails/mission">ANNULER</a>
-				</div>
-			</div>
-			
-		</div>
-	</script>
+<script src="js/vendor/json2-min.js"></script>
+<script src="js/vendor/jquery-2.1.4.js"></script>
+<script src="js/vendor/underscore-min.js"></script>
+<script src="js/vendor/backbone-min.js"></script>
+<script src="js/vendor/backbone.localStorage-min.js"></script>
+<script src="js/vendor/handlebars-v3.0.3.js"></script>
 
-	<script type="text/template" id="menu-template" name="menu-template">
-		<nav id="panel-menu" class="slide-menu-left">
-			<ul>
-				<li><a href="#/missionPage">MISSION</a></li>
-				<li>PROFIL</li>
-				<li>AIDE</li>
-				<li>À PROPOS</li>
-				<li>PARAMÈTRES</li>
-			</ul>
-		</nav>
-	</script>
+<script src="js/vendor/slick.min.js"></script>
 
-		<script src="js/vendor/json2-min.js"></script>
-		<script src="js/vendor/jquery-2.1.4.js"></script>
-		<script src="js/vendor/underscore-min.js"></script>
-		<script src="js/vendor/backbone-min.js"></script>
-		<script src="js/vendor/backbone.localStorage-min.js"></script>
-		<script src="js/vendor/handlebars-v3.0.3.js"></script>
-
-		<script src="js/vendor/slick.min.js"></script>
-
-		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-		<!-- backbonfire used to link backbone and firebase-->
-		<script src="js/vendor/backbonefire.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- backbonfire used to link backbone and firebase-->
+<script src="js/vendor/backbonefire.min.js"></script>
 
 
-		<script src="js/scripts/googleMap.js"></script>
-		<script src="js/scripts/camera.js"></script>
+<script src="js/scripts/googleMap.js"></script>
+<script src="js/scripts/camera.js"></script>
 
 
-		<script src="js/app.js"></script>
-	
-		<!--MODELS-->
-		<script src="js/models/mission.js"></script>
-		<script src="js/models/map.js"></script>
-		<script src="js/models/picture.js"></script>
+<script src="js/app.js"></script>
 
-		<!--COLLECTIONS-->
-		<script src="js/collections/missions.js"></script>
-		<script src="js/collections/maps.js"></script>
-		<script src="js/collections/pictures.js"></script>
+<!--MODELS-->
+<script src="js/models/mission.js"></script>
+<script src="js/models/map.js"></script>
+<script src="js/models/picture.js"></script>
 
-		<!--EXTENSIONS-->
-		<script src="js/extensions/view.js"></script>
+<!--COLLECTIONS-->
+<script src="js/collections/missions.js"></script>
+<script src="js/collections/maps.js"></script>
+<script src="js/collections/pictures.js"></script>
 
-		<!--VIEWS-->
-		<script src="js/views/app-view.js"></script>
-		<script src="js/views/home-view.js"></script>
-		<script src="js/views/mission-view.js"></script>
-		<script src="js/views/mission-page-view.js"></script>
-		<script src="js/views/mission-proposition-view.js"></script>
-		<script src="js/views/mission-explication-view.js"></script>
-		<script src="js/views/image-selection-view.js"></script>
+<!--EXTENSIONS-->
+<script src="js/extensions/view.js"></script>
 
-		<!--ROUTERS-->
-		<script src="js/routers/router.js"></script>
-	
-	
-		<script src="js/app2.js"></script>
+<!--VIEWS-->
+<script src="js/views/app-view.js"></script>
+<script src="js/views/home-view.js"></script>
+<script src="js/views/mission-view.js"></script>
+<script src="js/views/mission-page-view.js"></script>
+<script src="js/views/mission-proposition-view.js"></script>
+<script src="js/views/mission-explication-view.js"></script>
+<script src="js/views/image-selection-view.js"></script>
 
-	</body>
+<!--ROUTERS-->
+<script src="js/routers/router.js"></script>
+
+
+<script src="js/app2.js"></script>
+
+</body>
 </html>
