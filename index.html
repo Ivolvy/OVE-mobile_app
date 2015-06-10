@@ -110,7 +110,7 @@
 
 	<section class="navigation"></section>
 
-	<div class="body" style="width:100%;height:100%;margin-top:33px">
+	<div class="body" style="width:100%;min-height:620px;height:100%;margin-top:33px">
 		<div class="explication"></div>
 		<div class="actual camera hidden"></div>
 		<div id="googleMap"></div>
@@ -182,6 +182,14 @@
 	</div>
 </script>
 
+<script type="text/template" id="mission-opinion-template" name="mission-opinion-template">
+	<div id="mission-opinion">
+		
+
+	</div>
+</script>
+
+
 <script type="text/template" id="menu-template" name="menu-template">
 	<nav id="panel-menu" class="slide-menu-left">
 		<ul>
@@ -235,6 +243,7 @@
 <script src="js/views/mission-proposition-view.js"></script>
 <script src="js/views/mission-explication-view.js"></script>
 <script src="js/views/image-selection-view.js"></script>
+<script src="js/views/mission-opinion-view.js"></script>
 
 <!--ROUTERS-->
 <script src="js/routers/router.js"></script>

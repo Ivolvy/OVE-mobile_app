@@ -109,7 +109,6 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                 var exists = app.missionsPictures.where({'missionId': missionId});
 
                 if(exists == "" || exists == undefined){
-                    alert("create picture");
                     app.missionsPictures.create(that.newAttributesPicture(missionId));
                 }
 
@@ -177,12 +176,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         if (!map) {
             //launch the map
             initialize();
-          
+
             //trace itineray if exists
             if(originLat && originLng && destinationLat && destinationLng) {
                 initItineray(originLat, originLng, destinationLat, destinationLng);
             }
-        
+
             //place marker if exists
             if(markerArray.length != 0) {
                 for(var i=0;i < markerArray.length;i++){
@@ -197,9 +196,9 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         cameraApp.takePicture(this);
         actualPics+=1;
         itemMission.save({'actualPics': actualPics});
-        this.updateNbOfPics();
     },
     getPicturePosition: function(){
+        this.updateNbOfPics();
         navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
     },
 

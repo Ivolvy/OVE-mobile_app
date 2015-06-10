@@ -1,5 +1,6 @@
 var itemPicture;
 var imageNameArray = new Array;
+var tempImagesArray = new Array;
 var imageToSendArray = new Array;
 
 app.Views.ImageSelectionView = app.Extensions.View.extend({
@@ -48,24 +49,37 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
     addImagesOnGallery: function(){
         this.$gallery = this.$('#gallery');
         var imageUrl;
+        var index;
 
         //mettre fileArray dans app.js pour récupérer le liens des images partout,
         //avant de les envoyer ensuite sur le serveur
         for(var i=0;i < fileArray.length;i++){
-            this.$gallery.append('<img class=picture'+i+'>');
-            //imageUrl = 'http://michaelgenty.com/test/'+imageNameArray[i]+'';
+            this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' src="img/picto_photo_select.png"></div></div>');
+            //imageUrl = 'http://michaelgenty.com/test/1433883728454.jpg';
             imageUrl = fileArray[i];
             this.$('.picture'+i+'').css("background", "url('"+imageUrl+"') 50% 50% no-repeat");
             this.$('.picture'+i+'').css("background-size", "cover");
             this.$('.picture'+i+'').attr("srcImg", imageUrl);
         }
-
-        $('#gallery img').click(function() {
-            imageToSendArray.push($(this).attr('srcImg'));
+        //on click on an image
+        $('#gallery div').click(function() {
+            $(this).find('div').toggleClass('hidden');
+            index = $(this).find('img').attr('id');
+            if($(this).find('div').hasClass('hidden')){
+                tempImagesArray[index] = "0";
+            }
+            else {
+                tempImagesArray[index] = $(this).attr('srcImg'); //save her url
+            }
         });
     },
 
     sendPicsToWeb: function(){
+        for(var i=0;i < tempImagesArray.length;i++) {
+            if(tempImagesArray[i]!= "0"){
+                imageToSendArray.push(tempImagesArray[i]);
+            }
+        }
         cameraApp.uploadPicture(this, imageToSendArray);
     },
 
@@ -77,8 +91,10 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
             if(i == imageToSaveInBDDArray.length - 1){
                 return true;
             }
-        }
-        alert("pictures uploaded");
+        } 
+    },
+    goToMissionOpinion: function(){
+        Backbone.history.navigate('#/missionOpinion', true);
     },
     cancelSelection: function(){
         var missionId = itemPicture.get('missionId');

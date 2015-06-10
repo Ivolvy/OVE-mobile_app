@@ -232,7 +232,7 @@ header{
 }
 
 /*Three genre of mission - light and dark*/
-.game-light{  
+.game-light{
     border-right: 6px solid #c9603e;
 }
 .fun-light{
@@ -357,13 +357,16 @@ header{
 
 #mission-explication .explication,
 #mission-explication .actual{
+    min-height:620px;
     height: 100%;
+    margin-top: 66px;
 }
 
 #mission-explication .explication .background{
     background: url("../img/backgrounds/bg_mission-explication-bleu.png") no-repeat center center;
     background-size: cover;
     text-align: center;
+    min-height:620px;
     height: 100%;
     position: absolute;
     width: 100%;
@@ -382,7 +385,7 @@ header{
 }
 
 #explicationView{
-    position: relative;    
+    position: relative;
 }
 
 #explicationView h1{
@@ -560,12 +563,46 @@ header{
 #gallery{
     padding-top: 15px;
     height: 260px;
+    z-index: -1;
+    position: relative;
 }
-#gallery img{
-    width: 150px;
+#gallery div{
+    /*width: 150px;*/
     height: 150px;
     margin: 4px;
+    position: relative;
 }
+#gallery div img{
+    width: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#gallery div .backColor{
+    background-color: #462B60;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    margin-left: 0;
+}
+
+/*----------------------------------------------*/
+/*----------------MISSION OPINION---------------*/
+/*----------------------------------------------*/
+
+#mission-opinion{
+    background: url("../img/backgrounds/bg_mission-empechement-avis-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+    
+}
+
+
 
 
 /*----------------------------------------------*/
