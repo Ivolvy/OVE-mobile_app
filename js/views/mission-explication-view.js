@@ -21,9 +21,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     actualTemplate: _.template($('#missionActual-template').html()),
 
+    menuTemplate: _.template($('#menu-template').html()),
+
     events: {
         'click #takePicture': 'takePicture',
-        'click .finish': 'toggleFinish'
+        'click .finish': 'toggleFinish',
+        'click .left-menu': 'toggleMenu'
     },
 
 
@@ -42,13 +45,16 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
         this.$el.html(this.template());
 
+        this.$page = this.$('.page');
+        this.$leftMenu = this.$('.left-menu');
         this.$navigation = this.$('.navigation');
         this.$explication = this.$('.explication');
         this.$actual = this.$('.actual');
         this.$map = this.$('#googleMap');
         this.$camera = this.$('.camera');
         this.$buttonsMap = this.$('#buttonsMap');
-
+        
+        
         app.missions = new Missions();
         app.missionsMaps = new MapsCollection();
         app.missionsPictures = new PicturesCollection();
@@ -125,12 +131,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         return this;
     },
 
-    render: function () {
+    onRender: function () {
 
         this.$navigation.html(this.statsTemplate());
         this.$explication.html(this.explicationTemplate());
         this.$actual.html(this.actualTemplate());
-
+        this.$page.append(this.menuTemplate());
 
         return this;
     },
@@ -239,6 +245,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     toggleFinish: function () {
         var missionId = itemMission.get('id');
         Backbone.history.navigate('#/imageSelection/'+missionId, true);
+    },
+
+    //display or not the panel menu
+    toggleMenu: function () {
+        this.$page.toggleClass('sml-open');
+        this.$leftMenu.toggleClass('open');
     }
 
 });

@@ -42,14 +42,6 @@ app.Router = Backbone.Router.extend({
 	missionPage: function () {
 		var view = new app.Views.MissionPageView();
 		app.getInstance().goto(view);
-		
-		/*put this fix if I can't resolve the bug when we reload the page
-		(the data doesn't display again)*/
-		 /*if (!this.pageView) {
-		 this.pageView = new app.Views.MissionPageView();
-		 }
-		 app.getInstance().goto(this.pageView);
-		 */
 	},
 	missionProposition: function(){
 		var view = new app.Views.MissionPropositionView();

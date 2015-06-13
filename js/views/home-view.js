@@ -1,10 +1,13 @@
+var that;
+
 // The initial view triggered on start (Home view)
 app.Views.Home = app.Extensions.View.extend({
 
     className: 'home',
     template: null,
 
-    initialize: function(options) {
+    initialize: function() {
+        that = this;
         this.animateIn = 'fadeIn';
         this.animateOut = 'iosFadeLeft';
 
@@ -27,8 +30,16 @@ app.Views.Home = app.Extensions.View.extend({
         if (this.$el.is(':empty')) {
             this.$el.html(this.template());
         }
-
+            
+        setTimeout(function(){
+            that.passToMissionPage();
+        },2000);
+        
         return this;
+    },
+    
+    passToMissionPage: function(){
+        Backbone.history.navigate('#/missionPage', true);
     }
 
 });

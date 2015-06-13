@@ -18,35 +18,41 @@
 </head>
 <body class="no-select">
 <script type="text/template" name="home">
-	<h1>Home</h1>
-	<p><a href="#/missionPage">Detail &rarr;</a></p>
+	<div id="home-background"></div>
 </script>
 
 <script type="text/template" id="mission-page" name="mission-page">
-	<header>
-		<div id="left-menu" class="hamburger"></div>
-		<h1 id="title">MISSIONS</h1>
-		<div id="ove-logo"></div>
-	</header>
+	<div class="page">
+		<header>
+			<div class="left-menu nav-icon3">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<h1 id="title">MISSIONS</h1>
+			<div id="ove-logo"></div>
+		</header>
 
-	<section class="page-body">
+		<section class="page-body">
 
-		<section class="navigation"></section>
+			<section class="navigation"></section>
 
-		<div id="sort">
-			<span>Afficher par :</span>
-			<select name="list" id="list">
-				<option>DATE</option>
-				<option>NOM</option>
-			</select>
-		</div>
-		<!--
-        <input id="new-mission" placeholder="Add mission" autofocus>
-        -->
-		<section id="main">
-			<ul id="mission-list"></ul>
+			<div id="sort">
+				<span>Afficher par :</span>
+				<select name="list" id="list">
+					<option>DATE</option>
+					<option>NOM</option>
+				</select>
+			</div>
+			<!--
+			<input id="new-mission" placeholder="Add mission" autofocus>
+			-->
+			<section id="main">
+				<ul id="mission-list"></ul>
+			</section>
 		</section>
-	</section>
+	</div>
 </script>
 
 <script type="text/template" id="item-template">
@@ -92,6 +98,12 @@
 
 <script type="text/template" id="mission-proposition" name="mission-proposition">
 	<header class="header">
+		<div class="left-menu nav-icon3">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
 		<h2 class="title">NOUVELLE MISSION</h2>
 		<h1 class="mission-title">ombres</h1>
 	</header>
@@ -104,25 +116,31 @@
 </script>
 
 <script type="text/template" id="mission-explication" name="mission-explication">
-	<header>
-		<h1>OMBRES</h1>
-	</header>
-
-	<section class="navigation"></section>
-
-	<div class="body" style="width:100%;min-height:620px;height:100%;margin-top:33px">
-		<div class="explication"></div>
-		<div class="actual camera hidden"></div>
-		<div id="googleMap"></div>
-		<div id="buttonsMap" class="hidden">
-			<div class="finish button">FINIR</div>
-			<div class="resume button">
-				<a href="#/filterDetails/mission">REPRENDRE</a>
+	<div class="page">
+		<header>
+			<div class="left-menu nav-icon3">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<h1>OMBRES</h1>
+		</header>
+	
+		<section class="navigation"></section>
+	
+		<div class="body" style="width:100%;min-height:620px;height:100%;margin-top:33px">
+			<div class="explication"></div>
+			<div class="actual camera hidden"></div>
+			<div id="googleMap"></div>
+			<div id="buttonsMap" class="hidden">
+				<div class="finish button">FINIR</div>
+				<div class="resume button">
+					<a href="#/filterDetails/mission">REPRENDRE</a>
+				</div>
 			</div>
 		</div>
 	</div>
-
-
 </script>
 
 <script type="text/template" id="missionExplication-template">
@@ -163,29 +181,91 @@
 
 <script type="text/template" id="image-selection-template" name="image-selection-template">
 	<div id="image-selection">
-		<div class="top"></div>
-		<div class="bottom"></div>
-		<header>
-			<h1>OMBRES</h1>
-		</header>
-		<div class="title">
-			<p>SÉLECTIONNE LES PHOTOS QUE TU SOUHAITES PARTAGER</p>
+		<div class="page">
+			<div class="top"></div>
+			<div class="bottom"></div>
+			<header>
+				<div class="left-menu nav-icon3">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<h1>OMBRES</h1>
+			</header>
+			<div class="title">
+				<p>SÉLECTIONNE LES PHOTOS QUE TU SOUHAITES PARTAGER</p>
+			</div>
+
+			<div id="gallery"></div>
+
+			<div class="buttonsSelection">
+				<div class="send button">ENVOYER</div>
+				<div class="cancel button">ANNULER</div>
+			</div>
 		</div>
-
-		<div id="gallery"></div>
-
-		<div id="buttonsSelection">
-			<div class="send button">ENVOYER</div>
-			<div class="cancel button">ANNULER</div>
-		</div>
-
 	</div>
 </script>
 
 <script type="text/template" id="mission-opinion-template" name="mission-opinion-template">
-	<div id="mission-opinion">
-		
-
+	<div class="page">
+		<div id="mission-opinion">
+			<header>
+				<div class="left-menu nav-icon3">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<h1>OMBRES</h1>
+			</header>
+			<div class="title">
+				<p>MISSION COMPLÉTÉE</p>
+			</div>
+	
+			<img class="completion" src="img/mission-avis-ombre-completion.png">
+	
+			<div class="description">
+				<p>
+					Es-tu du genre à deviner à quel objet correspond une ombre ?
+				</p>
+			</div>
+	
+			<div class="opinionText">TON AVIS</div>
+			
+			<div id="opinionBar">
+				<!--it's crap, but no time-->
+				<div id="contentBar">
+					<div id="1" class="pos">
+						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+					</div>
+					<div id="2" class="pos">
+						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+					</div>
+					<div id="3" class="pos">
+						<img src="img/mission-opinion/mission-avis-selectCircle.png">
+					</div>
+					<div id="4" class="pos">
+						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+					</div>
+					<div id="5" class="pos">
+						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+					</div>
+				</div>
+					<img class="barImg" src="img/mission-opinion/mission-avis-selectbar-bleu.png">
+				
+				<p class="label1" hidden>je n'ai pas aimé</p>
+				<p class="label2 hidden">franchement... bof.</p>
+				<p class="label3">passable</p>
+				<p class="label4 hidden">plutôt bien</p>
+				<p class="label5 hidden">génial !</p>
+			</div>
+			
+			<div class="buttonsSelection">
+				<div class="valid button">VALIDER</div>
+				<div class="pass button">PASSER</div>
+			</div>
+		</div>
 	</div>
 </script>
 
@@ -193,9 +273,8 @@
 <script type="text/template" id="menu-template" name="menu-template">
 	<nav id="panel-menu" class="slide-menu-left">
 		<ul>
-			<li><a href="#/missionPage">MISSION</a></li>
 			<li>PROFIL</li>
-			<li>AIDE</li>
+			<li><a href="#/missionPage">MISSIONS</a></li>
 			<li>À PROPOS</li>
 			<li>PARAMÈTRES</li>
 		</ul>

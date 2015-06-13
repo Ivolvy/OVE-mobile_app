@@ -45,8 +45,8 @@ var cameraApp = {
             if(imageSelection.savePicturesInDatabase(imageToSendArray)){
                 if(i == imageToSendArray.length - 1){
                     imageToSendArray.splice(0,imageToSendArray.length); //empty the array
-                    imageSelection.goToMissionOpinion();
                 }
+                //imageSelection.goToMissionOpinion();
             }
         }
 
@@ -66,7 +66,7 @@ var cameraApp = {
             ft.upload(imageToSendArray[i], encodeURI("http://michaelgenty.com/upload.php"), win(i), fail, options);
         }
         alert("pictures uploaded");//TODO - completion bar or popup status
-        
+        imageSelection.goToMissionOpinion();
     }
 
 

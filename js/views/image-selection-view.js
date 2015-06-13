@@ -7,9 +7,12 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
 
     id: 'image-selection-template',
 
+    menuTemplate: _.template($('#menu-template').html()),
+
     events: {
         'click .send': 'sendPicsToWeb',
-        'click .cancel': 'cancelSelection'
+        'click .cancel': 'cancelSelection',
+        'click .left-menu': 'toggleMenu'
     },
 
     initialize: function (missionId) {
@@ -21,6 +24,8 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         this.template = _.template($('script[name=image-selection-template]').html());
         this.$el.html(this.template());
 
+        this.$page = this.$('.page');
+        this.$leftMenu = this.$('.left-menu');
         app.missionsPictures = new PicturesCollection();
 
         app.missionsPictures.fetch({
@@ -42,8 +47,8 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         // return this;
     },
 
-    render: function () {
-        // return this;
+    onRender: function () {
+        this.$page.append(this.menuTemplate());
     },
 
     addImagesOnGallery: function(){
@@ -99,6 +104,13 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
     cancelSelection: function(){
         var missionId = itemPicture.get('missionId');
         Backbone.history.navigate('#/missionExplication/'+missionId, true);
+    },
+    
+    //display or not the panel menu
+    toggleMenu: function () {
+        this.$page.toggleClass('sml-open');
+        this.$leftMenu.toggleClass('open');
     }
+    
 
 });

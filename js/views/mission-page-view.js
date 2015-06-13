@@ -1,7 +1,3 @@
-/*global Backbone*/
-//var app = app || {};
-
-
 // The Application
 
 // Our overall **MissionPageView** is the top-level piece of UI.
@@ -18,7 +14,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// Delegated events for creating new items, and clearing completed ones.
 	events: {
 		'keypress #new-mission': 'createOnEnter',
-		'click #left-menu': 'toggleMenu'
+		'click .left-menu': 'toggleMenu'
 	},
 
 	// At initialization we bind to the relevant events on the `Missions`
@@ -32,12 +28,15 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		this.$el.html(this.template());
 
+		this.$page = this.$('.page');
+
+		this.$leftMenu = this.$('.left-menu');
+		
 		this.$input = this.$('#new-mission');
 		this.$navigation = this.$('.navigation');
 		this.$main = this.$('#main');
 		this.$list = this.$('#mission-list');
 		this.$pageBody = this.$('.page-body');
-		this.$menu = this.$('#left-menu');
 
 		app.missions = new Missions();
 		app.MissionFilter = 'actuality';
@@ -130,16 +129,10 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	},
 
 	//display or not the panel menu
-	toggleMenu: function () {
-		if(this.$pageBody.hasClass('sml-open')){
-			this.$pageBody.removeClass('sml-open');
-			this.$menu.addClass('hamburger');
-			this.$menu.removeClass('close');
-		}
-		else {
-			this.$pageBody.addClass('sml-open');
-			this.$menu.removeClass('hamburger');
-			this.$menu.addClass('close');
-		}
+	toggleMenu: function (e) {
+		this.$page.toggleClass('sml-open');
+		this.$leftMenu.toggleClass('open');
 	}
+
+	
 });
