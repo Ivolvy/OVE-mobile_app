@@ -20,7 +20,7 @@ app.Views.MissionOpinionView = app.Extensions.View.extend({
         this.template = _.template($('script[name=mission-opinion-template]').html());
         this.$el.html(this.template());
 
-        this.$page = this.$('.page');
+        this.$page = this.$('.pageContent');
         this.$leftMenu = this.$('.left-menu');
 
         // return this;

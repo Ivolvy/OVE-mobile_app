@@ -5,10 +5,12 @@ var destinationLng;
 var itemMap;
 var itemPicture;
 var itemMission;
-var imageNameArray = new Array;
 var markerArray = new Array;
 var actualPics;
 var totalPics;
+var indexNavPage = 1; //the start page id
+var route;
+var that;
 
 
 app.Views.MissionExplicationView = app.Extensions.View.extend({
@@ -22,17 +24,16 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     actualTemplate: _.template($('#missionActual-template').html()),
 
     menuTemplate: _.template($('#menu-template').html()),
-
+        
     events: {
         'click #takePicture': 'takePicture',
         'click .finish': 'toggleFinish',
         'click .left-menu': 'toggleMenu'
     },
 
-
     initialize: function (missionId) {
-        var that = this;
-
+        that = this;
+        
         this.animateIn = 'iosSlideInRight';
         this.animateOut = 'slideOutRight';
 
@@ -45,7 +46,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
         this.$el.html(this.template());
 
-        this.$page = this.$('.page');
+        this.$page = this.$('.pageContent');
         this.$leftMenu = this.$('.left-menu');
         this.$navigation = this.$('.navigation');
         this.$explication = this.$('.explication');
@@ -53,7 +54,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         this.$map = this.$('#googleMap');
         this.$camera = this.$('.camera');
         this.$buttonsMap = this.$('#buttonsMap');
-        
+
+        //used to set the indexNavPage
+        this.initClickMenu();
+        //add event on swipe
+        this.initSwipeEvent();
+
         
         app.missions = new Missions();
         app.missionsMaps = new MapsCollection();
@@ -123,7 +129,6 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                 var pictureId = pictureCollection[0].id;
                 itemPicture = app.missionsPictures.get(pictureId);
                 //alert(itemMap.get('origin'));
-
             }
         });
 
@@ -133,10 +138,15 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     onRender: function () {
 
-        this.$navigation.html(this.statsTemplate());
-        this.$explication.html(this.explicationTemplate());
-        this.$actual.html(this.actualTemplate());
-        this.$page.append(this.menuTemplate());
+            this.$navigation.html(this.statsTemplate());
+            this.$explication.html(this.explicationTemplate());
+            this.$actual.html(this.actualTemplate());
+            this.$page.append(this.menuTemplate());
+        
+            //used to set the indexNavPage
+            this.initClickMenu();
+            //add event on swipe
+            this.initSwipeEvent();
 
         return this;
     },
@@ -251,6 +261,35 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     toggleMenu: function () {
         this.$page.toggleClass('sml-open');
         this.$leftMenu.toggleClass('open');
-    }
+    },
 
+    initClickMenu: function(){
+        this.$('.1').click(function() {
+            indexNavPage = 1;
+        });
+        this.$('.2').click(function() {
+            indexNavPage = 2;
+        });
+        this.$('.3').click(function() {
+            indexNavPage = 3;
+        });
+    },
+    initSwipeEvent: function(){
+        this.$page.swipe({
+            swipeLeft:function(ev){
+                if(indexNavPage < 3) {
+                    indexNavPage+=1;
+                    route = $(".filters ." + indexNavPage).attr('href');
+                    Backbone.history.navigate(route, true);
+                }
+            },
+            swipeRight:function(ev){
+                if(indexNavPage > 1) {
+                    indexNavPage-=1;
+                    route = $(".filters ." + indexNavPage).attr('href');
+                    Backbone.history.navigate(route, true);
+                }
+            }
+        });
+    }
 });

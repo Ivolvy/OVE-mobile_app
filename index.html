@@ -22,7 +22,7 @@
 </script>
 
 <script type="text/template" id="mission-page" name="mission-page">
-	<div class="page">
+	<div class="pageContent">
 		<header>
 			<div class="left-menu nav-icon3">
 				<span></span>
@@ -71,13 +71,13 @@
 <script type="text/template" id="mission-nav-list">
 	<ul class="filters">
 		<li>
-			<a href="#/filterMissions/completed">PASSÉES</a>
+			<a class="1" href="#/filterMissions/completed">PASSÉES</a>
 		</li>
 		<li>
-			<a class="selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
+			<a class="2 selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
 		</li>
 		<li>
-			<a href="#/filterMissions/active">EN COURS</a>
+			<a class="3" href="#/filterMissions/active">EN COURS</a>
 		</li>
 	</ul>
 </script>
@@ -85,13 +85,13 @@
 <script type="text/template" id="explication-nav">
 	<ul class="filters">
 		<li>
-			<a class="selected" href="#/filterDetails/explication">EXPLICATION</a>
+			<a class="1 selected" href="#/filterDetails/explication">EXPLICATION</a>
 		</li>
 		<li>
-			<a href="#/filterDetails/mission">MISSION</a>
+			<a class="2" href="#/filterDetails/mission">MISSION</a>
 		</li>
 		<li>
-			<a href="#/filterDetails/terminate">TERMINER</a>
+			<a class="3" href="#/filterDetails/terminate">TERMINER</a>
 		</li>
 	</ul>
 </script>
@@ -116,20 +116,18 @@
 </script>
 
 <script type="text/template" id="mission-explication" name="mission-explication">
-	<div class="page">
-		<header>
-			<div class="left-menu nav-icon3">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-			<h1>OMBRES</h1>
-		</header>
-	
-		<section class="navigation"></section>
-	
-		<div class="body" style="width:100%;min-height:620px;height:100%;margin-top:33px">
+		<div class="pageContent" style="width:100%;min-height:620px;height:100%">
+			<header>
+				<div class="left-menu nav-icon3">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<h1>OMBRES</h1>
+			</header>
+
+			<section class="navigation"></section>
 			<div class="explication"></div>
 			<div class="actual camera hidden"></div>
 			<div id="googleMap"></div>
@@ -140,7 +138,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 </script>
 
 <script type="text/template" id="missionExplication-template">
@@ -181,7 +179,7 @@
 
 <script type="text/template" id="image-selection-template" name="image-selection-template">
 	<div id="image-selection">
-		<div class="page">
+		<div class="pageContent">
 			<div class="top"></div>
 			<div class="bottom"></div>
 			<header>
@@ -208,7 +206,7 @@
 </script>
 
 <script type="text/template" id="mission-opinion-template" name="mission-opinion-template">
-	<div class="page">
+	<div class="pageContent">
 		<div id="mission-opinion">
 			<header>
 				<div class="left-menu nav-icon3">
@@ -281,6 +279,13 @@
 	</nav>
 </script>
 
+
+<script>
+
+</script>
+
+
+
 <script src="js/vendor/json2-min.js"></script>
 <script src="js/vendor/jquery-2.1.4.js"></script>
 <script src="js/vendor/underscore-min.js"></script>
@@ -289,6 +294,7 @@
 <script src="js/vendor/handlebars-v3.0.3.js"></script>
 
 <script src="js/vendor/slick.min.js"></script>
+<script src="js/vendor/jquery.touchSwipe.min.js"></script>
 
 <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 <!-- backbonfire used to link backbone and firebase-->

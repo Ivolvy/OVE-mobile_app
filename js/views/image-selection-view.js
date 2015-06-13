@@ -24,7 +24,7 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         this.template = _.template($('script[name=image-selection-template]').html());
         this.$el.html(this.template());
 
-        this.$page = this.$('.page');
+        this.$page = this.$('.pageContent');
         this.$leftMenu = this.$('.left-menu');
         app.missionsPictures = new PicturesCollection();
 

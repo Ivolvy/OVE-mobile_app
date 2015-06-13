@@ -1,3 +1,5 @@
+var indexNavPage = 2;
+var route;
 // The Application
 
 // Our overall **MissionPageView** is the top-level piece of UI.
@@ -21,6 +23,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// collection, when items are added or changed. Kick things off by
 	// loading any preexisting missions that might be saved in *localStorage*.
 	initialize: function () {
+		
 		this.animateIn = 'iosSlideInRight';
 		this.animateOut = 'slideOutRight';
 
@@ -28,7 +31,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		this.$el.html(this.template());
 
-		this.$page = this.$('.page');
+		this.$page = this.$('.pageContent');
 
 		this.$leftMenu = this.$('.left-menu');
 		
@@ -37,7 +40,8 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.$main = this.$('#main');
 		this.$list = this.$('#mission-list');
 		this.$pageBody = this.$('.page-body');
-
+		
+		
 		app.missions = new Missions();
 		app.MissionFilter = 'actuality';
 
@@ -55,7 +59,6 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		// event is triggered at the end of the fetch.
 		app.missions.fetch({});
 
-
 		return this;
 	},
 
@@ -65,27 +68,24 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 		var completed =app.missions.completed().length;
 		var remaining =app.missions.remaining().length;
+		
+		this.$pageBody.append(this.menuTemplate());
+		
+		this.$navigation.html(this.statsTemplate({
+			completed: completed,
+			remaining: remaining
+		}));
+	
+		this.$('.filters li a')
+			.removeClass('selected')
+			.filter('[href="#/filterMissions/' + (app.MissionFilter || '') + '"]')
+			.addClass('selected');
 
-		if (app.missions.length) {
-			this.$main.show();
-			this.$navigation.show();
-
-			this.$navigation.html(this.statsTemplate({
-				completed: completed,
-				remaining: remaining
-			}));
-
-			this.$pageBody.append(this.menuTemplate());
-
-			this.$('.filters li a')
-				.removeClass('selected')
-				.filter('[href="#/filterMissions/' + (app.MissionFilter || '') + '"]')
-				.addClass('selected');
-		} else {
-			this.$main.hide();
-		}
-
-
+		//used to set the indexNavPage
+		this.initClickMenu();
+		//add event on swipe
+		this.initSwipeEvent();
+		
 		return this;
 	},
 
@@ -132,7 +132,35 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	toggleMenu: function (e) {
 		this.$page.toggleClass('sml-open');
 		this.$leftMenu.toggleClass('open');
+	},
+	initClickMenu: function(){
+		this.$('.1').click(function() {
+			indexNavPage = 1;
+		});
+		this.$('.2').click(function() {
+			indexNavPage = 2;
+		});
+		this.$('.3').click(function() {
+			indexNavPage = 3;
+		});
+	},
+	initSwipeEvent: function(){
+		this.$page.swipe({
+			swipeLeft:function(ev){
+				if(indexNavPage < 3) {
+					indexNavPage+=1;
+					route = $(".filters ." + indexNavPage).attr('href');
+					Backbone.history.navigate(route, true);
+				}
+			},
+			swipeRight:function(ev){
+				if(indexNavPage > 1) {
+					indexNavPage-=1;
+					route = $(".filters ." + indexNavPage).attr('href');
+					Backbone.history.navigate(route, true);
+				}
+			}
+		});
 	}
-
 	
 });

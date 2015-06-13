@@ -14,6 +14,10 @@ var Missions = Backbone.Firebase.Collection.extend({
 	completed: function () {
 		return this.where({completed: true});
 	},
+	render: function(){
+
+		Firebase.getDefaultConfig().setPersistenceEnabled(true);
+	},
 
 	// Filter down the list to only mission items that are still not finished.
 	remaining: function () {
