@@ -58,6 +58,7 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
 
         //mettre fileArray dans app.js pour récupérer le liens des images partout,
         //avant de les envoyer ensuite sur le serveur
+        //les images sont récupérées sur le téléphone
         for(var i=0;i < fileArray.length;i++){
             this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' src="img/picto_photo_select.png"></div></div>');
             //imageUrl = 'http://michaelgenty.com/test/1433883728454.jpg';
@@ -79,15 +80,18 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         });
     },
 
+    //send the selected pics to the server
     sendPicsToWeb: function(){
         for(var i=0;i < tempImagesArray.length;i++) {
             if(tempImagesArray[i]!= "0"){
                 imageToSendArray.push(tempImagesArray[i]);
             }
         }
+        //upload the selected pictures on the server
         cameraApp.uploadPicture(this, imageToSendArray);
     },
 
+    //saves the selected pictures in the database
     savePicturesInDatabase: function(imageToSaveInBDDArray){
         for(var i=0;i < fileArray.length;i++){
             imageNameArray.push(fileArray[i].substr(imageToSaveInBDDArray[i].lastIndexOf('/') + 1));

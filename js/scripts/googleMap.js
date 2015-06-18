@@ -1,6 +1,6 @@
 var map;
 var direction;
-var markerArray = new Array;
+var markerArrayOnMap = new Array;
 
 function initialize() {
     var previousPosition = null;
@@ -8,7 +8,7 @@ function initialize() {
     var origin;
     var destination;
     
-    
+
     var styles = [
         {
             "featureType": "road",
@@ -191,43 +191,64 @@ function traceItinerary(origin, destination){
 }
 
 //place a marker on the map
-function placePictureMarker(markerLatLngPosition, idMarker){
+function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
     //center the map on the new coordinates
     //map.panTo(new google.maps.LatLng(lat, lng));
 
     //place a marker to the exact position
-    markerArray[idMarker] = new google.maps.Marker({
-        position:  new google.maps.LatLng(markerArray[idMarker].A, markerArray[idMarker].F),
+    markerArrayOnMap[idMarker] = new google.maps.Marker({
+        position:  new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F),
         map: map
     });
 }
 
-//set an info window on the selected marker
-function setInfoWindowOnMarker(idMarker){
+//set an info window on the selected marker - for existing pictures on server
+function setInfoWindowOnMarker(index) {
     //the content displayed in the marker
-    var contentString = "";
-        
-        /*'<div id="infoWindow" style="width:150px">' +
-        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '<div><img style="width:150px" src="img/backgrounds/bg_img_dog_blurr.jpg"/></div>'+
-        '</div>';*/
-    //TODO - improve
-    for(var i=0;i < fileArray.length;i++){
-        contentString.append('<img style="width:150px" src='+fileArray[i]+'>');
+    var contentString = '<div id="infoWindow" style="width:150px">';
+
+    for (var i = 0; i < picsArray[index].length; i++) {
+        contentString += '<div><img style="width:150px" src=http://michaelgenty.com/test/' + picsArray[index][i] + '></div>';
     }
+    contentString += '</div>';
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
         size: new google.maps.Size(1000, 1000)
     });
 
-    google.maps.event.addListener(markerArray[idMarker], 'click', function(){
-        infowindow.open(map,markerArray[idMarker]);
+    google.maps.event.addListener(markerArrayOnMap[index], 'click', function () {
+        infowindow.open(map, markerArrayOnMap[index]);
+    });
+
+    //display the carousel when infowindow is created
+    google.maps.event.addListener(infowindow, 'domready', function () {
+        $('#infoWindow').slick(); //slick is the carousel
+    });
+
+}
+
+//set an new info window on the selected marker - for inexistent pictures on server
+function setNewInfoWindowOnMarker(index){
+    //the content displayed in the marker
+    var contentString = '<div id="infoWindow" style="width:150px">';
+
+    for(var i=0;i < fileArray[index].length;i++){
+        contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
+    }
+    contentString+='</div>';
+
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        size: new google.maps.Size(1000, 1000)
+    });
+
+    google.maps.event.addListener(markerArrayOnMap[index], 'click', function(){
+        infowindow.open(map,markerArrayOnMap[index]);
     });
 
     //display the carousel when infowindow is created
     google.maps.event.addListener(infowindow, 'domready', function(){
-        $('#infoWindow').slick();
+        $('#infoWindow').slick(); //slick is the carousel
     });
 }

@@ -1,4 +1,4 @@
-var indexNavPage = 2;
+var indexNavPage;
 var route;
 // The Application
 
@@ -81,6 +81,8 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			.filter('[href="#/filterMissions/' + (app.MissionFilter || '') + '"]')
 			.addClass('selected');
 
+		indexNavPage = 1;
+		
 		//used to set the indexNavPage
 		this.initClickMenu();
 		//add event on swipe

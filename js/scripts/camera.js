@@ -30,15 +30,17 @@ var cameraApp = {
         function onSuccess(imageURI) {
             // var image = document.getElementById('imgH');
             var fileURL = imageURI;
-            fileArray.push(fileURL); //add image path in the array
-            missionExplication.getPicturePosition();
+            var actualMarker = markerArray.length;
+            fileArray[actualMarker] = new Array();
+            fileArray[actualMarker].push(fileURL); //add image path in the array
+            missionExplication.updateNbOfPics();
         }
         function onFail(message) {
             // alert('Failed because: ' + message);
         }
     },
 
-    //upload a picture on the server
+    //upload a picture on the server - when we selected her
     uploadPicture: function(imageSelection, imageToSendArray){
 
         function win(i){
