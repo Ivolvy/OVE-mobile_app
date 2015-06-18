@@ -59,13 +59,22 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         //mettre fileArray dans app.js pour récupérer le liens des images partout,
         //avant de les envoyer ensuite sur le serveur
         //les images sont récupérées sur le téléphone
-        for(var i=0;i < fileArray.length;i++){
-            this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' src="img/picto_photo_select.png"></div></div>');
-            //imageUrl = 'http://michaelgenty.com/test/1433883728454.jpg';
-            imageUrl = fileArray[i];
-            this.$('.picture'+i+'').css("background", "url('"+imageUrl+"') 50% 50% no-repeat");
-            this.$('.picture'+i+'').css("background-size", "cover");
-            this.$('.picture'+i+'').attr("srcImg", imageUrl);
+alert("addimageongallery");
+alert(fileArray[1]);
+alert(fileArray[1].length);
+        for(var index=0;index < (markerArray.length);index++){
+
+            if(fileArray[index]){
+                for(var i=0;i < fileArray[index].length;i++){
+                alert("hop");
+                    this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' src="img/picto_photo_select.png"></div></div>');
+                    //imageUrl = 'http://michaelgenty.com/test/1433883728454.jpg';
+                    imageUrl = fileArray[index][i];
+                    this.$('.picture'+i+'').css("background", "url('"+imageUrl+"') 50% 50% no-repeat");
+                    this.$('.picture'+i+'').css("background-size", "cover");
+                    this.$('.picture'+i+'').attr("srcImg", imageUrl);
+                }
+            }
         }
         //on click on an image
         $('#gallery div').click(function() {
@@ -93,8 +102,8 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
 
     //saves the selected pictures in the database
     savePicturesInDatabase: function(imageToSaveInBDDArray){
-        for(var i=0;i < fileArray.length;i++){
-            imageNameArray.push(fileArray[i].substr(imageToSaveInBDDArray[i].lastIndexOf('/') + 1));
+        for(var i=0;i < imageToSaveInBDDArray.length;i++){
+            imageNameArray.push(imageToSaveInBDDArray[i].substr(imageToSaveInBDDArray[i].lastIndexOf('/') + 1));
             itemPicture.save({'picsArray': imageNameArray});
 
             if(i == imageToSaveInBDDArray.length - 1){

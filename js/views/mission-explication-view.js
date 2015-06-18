@@ -221,8 +221,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
 
     takePicture: function(){
         if(actualPics < totalPics) {
-            that.getPicturePosition();
             cameraApp.takePicture(this);
+            actualPics += 1;
         }
         
     },
@@ -235,25 +235,51 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     placeAndSaveMarker: function(position){
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
-
+alert("00");
         var position = new google.maps.LatLng(lat, lng);
         var prevMarker = markerArray[markerArray.length-1];
 
-        previousPosition =new google.maps.LatLng(prevMarker.A, prevMarker.F);
+        previousPosition = new google.maps.LatLng(prevMarker.A, prevMarker.F);
 
         //test if the picture's position is 50 meters further
         //used to store the pictures in the same marker if the are close
         if(previousPosition && position) {
+        alert("01");
             var distance = google.maps.geometry.spherical.computeDistanceBetween(previousPosition, position);
 
             if(distance > 50) {
+                 alert("position supérieur à 0m");
+
+                var newMarker = markerArray.length;
+               alert("newmarker: "+newMarker)
+               fileArray[newMarker] = new Array();
+               fileArray[newMarker].push(fileURL); //add image path in the array
+
+
                 markerArray.push(position);
+                placePictureMarker(position, (markerArray.length - 1), this);
                 //save insert the new values in database
                 itemMap.save({'markerArray': markerArray});
+
+                var actualMarker = markerArray.length - 1;
+                alert("actualmarker: "+actualMarker);
+                that.setNewInfoWindow(actualMarker);
             }
             else{
-                alert("position inférieure à 0m");
+              alert("position inférieure à 0m");
+
+               var actualMarker = markerArray.length - 1;
+                alert("actualMarker: "+actualMarker)
+                if(!fileArray[actualMarker]){
+                    fileArray[actualMarker] = new Array();
+                }
+                fileArray[actualMarker].push(fileURL); //add image path in the array
+
+
                 //garder le même id de marker
+
+                alert("actualmarker: "+actualMarker);
+                that.setNewInfoWindow(actualMarker);
             }
         }
 
@@ -269,6 +295,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     },
     //set new info window in a marker on the map - the pictures are NOT present in database
     setNewInfoWindow: function(index){
+    alert("setNewinfoWindow");
+    alert("fileArray: "+fileArray[index])
         if(fileArray[index]) { //if the pics array with index exists
             if (fileArray[index].length != 0) {
                 setNewInfoWindowOnMarker(index);//the id is the place in markerArray
@@ -277,11 +305,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     },
 
     updateNbOfPics: function(){
-        actualPics += 1;
         itemMission.save({'actualPics': actualPics});
         this.$('#totalPicture').html(actualPics+'/'+totalPics);
-        var actualMarker = markerArray.length;
-        this.setNewInfoWindow(actualMarker);
     },
 
     // Generate the attributes for a new Mission map itemMap.

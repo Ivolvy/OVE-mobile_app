@@ -1,4 +1,4 @@
-var fileArray = new Array; //store the path to all taken images
+var fileURL;
 
 var cameraApp = {
 
@@ -29,11 +29,13 @@ var cameraApp = {
         });
         function onSuccess(imageURI) {
             // var image = document.getElementById('imgH');
-            var fileURL = imageURI;
-            var actualMarker = markerArray.length;
-            fileArray[actualMarker] = new Array();
-            fileArray[actualMarker].push(fileURL); //add image path in the array
+            fileURL = imageURI;
+        /*    var newMarker = markerArray.length;
+            alert("newmarker: "+newMarker)
+            fileArray[newMarker] = new Array();
+            fileArray[newMarker].push(fileURL); //add image path in the array*/
             missionExplication.updateNbOfPics();
+            missionExplication.getPicturePosition();
         }
         function onFail(message) {
             // alert('Failed because: ' + message);

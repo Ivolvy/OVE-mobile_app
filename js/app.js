@@ -1,5 +1,5 @@
-
 var ENTER_KEY = 13;
+var fileArray;
 
 window.app = {
     Views: {},
@@ -9,9 +9,11 @@ window.app = {
     Model: {},
 
     init: function () {
+        fileArray = new Array();
         // get an instance of the root App view
         this.getInstance();
         new app.Router();
+
         // start backbone hash change listener
         Backbone.history.start();
     },

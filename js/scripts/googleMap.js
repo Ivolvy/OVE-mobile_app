@@ -194,7 +194,9 @@ function traceItinerary(origin, destination){
 function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
     //center the map on the new coordinates
     //map.panTo(new google.maps.LatLng(lat, lng));
-
+        alert("placepicturemarker");
+        alert("idmarker: "+idMarker);
+        alert("markeronmap: "+markerArrayOnMap[idMarker]);
     //place a marker to the exact position
     markerArrayOnMap[idMarker] = new google.maps.Marker({
         position:  new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F),
@@ -205,7 +207,7 @@ function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
 //set an info window on the selected marker - for existing pictures on server
 function setInfoWindowOnMarker(index) {
     //the content displayed in the marker
-    var contentString = '<div id="infoWindow" style="width:150px">';
+    var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
 
     for (var i = 0; i < picsArray[index].length; i++) {
         contentString += '<div><img style="width:150px" src=http://michaelgenty.com/test/' + picsArray[index][i] + '></div>';
@@ -223,7 +225,7 @@ function setInfoWindowOnMarker(index) {
 
     //display the carousel when infowindow is created
     google.maps.event.addListener(infowindow, 'domready', function () {
-        $('#infoWindow').slick(); //slick is the carousel
+        $('.infoWindow_'+index).slick(); //slick is the carousel
     });
 
 }
@@ -231,24 +233,29 @@ function setInfoWindowOnMarker(index) {
 //set an new info window on the selected marker - for inexistent pictures on server
 function setNewInfoWindowOnMarker(index){
     //the content displayed in the marker
-    var contentString = '<div id="infoWindow" style="width:150px">';
+    alert("newinfo and index: "+index);
 
+    $('.infoWindow_'+index).remove();//delete the previous infowindow
+    var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
+        alert("filearray value: "+fileArray[index][0]);
     for(var i=0;i < fileArray[index].length;i++){
         contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
     }
+    alert("pute1");
     contentString+='</div>';
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
         size: new google.maps.Size(1000, 1000)
     });
-
+    alert("markerarrayonmap: "+markerArrayOnMap[index]);
     google.maps.event.addListener(markerArrayOnMap[index], 'click', function(){
         infowindow.open(map,markerArrayOnMap[index]);
     });
-
+    alert("e");
     //display the carousel when infowindow is created
     google.maps.event.addListener(infowindow, 'domready', function(){
-        $('#infoWindow').slick(); //slick is the carousel
+        $('.infoWindow_'+index).slick(); //slick is the carousel
     });
+     alert("pute2");
 }
