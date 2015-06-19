@@ -1,7 +1,6 @@
 var itemPicture;
-var imageNameArray = new Array;
-var tempImagesArray = new Array;
-var imageToSendArray = new Array;
+var imageNameArray = [];
+var tempImagesArray = [];
 
 app.Views.ImageSelectionView = app.Extensions.View.extend({
 
@@ -54,20 +53,16 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
     addImagesOnGallery: function(){
         this.$gallery = this.$('#gallery');
         var imageUrl;
-        var index;
+        var picsId;
+        var markerId;
+        var srcImg;
 
-        //mettre fileArray dans app.js pour récupérer le liens des images partout,
-        //avant de les envoyer ensuite sur le serveur
-        //les images sont récupérées sur le téléphone
-alert("addimageongallery");
-alert(fileArray[1]);
-alert(fileArray[1].length);
+        //before send the pictures on the server, they are retrieved from the phone
+        //display all the marker's image on the screen of imageSelection
         for(var index=0;index < (markerArray.length);index++){
-
             if(fileArray[index]){
                 for(var i=0;i < fileArray[index].length;i++){
-                alert("hop");
-                    this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' src="img/picto_photo_select.png"></div></div>');
+                    this.$gallery.append('<div class=picture'+i+'><div class="backColor hidden"><img id='+i+' markerId='+index+' src="img/picto_photo_select.png"></div></div>');
                     //imageUrl = 'http://michaelgenty.com/test/1433883728454.jpg';
                     imageUrl = fileArray[index][i];
                     this.$('.picture'+i+'').css("background", "url('"+imageUrl+"') 50% 50% no-repeat");
@@ -76,40 +71,71 @@ alert(fileArray[1].length);
                 }
             }
         }
+        //init the slick slide gallery
+        this.$gallery.slick({
+            vertical: true,
+            verticalSwiping: true,
+            arrows: false,
+            slidesToShow: 2,
+            slidesToScroll: 1
+        });
+        
         //on click on an image
-        $('#gallery div').click(function() {
+        $('.slick-track div').click(function() {
             $(this).find('div').toggleClass('hidden');
-            index = $(this).find('img').attr('id');
+            srcImg = $(this).attr('srcImg');
+            markerId = $(this).find('img').attr('markerId');
+            picsId = $(this).find('img').attr('id');
+
+            if(!tempImagesArray[markerId]){
+                tempImagesArray[markerId] = [];
+            }
+
+            //if the picture is not seleted
             if($(this).find('div').hasClass('hidden')){
-                tempImagesArray[index] = "0";
+                tempImagesArray[markerId][picsId] = "0";
             }
             else {
-                tempImagesArray[index] = $(this).attr('srcImg'); //save her url
+                //if the picture is selected, save her url in the array
+                tempImagesArray[markerId][picsId] = srcImg;
             }
         });
     },
 
     //send the selected pics to the server
     sendPicsToWeb: function(){
-        for(var i=0;i < tempImagesArray.length;i++) {
-            if(tempImagesArray[i]!= "0"){
-                imageToSendArray.push(tempImagesArray[i]);
-            }
-        }
         //upload the selected pictures on the server
-        cameraApp.uploadPicture(this, imageToSendArray);
+        cameraApp.uploadPicture(this, tempImagesArray);
     },
 
-    //saves the selected pictures in the database
+    //saves the selected pictures from imageSelection in database
     savePicturesInDatabase: function(imageToSaveInBDDArray){
-        for(var i=0;i < imageToSaveInBDDArray.length;i++){
-            imageNameArray.push(imageToSaveInBDDArray[i].substr(imageToSaveInBDDArray[i].lastIndexOf('/') + 1));
-            itemPicture.save({'picsArray': imageNameArray});
+        var length = imageToSaveInBDDArray.length;
+        for(var index=0;index < length;index++) {
+             if(imageToSaveInBDDArray[index]){
+                var subLength = imageToSaveInBDDArray[index].length;
+                for (var i = 0; i < subLength; i++) {
+                    if(imageToSaveInBDDArray[index][i] != "0"){ //if there is no pictures
+                        var imageFile = imageToSaveInBDDArray[index][i];
+                        var fileName = imageFile.substr(imageFile.lastIndexOf('/') + 1);
 
-            if(i == imageToSaveInBDDArray.length - 1){
+                        if(!imageNameArray[index]){
+                            imageNameArray[index] = [];
+                        }
+
+                        imageNameArray[index][i] = fileName;
+                    }
+                }
+             }
+
+          if(index == (length - 1)){
+                //save the array of all marker's pictures
+                itemPicture.save({'picsArray': imageNameArray});
                 return true;
-            }
-        } 
+          }
+      }
+
+
     },
     goToMissionOpinion: function(){
         Backbone.history.navigate('#/missionOpinion', true);

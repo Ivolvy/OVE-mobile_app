@@ -5,8 +5,8 @@ var destinationLng;
 var itemMap;
 var itemPicture;
 var itemMission;
-var markerArray = new Array;
-var picsArray = new Array;
+var markerArray = [];
+var picsArray = [];
 var actualPics;
 var totalPics;
 var indexNavPage; //the start page id
@@ -212,20 +212,20 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             if(markerArray.length != 0) {
                 for(var i=0;i < markerArray.length;i++){
                     placePictureMarker(markerArray[i], i, this);
-                    //set the info window on the correspondinf marker
+                    //set the info window on the correspondent marker
                     this.setOldInfoWindow(i);
                 }
             }
         }
     },
-
+    //take anew picture with the camera
     takePicture: function(){
         if(actualPics < totalPics) {
             cameraApp.takePicture(this);
             actualPics += 1;
         }
-        
     },
+    //get the position on the map where the picture is taken
     getPicturePosition: function(){
         navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
     },
@@ -235,7 +235,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     placeAndSaveMarker: function(position){
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
-alert("00");
+
         var position = new google.maps.LatLng(lat, lng);
         var prevMarker = markerArray[markerArray.length-1];
 
@@ -244,45 +244,54 @@ alert("00");
         //test if the picture's position is 50 meters further
         //used to store the pictures in the same marker if the are close
         if(previousPosition && position) {
-        alert("01");
+   
             var distance = google.maps.geometry.spherical.computeDistanceBetween(previousPosition, position);
 
             if(distance > 50) {
                  alert("position supérieur à 0m");
-
+                
+                //set a new marker on the map
                 var newMarker = markerArray.length;
-               alert("newmarker: "+newMarker)
-               fileArray[newMarker] = new Array();
-               fileArray[newMarker].push(fileURL); //add image path in the array
-
-
+                fileArray[newMarker] = [];
+                fileArray[newMarker].push(fileURL); //add image path in the array
+                
                 markerArray.push(position);
                 placePictureMarker(position, (markerArray.length - 1), this);
                 //save insert the new values in database
                 itemMap.save({'markerArray': markerArray});
 
                 var actualMarker = markerArray.length - 1;
-                alert("actualmarker: "+actualMarker);
                 that.setNewInfoWindow(actualMarker);
+                that.savedPositionAnimation();
             }
             else{
               alert("position inférieure à 0m");
 
                var actualMarker = markerArray.length - 1;
-                alert("actualMarker: "+actualMarker)
                 if(!fileArray[actualMarker]){
-                    fileArray[actualMarker] = new Array();
+                    fileArray[actualMarker] = [];
                 }
                 fileArray[actualMarker].push(fileURL); //add image path in the array
-
-
-                //garder le même id de marker
-
-                alert("actualmarker: "+actualMarker);
+                
+                //keep the same marker id
                 that.setNewInfoWindow(actualMarker);
+                that.savedPositionAnimation();
             }
         }
+                
+    },
+    
+    //display a popup to say that the picture and the position are saved
+    savedPositionAnimation: function(){
+        var mc = this.$(".popupUploadOk");
 
+        //on click on begin experience
+        this.$pageBody.click(function(){
+            var tl = new TimelineMax();
+            tl.add( TweenMax.to(mc, 0.5, {bottom:350, force3D:true}) );
+            tl.add( TweenMax.to(mc, 0.5, {delay:1, bottom:-50, ease:Back.easeIn, force3D:true}) );
+        });
+        
     },
 
     //set info window in a marker on the map - the pictures are present in database
@@ -295,17 +304,19 @@ alert("00");
     },
     //set new info window in a marker on the map - the pictures are NOT present in database
     setNewInfoWindow: function(index){
-    alert("setNewinfoWindow");
-    alert("fileArray: "+fileArray[index])
         if(fileArray[index]) { //if the pics array with index exists
             if (fileArray[index].length != 0) {
                 setNewInfoWindowOnMarker(index);//the id is the place in markerArray
             }
         }
     },
-
-    updateNbOfPics: function(){
+    //save the value of actualPics in database 
+    saveNbPicsOnDatabase: function(){
         itemMission.save({'actualPics': actualPics});
+        that.updateNbOfPics();
+    },
+    //display the new value on the "take picture screen"
+    updateNbOfPics: function(){
         this.$('#totalPicture').html(actualPics+'/'+totalPics);
     },
 

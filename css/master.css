@@ -478,6 +478,23 @@ header{
     width: 155px;
 }
 
+.popupUploadOk{
+    width: 100%;
+    color: #fff;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    bottom: -50px;
+}
+.popupUploadOk p{
+    margin: auto;
+    width: 189px;
+    padding: 8px;
+    background-color: #4d3267;
+}
+
+
 /*----------------------------------------------*/
 /*------------------GOOGLE MAP------------------*/
 /*----------------------------------------------*/
@@ -573,12 +590,14 @@ header{
     height: 260px;
     z-index: -1;
     position: relative;
+    margin-left: -6px;
 }
 #gallery div{
     /*width: 150px;*/
     height: 150px;
-    margin: 4px;
+    margin-left: 3px;
     position: relative;
+    margin-bottom: 10px;
 }
 #gallery div img{
     width: 40px;

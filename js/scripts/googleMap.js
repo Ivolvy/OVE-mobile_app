@@ -1,13 +1,8 @@
 var map;
 var direction;
-var markerArrayOnMap = new Array;
+var markerArrayOnMap = [];
 
 function initialize() {
-    var previousPosition = null;
-    var address = null;
-    var origin;
-    var destination;
-    
 
     var styles = [
         {
@@ -137,11 +132,10 @@ function initialize() {
 
     //display the map init where the user is
     navigator.geolocation.getCurrentPosition(successCallback, null);
-
 }
 
 
-
+//init the values to trace the itinerary
 function initItineray(originLat, originLng, destinationLat, destinationLng){
     setAddress(originLat, originLng, 'origin');
     setAddress(destinationLat, destinationLng, 'destination');
@@ -172,10 +166,10 @@ function setAddress(lat, lng, position){
     });
 }
 
+//trace the itinerary between the start and the end point of the traject
 function traceItinerary(origin, destination){
 
     if(origin && destination){
-
         var request = {
             origin      : origin,
             destination : destination,
@@ -190,13 +184,10 @@ function traceItinerary(origin, destination){
     }
 }
 
-//place a marker on the map
+//place a marker on the map when a picture is taken
 function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
     //center the map on the new coordinates
     //map.panTo(new google.maps.LatLng(lat, lng));
-        alert("placepicturemarker");
-        alert("idmarker: "+idMarker);
-        alert("markeronmap: "+markerArrayOnMap[idMarker]);
     //place a marker to the exact position
     markerArrayOnMap[idMarker] = new google.maps.Marker({
         position:  new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F),
@@ -208,7 +199,8 @@ function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
 function setInfoWindowOnMarker(index) {
     //the content displayed in the marker
     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
-
+    
+    //insert all the marker's pictures in the popup content
     for (var i = 0; i < picsArray[index].length; i++) {
         contentString += '<div><img style="width:150px" src=http://michaelgenty.com/test/' + picsArray[index][i] + '></div>';
     }
@@ -233,29 +225,29 @@ function setInfoWindowOnMarker(index) {
 //set an new info window on the selected marker - for inexistent pictures on server
 function setNewInfoWindowOnMarker(index){
     //the content displayed in the marker
-    alert("newinfo and index: "+index);
 
     $('.infoWindow_'+index).remove();//delete the previous infowindow
     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
-        alert("filearray value: "+fileArray[index][0]);
+
+    //insert all the marker's pictures in the popup content
     for(var i=0;i < fileArray[index].length;i++){
         contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
     }
-    alert("pute1");
+   
     contentString+='</div>';
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
         size: new google.maps.Size(1000, 1000)
     });
-    alert("markerarrayonmap: "+markerArrayOnMap[index]);
+ 
     google.maps.event.addListener(markerArrayOnMap[index], 'click', function(){
         infowindow.open(map,markerArrayOnMap[index]);
     });
-    alert("e");
+   
     //display the carousel when infowindow is created
     google.maps.event.addListener(infowindow, 'domready', function(){
         $('.infoWindow_'+index).slick(); //slick is the carousel
     });
-     alert("pute2");
+    
 }

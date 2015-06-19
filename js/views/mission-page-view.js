@@ -23,7 +23,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// collection, when items are added or changed. Kick things off by
 	// loading any preexisting missions that might be saved in *localStorage*.
 	initialize: function () {
-		
+
 		this.animateIn = 'iosSlideInRight';
 		this.animateOut = 'slideOutRight';
 

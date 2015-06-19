@@ -34,7 +34,7 @@ var cameraApp = {
             alert("newmarker: "+newMarker)
             fileArray[newMarker] = new Array();
             fileArray[newMarker].push(fileURL); //add image path in the array*/
-            missionExplication.updateNbOfPics();
+            missionExplication.saveNbPicsOnDatabase();
             missionExplication.getPicturePosition();
         }
         function onFail(message) {
@@ -60,14 +60,23 @@ var cameraApp = {
             console.log("upload error target " + error.target);
         };
 
-        for(var i=0;imageToSendArray.length;i++){
-            var options = new FileUploadOptions();
-            options.fileKey = "file";
-            options.fileName = imageToSendArray[i].substr(imageToSendArray[i].lastIndexOf('/') + 1);
-            options.mimeType = "text/plain";
+        var length = imageToSendArray.length;
+        for(var index=0;index < length;index++) {
+             if(imageToSendArray[index]){
+                var subLength = imageToSendArray[index].length;
+                for (var i = 0; i < subLength; i++) {
+                    if(imageToSendArray[index][i] != "0"){
+                        var options = new FileUploadOptions();
+                        options.fileKey = "file";
+                        var imageFile = imageToSendArray[index][i];
+                        options.fileName = imageFile.substr(imageFile.lastIndexOf('/') + 1);
+                        options.mimeType = "text/plain";
 
-            var ft = new FileTransfer();
-            ft.upload(imageToSendArray[i], encodeURI("http://michaelgenty.com/upload.php"), win(i), fail, options);
+                        var ft = new FileTransfer();
+                        ft.upload(imageToSendArray[index][i], encodeURI("http://michaelgenty.com/upload.php"), win(i), fail, options);
+                   }
+                }
+             }
         }
         alert("pictures uploaded");//TODO - completion bar or popup status
         imageSelection.goToMissionOpinion();
