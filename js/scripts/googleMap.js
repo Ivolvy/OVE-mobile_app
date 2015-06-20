@@ -193,11 +193,13 @@ function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
         position:  new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F),
         map: map
     });
+    map.panTo(new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F);
 }
 
 //set an info window on the selected marker - for existing pictures on server
 function setInfoWindowOnMarker(index) {
     //the content displayed in the marker
+
     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
     
     //insert all the marker's pictures in the popup content
@@ -226,7 +228,6 @@ function setInfoWindowOnMarker(index) {
 function setNewInfoWindowOnMarker(index){
     //the content displayed in the marker
 
-    $('.infoWindow_'+index).remove();//delete the previous infowindow
     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
 
     //insert all the marker's pictures in the popup content

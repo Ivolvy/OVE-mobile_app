@@ -113,7 +113,8 @@ app.Views.MissionView = app.Extensions.View.extend({
 		if(this.model.get('genre')){
 			//3 choices: game, fun, sensibility
 			this.$el.toggleClass(this.model.get('genre')+'-light');
-			this.$shared.toggleClass(this.model.get('genre')+'-dark');
+			//this.$shared.toggleClass(this.model.get('genre')+'-dark');
+			this.$shared.toggleClass('share-background');
 		}
 		if(this.model.get('shared') == 1) {
 			this.$shared.toggleClass('hidden');
