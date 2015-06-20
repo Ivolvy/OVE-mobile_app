@@ -1,5 +1,7 @@
 var indexNavPage;
 var route;
+var that;
+var missionActualId;
 // The Application
 
 // Our overall **MissionPageView** is the top-level piece of UI.
@@ -11,19 +13,23 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 	statsTemplate: _.template($('#mission-nav-list').html()),
 
+	missionRecent: _.template($('#missionRecent').html()),
+
 	menuTemplate: _.template($('#menu-template').html()),
 
 	// Delegated events for creating new items, and clearing completed ones.
 	events: {
 		'keypress #new-mission': 'createOnEnter',
-		'click .left-menu': 'toggleMenu'
+		'click .left-menu': 'toggleMenu',
+		'click #accept': 'selectActualMission'
 	},
 
 	// At initialization we bind to the relevant events on the `Missions`
 	// collection, when items are added or changed. Kick things off by
 	// loading any preexisting missions that might be saved in *localStorage*.
 	initialize: function () {
-
+		that = this;
+		
 		this.animateIn = 'iosSlideInRight';
 		this.animateOut = 'slideOutRight';
 
@@ -36,29 +42,41 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.$leftMenu = this.$('.left-menu');
 		
 		this.$input = this.$('#new-mission');
-		this.$navigation = this.$('.navigation');
 		this.$main = this.$('#main');
+		this.$navigation = this.$('.navigation');
+		this.$recent = this.$('#recent');
 		this.$list = this.$('#mission-list');
 		this.$pageBody = this.$('.page-body');
 		
 		
 		app.missions = new Missions();
-		app.MissionFilter = 'actuality';
+		app.MissionFilter = 'actual';
 
 		//call for each line in database
 		this.listenTo(app.missions, 'add', this.addOne);
 		//listen on the sync and not the reset
 		//->permit to keep the datas when we quit and re-launch the page
 		this.listenTo(app.missions, 'sync', this.addAll);
-		this.listenTo(app.missions, 'change:completed', this.filterOne);
 		this.listenTo(app.missions, 'filter', this.filterAll);
 		this.listenTo(app.missions, 'all', _.debounce(this.render, 0));
 
 		// Suppresses 'add' events with {reset: true} and prevents the app view
 		// from being re-rendered for every model. Only renders when the 'reset'
 		// event is triggered at the end of the fetch.
-		app.missions.fetch({});
+		app.missions.fetch({
+			success: function(model, response) {
 
+				var missionActual = app.missions.where({'actual': true});
+
+				if(missionActual[0]) {
+					missionActualId = missionActual[0].id;
+					that.$('#recent').toggleClass('hidden', false);
+				}
+				else{
+					that.$('#recent').toggleClass('hidden', true);
+				}
+			}			
+		});
 		return this;
 	},
 
@@ -66,15 +84,10 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// of the app doesn't change.
 	onRender: function () {
 
-		var completed =app.missions.completed().length;
-		var remaining =app.missions.remaining().length;
-		
 		this.$pageBody.append(this.menuTemplate());
 		
-		this.$navigation.html(this.statsTemplate({
-			completed: completed,
-			remaining: remaining
-		}));
+		this.$navigation.html(this.statsTemplate());
+		this.$recent.html(this.missionRecent());
 	
 		this.$('.filters li a')
 			.removeClass('selected')
@@ -87,7 +100,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.initClickMenu();
 		//add event on swipe
 		this.initSwipeEvent();
-		
+
 		return this;
 	},
 
@@ -129,7 +142,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			this.$input.val('');
 		}
 	},
-
+	
 	//display or not the panel menu
 	toggleMenu: function (e) {
 		this.$page.toggleClass('sml-open');
@@ -138,12 +151,18 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	initClickMenu: function(){
 		this.$('.1').click(function() {
 			indexNavPage = 1;
+			that.$('#main').toggleClass('hidden', false);
+			that.$('#recent').toggleClass('hidden', true);
 		});
 		this.$('.2').click(function() {
 			indexNavPage = 2;
+			that.$('#main').toggleClass('hidden', true);
+			that.$('#recent').toggleClass('hidden', false);
 		});
 		this.$('.3').click(function() {
 			indexNavPage = 3;
+			that.$('#main').toggleClass('hidden', false);
+			that.$('#recent').toggleClass('hidden', true);
 		});
 	},
 	initSwipeEvent: function(){
@@ -163,6 +182,10 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 				}
 			}
 		});
+	},
+	
+	selectActualMission: function(){
+		Backbone.history.navigate('#/missionExplication/'+missionActualId, true);
 	}
 	
 });

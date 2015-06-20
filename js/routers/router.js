@@ -7,7 +7,7 @@ app.Router = Backbone.Router.extend({
 		'': 'home',
 		'missionProposition': 'missionProposition',
 		'missionExplication/:id': 'missionExplication',
-		'missionOpinion': 'missionOpinion',
+		'missionOpinion/:id': 'missionOpinion',
 		'filterMissions/*action': 'setFilterMissions',
 		'filterDetails/*action': 'setFilterDetails',
 		'imageSelection/:id': 'imageSelection'
@@ -55,8 +55,8 @@ app.Router = Backbone.Router.extend({
 		var view = new app.Views.ImageSelectionView(id);
 		app.getInstance().goto(view);
 	},
-	missionOpinion: function(){
-		var view = new app.Views.MissionOpinionView();
+	missionOpinion: function(id){
+		var view = new app.Views.MissionOpinionView(id);
 		app.getInstance().goto(view);
 	}
 });

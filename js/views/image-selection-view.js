@@ -1,6 +1,7 @@
 var itemPicture;
 var imageNameArray = [];
 var tempImagesArray = [];
+var itemMission;
 
 app.Views.ImageSelectionView = app.Extensions.View.extend({
 
@@ -24,8 +25,22 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         this.$el.html(this.template());
 
         this.$page = this.$('.pageContent');
-        this.$leftMenu = this.$('.left-menu');
+        this.$leftMenu = this.$('.left-menu')
+
+        app.missions = new Missions();
         app.missionsPictures = new PicturesCollection();
+
+
+        app.missions.fetch({
+            success: function(model, response) {
+
+                var missionCollection = app.missions.where({'id': missionId});
+
+                var missionModelId = missionCollection[0].id;
+                itemMission = app.missions.get(missionModelId);
+
+            }
+        });
 
         app.missionsPictures.fetch({
             success: function(model, response) {
@@ -138,7 +153,8 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
 
     },
     goToMissionOpinion: function(){
-        Backbone.history.navigate('#/missionOpinion', true);
+        itemMission.save({'actual': false});
+        Backbone.history.navigate('#/missionPage', true);
     },
     cancelSelection: function(){
         var missionId = itemPicture.get('missionId');

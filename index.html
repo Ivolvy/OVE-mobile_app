@@ -48,13 +48,49 @@
 			<!--
 			<input id="new-mission" placeholder="Add mission" autofocus>
 			-->
-			<section id="main">
+			<section id="main" class="hidden">
 				<ul id="mission-list"></ul>
 			</section>
+			<section id="recent" class="hidden"></section>
 		</section>
 				
 	</div>
 </script>
+
+
+<script type="text/template" id="missionRecent" name="missionRecent">
+	<div id="recentView">
+		<div class="background"></div>
+		<div id="recentContent">
+			<h1>OMBRES</h1>
+			<div class="tips">"elles vous suivent partout"</div>
+
+			<div class="timeContent">
+				<p class="time">
+					14:58
+				</p>
+				<p class="timeText">
+					TEMPS RESTANT POUR ACCEPTER
+				</p>
+			</div>
+
+			<footer>
+				<div class="buttonContainer">
+					<div id="accept" class="button">ACCEPTER</div>
+				</div>
+				<div class="buttonContainer">
+					<div class="buttonRotate"></div>
+				</div>
+				<div class="buttonContainer buttonPart2">
+					<div id="delete" class="button">
+						<a href="#">SUPPRIMER</a>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</script>
+
 
 <script type="text/template" id="item-template">
 	<div class="item-content">
@@ -75,7 +111,7 @@
 			<a class="1" href="#/filterMissions/completed">PASSÉES</a>
 		</li>
 		<li>
-			<a class="2 selected" href="#/filterMissions/actuality">ACTUALITÉS</a> <!--(all)-->
+			<a class="2 selected" href="#/filterMissions/actual">RÉCENTE</a> <!--(all)-->
 		</li>
 		<li>
 			<a class="3" href="#/filterMissions/active">EN COURS</a>
@@ -133,9 +169,17 @@
 			<div class="actual camera hidden"></div>
 			<div id="googleMap"></div>
 			<div id="buttonsMap" class="hidden">
-				<div class="finish button">FINIR</div>
-				<div class="resume button">
-					<a href="#/filterDetails/mission">REPRENDRE</a>
+				<div class="buttonContainer">
+					<div class="finish button">FINIR</div>
+				</div>
+				<div class="buttonContainer">
+					<div class="buttonRotate"></div>
+				</div>
+
+				<div class="buttonContainer buttonPart2">
+					<div class="resume button">
+						<a href="#/filterDetails/mission">REPRENDRE</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -159,8 +203,13 @@
 		</div>
 
 		<footer>
-			<div id="begin" class="button">
-				<a href="#/filterDetails/mission">COMMENCER</a>
+			<div class="buttonContainer">
+				<div id="begin" class="button">
+					<a href="#/filterDetails/mission">COMMENCER</a>
+				</div>
+			</div>
+			<div class="buttonContainer">
+				<div class="buttonRotate"></div>
 			</div>
 		</footer>
 	</div>
@@ -199,9 +248,18 @@
 
 			<div id="gallery"></div>
 
-			<div class="buttonsSelection">
-				<div class="send button">ENVOYER</div>
-				<div class="cancel button">ANNULER</div>
+			<div class="buttonsSelection" style="padding-bottom: 116px;">
+				<div class="buttonContainer">
+					<div class="send button">ENVOYER</div>
+				</div>
+				<div class="buttonContainer">
+					<div class="buttonRotate"></div>
+				</div>
+
+				<div class="buttonContainer buttonPart2">
+					<div class="cancel button">ANNULER</div>
+				</div>
+			
 			</div>
 		</div>
 	</div>
@@ -231,39 +289,72 @@
 				</p>
 			</div>
 	
-			<div class="opinionText">TON AVIS</div>
-			
-			<div id="opinionBar">
-				<!--it's crap, but no time-->
-				<div id="contentBar">
-					<div id="1" class="pos">
-						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+			<div class="bottom-opinion">
+				<div class="opinionText">TON AVIS</div>
+				
+				<div id="opinionBar">
+					<!--it's crap, but no time-->
+					<div id="contentBar">
+						<div id="1" class="pos">
+							<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+						</div>
+						<div id="2" class="pos">
+							<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+						</div>
+						<div id="3" class="pos">
+							<img src="img/mission-opinion/mission-avis-selectCircle.png">
+						</div>
+						<div id="4" class="pos">
+							<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+						</div>
+						<div id="5" class="pos">
+							<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+						</div>
 					</div>
-					<div id="2" class="pos">
-						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+						<img class="barImg" src="img/mission-opinion/mission-avis-selectbar-bleu.png">
+					
+					<p class="label1 hidden">je n'ai pas aimé</p>
+					<p class="label2 hidden">franchement... bof.</p>
+					<p class="label3">passable</p>
+					<p class="label4 hidden">plutôt bien</p>
+					<p class="label5 hidden">génial !</p>
+				</div>
+				
+				<div class="buttonsSelection">
+					<div class="buttonContainer">
+						<div class="valid button">VALIDER</div>
 					</div>
-					<div id="3" class="pos">
-						<img src="img/mission-opinion/mission-avis-selectCircle.png">
+					<div class="buttonContainer">
+						<div class="buttonRotate"></div>
 					</div>
-					<div id="4" class="pos">
-						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
-					</div>
-					<div id="5" class="pos">
-						<img class="visibilityNone" src="img/mission-opinion/mission-avis-selectCircle.png">
+	
+					<div class="buttonContainer buttonPart2">
+						<div class="pass button">PASSER</div>
 					</div>
 				</div>
-					<img class="barImg" src="img/mission-opinion/mission-avis-selectbar-bleu.png">
-				
-				<p class="label1" hidden>je n'ai pas aimé</p>
-				<p class="label2 hidden">franchement... bof.</p>
-				<p class="label3">passable</p>
-				<p class="label4 hidden">plutôt bien</p>
-				<p class="label5 hidden">génial !</p>
 			</div>
-			
-			<div class="buttonsSelection">
-				<div class="valid button">VALIDER</div>
-				<div class="pass button">PASSER</div>
+
+			<div class="bottom-share hidden">
+				<div class="shareTitle">TA COLLECTE</div>
+				
+				<div class="shareText">
+					<span class="bold">Partage ta perception des ombres sur le site
+					collaboratif,</span> en selectionnant les captures que tu
+					souhaites envoyer !
+				</div>
+
+				<div class="buttonsSelection">
+					<div class="buttonContainer">
+						<div class="share button">PARTAGER</div>
+					</div>
+					<div class="buttonContainer">
+						<div class="buttonRotate"></div>
+					</div>
+
+					<div class="buttonContainer buttonPart2">
+						<div class="pass button">PASSER</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

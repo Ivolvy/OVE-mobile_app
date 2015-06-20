@@ -15,6 +15,7 @@ app.Mission = Backbone.Model.extend({
 		actualPics: '0',
 		totalPics: '',
 		picsArray: '',
+		actual: 'true',
 		completed: false
 	},
 

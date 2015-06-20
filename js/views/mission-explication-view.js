@@ -131,7 +131,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                 var pictureId = pictureCollection[0].id;
                 itemPicture = app.missionsPictures.get(pictureId);
                 //alert(itemMap.get('origin'));
-                
+
                 //if the array is not null, we save the datas in the picsArray
                 if(itemPicture.get('picsArray') != 0){
                     picsArray = itemPicture.get('picsArray');
@@ -186,6 +186,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             this.$buttonsMap.toggleClass('hidden', false);
 
         }
+        //change the underline of the menu
         for(var i=1;i<=3;i++) {
             if(i == visible) {
                 this.$('.filters li:nth-child('+i+') a').addClass('selected');
@@ -239,8 +240,9 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         var position = new google.maps.LatLng(lat, lng);
         var prevMarker = markerArray[markerArray.length-1];
 
-        previousPosition = new google.maps.LatLng(prevMarker.A, prevMarker.F);
-
+        if(prevMarker){
+            previousPosition = new google.maps.LatLng(prevMarker.A, prevMarker.F);
+        }
         //test if the picture's position is 50 meters further
         //used to store the pictures in the same marker if the are close
         if(previousPosition && position) {
@@ -248,21 +250,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             var distance = google.maps.geometry.spherical.computeDistanceBetween(previousPosition, position);
 
             if(distance > 50) {
-                 alert("position supérieur à 0m");
-                
-                //set a new marker on the map
-                var newMarker = markerArray.length;
-                fileArray[newMarker] = [];
-                fileArray[newMarker].push(fileURL); //add image path in the array
-                
-                markerArray.push(position);
-                placePictureMarker(position, (markerArray.length - 1), this);
-                //save insert the new values in database
-                itemMap.save({'markerArray': markerArray});
-
-                var actualMarker = markerArray.length - 1;
-                that.setNewInfoWindow(actualMarker);
-                that.savedPositionAnimation();
+                alert("position supérieur à 0m");
+                that.placeNewMarkerOnMap(position);
             }
             else{
               alert("position inférieure à 0m");
@@ -278,20 +267,35 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                 that.savedPositionAnimation();
             }
         }
+        else if(position){
+            that.placeNewMarkerOnMap(position);            
+        }
                 
+    },
+    
+    placeNewMarkerOnMap: function(position){
+        //set a new marker on the map
+        var newMarker = markerArray.length;
+        fileArray[newMarker] = [];
+        fileArray[newMarker].push(fileURL); //add image path in the array
+
+        markerArray.push(position);
+        placePictureMarker(position, (markerArray.length - 1), this);
+        //save insert the new values in database
+        itemMap.save({'markerArray': markerArray});
+
+        var actualMarker = markerArray.length - 1;
+        that.setNewInfoWindow(actualMarker);
+        that.savedPositionAnimation();
     },
     
     //display a popup to say that the picture and the position are saved
     savedPositionAnimation: function(){
         var mc = this.$(".popupUploadOk");
-
-        //on click on begin experience
-        this.$pageBody.click(function(){
-            var tl = new TimelineMax();
-            tl.add( TweenMax.to(mc, 0.5, {bottom:350, force3D:true}) );
-            tl.add( TweenMax.to(mc, 0.5, {delay:1, bottom:-50, ease:Back.easeIn, force3D:true}) );
-        });
         
+        var tl = new TimelineMax();
+        tl.add( TweenMax.to(mc, 0.5, {bottom:60, force3D:true}) );
+        tl.add( TweenMax.to(mc, 0.5, {delay:1, bottom:-50, ease:Back.easeIn, force3D:true}) );
     },
 
     //set info window in a marker on the map - the pictures are present in database
@@ -335,7 +339,8 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     //display image selection
     toggleFinish: function () {
         var missionId = itemMission.get('id');
-        Backbone.history.navigate('#/imageSelection/'+missionId, true);
+        //Backbone.history.navigate('#/imageSelection/'+missionId, true);
+        Backbone.history.navigate('#/missionOpinion/'+missionId, true);
     },
 
     //display or not the panel menu
@@ -355,17 +360,18 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             indexNavPage = 3;
         });
     },
+    //navigate between screen with swipe
     initSwipeEvent: function(){
         this.$page.swipe({
             swipeLeft:function(ev){
-                if(indexNavPage < 3) {
+                if(indexNavPage < 3 && indexNavPage != 3) {
                     indexNavPage+=1;
                     route = $(".filters ." + indexNavPage).attr('href');
                     Backbone.history.navigate(route, true);
                 }
             },
             swipeRight:function(ev){
-                if(indexNavPage > 1) {
+                if(indexNavPage > 1 && indexNavPage != 3) {
                     indexNavPage-=1;
                     route = $(".filters ." + indexNavPage).attr('href');
                     Backbone.history.navigate(route, true);

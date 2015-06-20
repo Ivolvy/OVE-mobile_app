@@ -9,10 +9,12 @@ app.Views.MissionOpinionView = app.Extensions.View.extend({
     events: {
         'click .valid': 'sendOpinion',
         'click .pass': 'passOpinion',
-        'click .left-menu': 'toggleMenu'        
+        'click .share': 'sharePictures',
+        'click .left-menu': 'toggleMenu'
     },
 
-    initialize: function () {
+    initialize: function (missionId) {
+        this.missionId = missionId;
 
         this.animateIn = 'iosSlideInRight';
         this.animateOut = 'slideOutRight';
@@ -34,10 +36,17 @@ app.Views.MissionOpinionView = app.Extensions.View.extend({
     },
     
     sendOpinion: function(){
-        Backbone.history.navigate('#/missionPage', true);
+        this.$(".bottom-opinion").toggleClass('hidden', true);
+        this.$(".bottom-share").toggleClass('hidden', false);
     },
     passOpinion: function(){
-        Backbone.history.navigate('#/missionPage', true);
+        //Backbone.history.navigate('#/missionPage', true);
+    },
+    sharePictures: function(){
+        Backbone.history.navigate('#/imageSelection/'+this.missionId, true);
+    },
+    passShare: function(){
+        //Backbone.history.navigate('#/missionPage', true);
     },
     initBarSelection: function(){
         this.$circle = this.$('.pos');

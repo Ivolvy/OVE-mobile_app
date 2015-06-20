@@ -8,6 +8,7 @@ html, body{
 
 body {
     position: fixed;
+    outline: none;
 }
 
 header{
@@ -34,7 +35,9 @@ header{
 .visibilityNone {
     visibility: hidden;
 }
-
+.bold{
+    font-weight: 700;
+}
 
 /*----------------------------------------------*/
 /*------------------HOME VIEW-------------------*/
@@ -56,7 +59,7 @@ header{
 /*--------------MISSION PAGE VIEW---------------*/
 /*----------------------------------------------*/
 
-#mission-page, #mission-opinion-template {
+#mission-page, #mission-opinion-template, #recentView {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     height: 100%;
@@ -234,6 +237,7 @@ header{
     vertical-align: middle;
 }
 
+
 /*Three genre of mission - light and dark*/
 .game-light{
     border-right: 6px solid #c9603e;
@@ -295,22 +299,45 @@ header{
     width: 100%;
     padding-top: 66px;
 }
+.buttonContainer{
+    position: absolute;
+    width: 100%;    
+}
 .button{
     width: 48%;
     height: 43px;
     background: rgba(70,43,96,1);
-    display: inline-block;
     text-align: center;
     font-size: 18px;
     line-height: 43px;
     vertical-align: middle;
     cursor: pointer;
     color: #FFF;
-    margin-bottom: 12px;
+    position: relative;
+    margin: auto;
+    z-index: 2;
 }
 .button a{
     color: #FFF;
     text-decoration: none;
+}
+.buttonRotate{
+    width: 182px;
+    height: 43px;
+    margin: auto;
+    background: rgba(70,43,96,0.6);
+    -ms-transform: rotate(-4deg); /* IE 9 */
+    -webkit-transform: rotate(-4deg); /* Chrome, Safari, Opera */
+    transform: rotate(-4deg);
+    z-index:0;
+}
+.buttonPart2{
+    margin-top: 57px;
+    font-size: 14px;
+}
+.backPart2{
+    min-width: 155px;
+    width: 155px;
 }
 
 #mission-proposition .accept{
@@ -332,6 +359,56 @@ header{
 
 
 /*----------------------------------------------*/
+/*--------------MISSION RECENT VIEW-------------*/
+/*----------------------------------------------*/
+
+#recent{
+    margin-top: 30px;
+}
+#recent .timeContent{
+    padding-top: 21px;
+}
+#recentView .background{
+    background: url("../img/backgrounds/bg_mission-recente-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+#recentContent{
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+#recentContent h1{
+    margin-left: -6px;
+    margin-top: 40px;
+}
+#recentContent .tips{  
+    width: 117px;
+    margin: auto;
+}
+#recentContent .time{
+    margin-top: 114px;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+#recentContent .timeText{
+    font-weight: 300;
+    margin-top: 5px;
+}
+#recentView footer{
+    width: 100%;
+}
+#recentView .delete{
+    width: 120px;
+}
+
+/*----------------------------------------------*/
 /*-----------MISSION EXPLICATION VIEW-----------*/
 /*----------------------------------------------*/
 
@@ -345,7 +422,6 @@ header{
     background: url("../img/backgrounds/bg_ombre.png") no-repeat center center;
     background-size: cover;
     text-align: center;
-    height: 100%;
 }
 
 #mission-explication header,
@@ -359,6 +435,7 @@ header{
 #mission-page header h1{
     margin-left: 0;
     color: #086294;
+    letter-spacing: 3px;
 }
 
 #mission-explication .explication,
@@ -464,7 +541,7 @@ header{
     bottom: 0;
     position: absolute;
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 114px;
 }
 #buttonsMap .button{
     display: block;
@@ -476,6 +553,8 @@ header{
 }
 #buttonsMap .resume{
     width: 155px;
+    height: 38px;
+    line-height: 38px;
 }
 
 .popupUploadOk{
@@ -565,13 +644,14 @@ header{
     font-size: 26px;
     padding-top: 0;
     margin-top: 8px;
+    letter-spacing: 3px;
 }
 
 .buttonsSelection{
     bottom: 0;
     position: absolute;
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 128px;
 }
 .buttonsSelection .button{
     display: block;
@@ -583,6 +663,8 @@ header{
 }
 .buttonsSelection .cancel{
     width: 155px;
+    height: 38px;
+    line-height: 38px;
 }
 
 #gallery{
@@ -656,11 +738,18 @@ header{
     width: 214px;
     margin: auto;
 }
-#mission-opinion .opinionText{
+#mission-opinion .opinionText,
+#mission-opinion .shareTitle{
     font-size: 22px;
     font-weight: 400;
     color: #FFF;
     padding-top: 63px;
+}
+#mission-opinion .shareText{
+    color: #fff;
+    width: 272px;
+    margin: auto;    
+    margin-top: 20px;
 }
 
 #opinionBar{
@@ -693,14 +782,21 @@ header{
     line-height: 38px;
 }
 #mission-opinion .buttonsSelection{
-    padding-bottom: 35px;
+    padding-bottom: 135px;
 }
-.buttonsSelection .valid{
+.buttonsSelection .valid,
+.buttonsSelection .share{
     width: 190px;
     margin-bottom: 10px;
 }
 .buttonsSelection .pass{
     width: 155px;
+    height: 38px;
+    line-height: 38px;
+}
+
+.buttonPart2 div, .buttonPart2 a{
+    font-size: 14px;
 }
 
 /*----------------------------------------------*/

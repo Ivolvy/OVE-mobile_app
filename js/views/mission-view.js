@@ -12,7 +12,6 @@ app.Views.MissionView = app.Extensions.View.extend({
 
 	// The DOM events specific to an itemMap.
 	events: {
-		'click .toggle': 'toggleCompleted',
 		'click .item-content': 'toggleMission'
 	},
 
@@ -43,6 +42,7 @@ app.Views.MissionView = app.Extensions.View.extend({
 		this.addIcon();
 
 		this.$el.toggleClass('completed', this.model.get('completed'));
+		this.$el.toggleClass('actual', this.model.get('actual'));
 		return this;
 	},
 	//set the class hidden
@@ -52,19 +52,28 @@ app.Views.MissionView = app.Extensions.View.extend({
 	},
 
 	isHidden: function () {
-	//	return this.model.get('completed') ?
-	//	app.MissionFilter === 'active' :
-	//	app.MissionFilter === 'completed';
-		
-		if(this.model.get('completed')){
+
+		if(this.model.get('completed') == true){
 			//if this.model.get('completed') = true,
 			//return false if we've clicked on active filter, so we display her.
 			//return true if we've clicked on completed filter, so we hide it
-			return app.MissionFilter === 'active';
+
+			if((app.MissionFilter === 'completed') == true){
+				return false;
+			}
 		}
 		else{
+			if(this.model.get('actual') == true){
+				if((app.MissionFilter === 'actual') == true){
+					return false;
+				}
+			}
 			//return false if the mission is uncompleted, so we hide her
-			return app.MissionFilter === 'completed';
+			else{
+				if((app.MissionFilter === 'active') == true){
+					return false;
+				}
+			}
 		}
 	},
 
