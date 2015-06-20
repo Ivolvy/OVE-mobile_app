@@ -61,17 +61,26 @@ app.Views.MissionView = app.Extensions.View.extend({
 			if((app.MissionFilter === 'completed') == true){
 				return false;
 			}
+			else{
+				return true;
+			}
 		}
 		else{
 			if(this.model.get('actual') == true){
 				if((app.MissionFilter === 'actual') == true){
 					return false;
 				}
+				else{
+					return true;
+				}
 			}
 			//return false if the mission is uncompleted, so we hide her
 			else{
 				if((app.MissionFilter === 'active') == true){
 					return false;
+				}
+				else{
+					return true;
 				}
 			}
 		}
@@ -84,19 +93,19 @@ app.Views.MissionView = app.Extensions.View.extend({
 
 		//if the frequency exists, display the associate image
 		if(this.model.get('frequency')){
-			this.$icons.append('<img src="img/mission-picto/'+this.model.get('frequency')+'"/>');
+			this.$icons.append('<img src="img/mission-picto/f_'+this.model.get('frequency')+'.png"/>');
 		}
 		else{
 			this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');
 		}
 		if(this.model.get('sense')){
-			this.$icons.append('<img src="img/mission-picto/'+this.model.get('sense')+'"/>');
+			this.$icons.append('<img src="img/mission-picto/s_'+this.model.get('sense')+'.png"/>');
 		}
 		else{
 			this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');
 		}
 		if(this.model.get('interaction')){
-			this.$icons.append('<img src="img/mission-picto/'+this.model.get('interaction')+'"/>');
+			this.$icons.append('<img src="img/mission-picto/i_'+this.model.get('interaction')+'.png"/>');
 		}
 		else{
 			this.$icons.append('<img src="img/mission-picto/i_none_grey.png"/>');

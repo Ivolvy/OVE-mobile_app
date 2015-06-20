@@ -19,7 +19,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 
 	// Delegated events for creating new items, and clearing completed ones.
 	events: {
-		'keypress #new-mission': 'createOnEnter',
+		'click #new-mission': 'createOnEnter',
 		'click .left-menu': 'toggleMenu',
 		'click #accept': 'selectActualMission'
 	},
@@ -137,10 +137,11 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	// If you hit return in the main input field, create new **Mission** model,
 	// persisting it to *localStorage*.
 	createOnEnter: function (e) {
-		if (e.which === ENTER_KEY && this.$input.val().trim()) {
+	/*	if (e.which === ENTER_KEY && this.$input.val().trim()) {
 			app.missions.create(this.newAttributes());
 			this.$input.val('');
-		}
+		}*/
+		//app.missions.create(this.newAttributes());
 	},
 	
 	//display or not the panel menu
