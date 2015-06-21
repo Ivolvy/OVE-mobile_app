@@ -2,6 +2,7 @@ var indexNavPage;
 var route;
 var that;
 var missionActualId;
+var isOneMissionActual;
 // The Application
 
 // Our overall **MissionPageView** is the top-level piece of UI.
@@ -14,6 +15,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	statsTemplate: _.template($('#mission-nav-list').html()),
 
 	missionRecent: _.template($('#missionRecent').html()),
+	oldMission: _.template($('#oldMission').html()),
 
 	menuTemplate: _.template($('#menu-template').html()),
 
@@ -45,6 +47,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.$main = this.$('#main');
 		this.$navigation = this.$('.navigation');
 		this.$recent = this.$('#recent');
+		this.$old = this.$('#old');
 		this.$list = this.$('#mission-list');
 		this.$pageBody = this.$('.page-body');
 		
@@ -67,13 +70,16 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 			success: function(model, response) {
 
 				var missionActual = app.missions.where({'actual': true});
-
+				
 				if(missionActual[0]) {
 					missionActualId = missionActual[0].id;
 					that.$('#recent').toggleClass('hidden', false);
+					that.$('#old').toggleClass('hidden', true);
+					isOneMissionActual = true;
 				}
 				else{
 					that.$('#recent').toggleClass('hidden', true);
+					that.$('#old').toggleClass('hidden', false);
 				}
 			}			
 		});
@@ -88,6 +94,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		
 		this.$navigation.html(this.statsTemplate());
 		this.$recent.html(this.missionRecent());
+		this.$old.html(this.oldMission());
 	
 		this.$('.filters li a')
 			.removeClass('selected')
@@ -153,17 +160,32 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 		this.$('.1').click(function() {
 			indexNavPage = 1;
 			that.$('#main').toggleClass('hidden', false);
-			that.$('#recent').toggleClass('hidden', true);
+			if(isOneMissionActual) {
+				that.$('#recent').toggleClass('hidden', true);
+			}
+			else{
+				that.$('#old').toggleClass('hidden', true);					
+			}
 		});
 		this.$('.2').click(function() {
 			indexNavPage = 2;
 			that.$('#main').toggleClass('hidden', true);
-			that.$('#recent').toggleClass('hidden', false);
+			if(isOneMissionActual) {
+				that.$('#recent').toggleClass('hidden', false);
+			}
+			else{
+				that.$('#old').toggleClass('hidden', false);
+			}
 		});
 		this.$('.3').click(function() {
 			indexNavPage = 3;
 			that.$('#main').toggleClass('hidden', false);
-			that.$('#recent').toggleClass('hidden', true);
+			if(isOneMissionActual) {
+				that.$('#recent').toggleClass('hidden', true);
+			}
+			else{
+				that.$('#old').toggleClass('hidden', true);
+			}
 		});
 	},
 	initSwipeEvent: function(){

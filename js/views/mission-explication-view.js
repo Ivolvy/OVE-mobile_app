@@ -13,6 +13,8 @@ var indexNavPage; //the start page id
 var route;
 var that;
 var previousPosition; //previous position of the photo on the map
+var previousScreen;
+var spinner; //the loader animation
 
 
 app.Views.MissionExplicationView = app.Extensions.View.extend({
@@ -141,7 +143,6 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             }
         });
 
-
         return this;
     },
 
@@ -153,6 +154,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         this.$page.append(this.menuTemplate());
 
         indexNavPage = 1;
+        previousScreen = 'explication';
 
         //used to set the indexNavPage
         this.initClickMenu();
@@ -162,29 +164,64 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         return this;
     },
 
+    //display the screens with transitions between them
     toggleVisible: function () {
         var visible;
         if(app.DetailFilter == 'explication'){
             visible = 1;
-            this.$explication.toggleClass('hidden', false);
-            this.$camera.toggleClass('hidden', true);
-            this.$map.toggleClass('hidden', true);
-            this.$buttonsMap.toggleClass('hidden', true);
+
+            if(previousScreen == 'mission') {
+                this.$camera.toggleClass('to-right', true);
+                this.$camera.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayExplication();
+                });
+            }
+            else if(previousScreen == 'terminate'){
+                this.$map.toggleClass('to-right', true);
+                this.$map.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayExplication();
+                });
+            }
+            
+            previousScreen = 'explication';
         }
         else if(app.DetailFilter == 'mission'){
             visible = 2;
-            this.$explication.toggleClass('hidden', true);
-            this.$camera.toggleClass('hidden', false);
-            this.$map.toggleClass('hidden', true);
-            this.$buttonsMap.toggleClass('hidden', true);
+            
+            if(previousScreen == 'explication') {
+                this.$explication.toggleClass('to-left', true);
+                this.$explication.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayCamera();
+                });
+            }
+            else if(previousScreen == 'terminate'){
+                this.$map.toggleClass('to-right', true);
+
+                this.$map.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayCamera();
+                });
+            }
+            //init the loader animation
+            that.initLoader();
+            previousScreen = 'mission';
         }
         else if(app.DetailFilter == 'terminate'){
             visible = 3;
-            this.$explication.toggleClass('hidden', true);
-            this.$camera.toggleClass('hidden', true);
-            this.$map.toggleClass('hidden', false);
-            this.$buttonsMap.toggleClass('hidden', false);
 
+            if(previousScreen == 'explication') {
+                this.$explication.toggleClass('to-left', true);
+                this.$explication.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayMap();
+                });
+            }
+            else if(previousScreen == 'mission'){
+                this.$camera.toggleClass('to-left', true);
+                this.$camera.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    that.displayMap();
+                });
+            }
+ 
+            previousScreen = 'terminate';
         }
         //change the underline of the menu
         for(var i=1;i<=3;i++) {
@@ -196,8 +233,36 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             }
         }
     },
-
-
+    //display or not the following pages
+    displayExplication: function(){
+        this.$explication.toggleClass('hidden', false);
+        this.$camera.toggleClass('hidden', true);
+        this.$map.toggleClass('hidden', true);
+        this.$buttonsMap.toggleClass('hidden', true);      
+        this.resetLeftRight();
+    },
+    displayCamera: function(){
+        this.$explication.toggleClass('hidden', true);
+        this.$camera.toggleClass('hidden', false);
+        this.$map.toggleClass('hidden', true);
+        this.$buttonsMap.toggleClass('hidden', true);
+        this.resetLeftRight();
+    },
+    displayMap: function(){
+        this.$explication.toggleClass('hidden', true);
+        this.$camera.toggleClass('hidden', true);
+        this.$map.toggleClass('hidden', false);
+        this.$buttonsMap.toggleClass('hidden', false);
+        this.resetLeftRight();
+    },
+    resetLeftRight: function(){
+        this.$explication.toggleClass('to-left', false);
+        this.$explication.toggleClass('to-right', false);
+        this.$camera.toggleClass('to-left', false);
+        this.$camera.toggleClass('to-right', false);
+        this.$map.toggleClass('to-left', false);
+        this.$map.toggleClass('to-right', false);
+    },
     loadScript: function () {
         //google.maps.event.addDomListener(window, 'load', initialize);
         if (!map) {
@@ -221,13 +286,14 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     },
     //take anew picture with the camera
     takePicture: function(){
-        if(actualPics < totalPics) {
+       if(actualPics < totalPics) {
             cameraApp.takePicture(this);
             actualPics += 1;
-        }
+       }
     },
     //get the position on the map where the picture is taken
     getPicturePosition: function(){
+        that.displayLoader();
         navigator.geolocation.getCurrentPosition(this.placeAndSaveMarker, null);
     },
     
@@ -240,6 +306,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         var position = new google.maps.LatLng(lat, lng);
         var prevMarker = markerArray[markerArray.length-1];
 
+        //if there is a previous marker, calculate the distance between this point and the new point
         if(prevMarker){
             previousPosition = new google.maps.LatLng(prevMarker.A, prevMarker.F);
         }
@@ -249,13 +316,12 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
    
             var distance = google.maps.geometry.spherical.computeDistanceBetween(previousPosition, position);
 
+            //create a new marker
             if(distance > 50) {
-                alert("position supérieur à 0m");
                 that.placeNewMarkerOnMap(position);
             }
+            //keep the same marker
             else{
-              alert("position inférieure à 0m");
-
                var actualMarker = markerArray.length - 1;
                 if(!fileArray[actualMarker]){
                     fileArray[actualMarker] = [];
@@ -272,7 +338,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         }
                 
     },
-    
+    //place a marker where a photo was taken
     placeNewMarkerOnMap: function(position){
         //set a new marker on the map
         var newMarker = markerArray.length;
@@ -291,6 +357,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     
     //display a popup to say that the picture and the position are saved
     savedPositionAnimation: function(){
+        that.hideLoader();
         var mc = this.$(".popupUploadOk");
         
         var tl = new TimelineMax();
@@ -298,6 +365,47 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         tl.add( TweenMax.to(mc, 0.5, {delay:1, bottom:-50, ease:Back.easeIn, force3D:true}) );
     },
 
+    initLoader: function(){
+        //launch and anim loader
+
+        var opts = {
+            lines: 9 // The number of lines to draw
+            , length: 15 // The length of each line
+            , width: 4 // The line thickness
+            , radius: 8 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#482B65' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '50%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: false // Whether to render a shadow
+            , hwaccel: false // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+        };
+        var target = document.getElementById('loaderUpload');
+        spinner = new Spinner(opts).spin(target);
+        that.hideLoader();
+    },
+    
+    displayLoader: function(){
+        spinner.spin(document.getElementById('loaderUpload'));
+        this.$('#loaderUpload').toggleClass('showLoader', true);
+    },
+    hideLoader: function(){
+        this.$('#loaderUpload').toggleClass('showLoader', false);
+        spinner.stop();
+
+    },
+
+    
     //set info window in a marker on the map - the pictures are present in database
     setOldInfoWindow: function(index){
         if(picsArray[index]) { //if the pics array with index exists

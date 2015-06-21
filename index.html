@@ -53,6 +53,7 @@
 				<ul id="mission-list"></ul>
 			</section>
 			<section id="recent" class="hidden"></section>
+			<section id="old" class="hidden"></section>
 		</section>
 				
 	</div>
@@ -74,7 +75,6 @@
 					TEMPS RESTANT POUR ACCEPTER
 				</p>
 			</div>
-
 			<footer>
 				<div class="buttonContainer">
 					<div id="accept" class="button">ACCEPTER</div>
@@ -91,7 +91,24 @@
 		</div>
 	</div>
 </script>
+<script type="text/template" id="oldMission" name="oldMission">
+	<div id="oldView">
+		<div class="background"></div>
+		<div id="oldContent">
+			<h1>OMBRES</h1>
+			<div class="tips">"elles vous suivent partout"</div>
 
+			<footer>
+				<div class="buttonContainer">
+					<div id="details" class="button">VOIR DÉTAILS</div>
+				</div>
+				<div class="buttonContainer">
+					<div class="buttonRotate"></div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</script>
 
 <script type="text/template" id="item-template">
 	<div class="item-content">
@@ -227,6 +244,7 @@
 		<div id="totalPicture"></div>
 	</div>
 	<div class="popupUploadOk"><p>Image et positions enregistrées !</p></div>
+	<div id="loaderUpload"></div>
 </script>
 
 <script type="text/template" id="image-selection-template" name="image-selection-template">
@@ -335,7 +353,7 @@
 				</div>
 			</div>
 
-			<div class="bottom-share hidden">
+			<div class="bottom-share to-right">
 				<div class="shareTitle">TA COLLECTE</div>
 				
 				<div class="shareText">
@@ -385,6 +403,7 @@
 <script src="js/vendor/jquery.touchSwipe.min.js"></script>
 <script src="js/vendor/TweenMax.min.js"></script>
 <script src="js/vendor/TimelineMax.min.js"></script>
+<script src="js/vendor/spin.min.js"></script>
 
 
 <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>

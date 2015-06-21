@@ -59,7 +59,7 @@ header{
 /*--------------MISSION PAGE VIEW---------------*/
 /*----------------------------------------------*/
 
-#mission-page, #mission-opinion-template, #recentView {
+#mission-page, #mission-opinion-template, #recentView, #oldView {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     height: 100%;
@@ -411,6 +411,42 @@ header{
 #recentView .delete{
     width: 120px;
 }
+/*----------------------------------------------*/
+/*---------------MISSION OLD VIEW---------------*/
+/*----------------------------------------------*/
+
+
+#old{
+    margin-top: 30px;
+}
+#oldView .background{
+    background: url("../img/backgrounds/bg_mission-recente-bleu.png") no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+#oldContent{
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+#oldContent h1{
+    margin-left: -6px;
+    margin-top: 40px;
+}
+#oldContent .tips{
+    width: 117px;
+    margin: auto;
+}
+
+#oldContent footer{
+    width: 100%;
+    margin-top: 176px;
+}
 
 /*----------------------------------------------*/
 /*-----------MISSION EXPLICATION VIEW-----------*/
@@ -472,7 +508,9 @@ header{
 }
 
 #explicationView{
-    position: relative;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 #explicationView h1{
@@ -505,7 +543,9 @@ header{
 }
 
 #actualView{
-    position: relative;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 
@@ -576,7 +616,19 @@ header{
     padding: 8px;
     background-color: #4d3267;
 }
-
+#loaderUpload{
+    position: absolute;
+    width: 100%;
+    bottom: -50px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.showLoader{
+    margin-bottom: 117px;
+}
 
 /*----------------------------------------------*/
 /*------------------GOOGLE MAP------------------*/
@@ -785,8 +837,27 @@ header{
     height: 38px;
     line-height: 38px;
 }
-#mission-opinion .buttonsSelection{
-    padding-bottom: 135px;
+#mission-opinion .bottom-opinion{
+    position: absolute;
+    width: 100%;
+}
+#mission-opinion .bottom-share{
+    position: absolute;
+    width: 100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.bottom-share .buttonsSelection{
+    bottom: -10px;
+    position: relative;
+    
+}
+.bottom-opinion .buttonsSelection{
+    padding-bottom: 0px;
+    position: relative;
 }
 .buttonsSelection .valid,
 .buttonsSelection .share{
@@ -884,6 +955,29 @@ nav.slide-menu-left {
 .sml-open{
     left: 84%;
 }
+
+/*----------------------------------------------*/
+/*----------------PAGE TRANSITION---------------*/
+/*----------------------------------------------*/
+
+
+.to-left{
+    margin-left: -100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.to-right{
+    margin-left: 100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
 
 
 

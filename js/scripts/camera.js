@@ -28,12 +28,8 @@ var cameraApp = {
             destinationType: Camera.DestinationType.FILE_URI
         });
         function onSuccess(imageURI) {
-            // var image = document.getElementById('imgH');
             fileURL = imageURI;
-        /*    var newMarker = markerArray.length;
-            alert("newmarker: "+newMarker)
-            fileArray[newMarker] = new Array();
-            fileArray[newMarker].push(fileURL); //add image path in the array*/
+
             missionExplication.saveNbPicsOnDatabase();
             missionExplication.getPicturePosition();
         }

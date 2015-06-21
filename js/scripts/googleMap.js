@@ -259,16 +259,20 @@ function setNewInfoWindowOnMarker(index){
  //set an existing info window on the selected marker - just replace the content
  function setExistingInfoWindowOnMarker(index){
      //the content displayed in the marker
+    if(oldInfoWindow){
+         var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
 
-     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
+         //insert all the marker's pictures in the popup content
+         for(var i=0;i < fileArray[index].length;i++){
+             contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
+         }
 
-     //insert all the marker's pictures in the popup content
-     for(var i=0;i < fileArray[index].length;i++){
-         contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
-     }
+         contentString+='</div>';
 
-     contentString+='</div>';
-
-     oldInfoWindow.setContent(contentString);
-     $('.infoWindow_'+index).slick(); //slick is the carousel
+         oldInfoWindow.setContent(contentString);
+         $('.infoWindow_'+index).slick(); //slick is the carousel
+    }
+    else{
+        this.setNewInfoWindowOnMarker(index);
+    }
  }

@@ -1,4 +1,5 @@
 var index;
+var that;
 
 app.Views.MissionOpinionView = app.Extensions.View.extend({
 
@@ -15,9 +16,11 @@ app.Views.MissionOpinionView = app.Extensions.View.extend({
 
     initialize: function (missionId) {
         this.missionId = missionId;
+        that = this;
 
         this.animateIn = 'iosSlideInRight';
         this.animateOut = 'slideOutRight';
+
 
         this.template = _.template($('script[name=mission-opinion-template]').html());
         this.$el.html(this.template());
@@ -35,10 +38,18 @@ app.Views.MissionOpinionView = app.Extensions.View.extend({
         // return this;
     },
     
+    //animate the two part of the opinion
     sendOpinion: function(){
-        this.$(".bottom-opinion").toggleClass('hidden', true);
-        this.$(".bottom-share").toggleClass('hidden', false);
+        this.$(".bottom-opinion").toggleClass('to-left', true);
+        this.$(".bottom-share").toggleClass('to-right', false);
+        this.$(".bottom-opinion").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+            that.displaySharePart();
+        });
     },
+    displaySharePart: function(){
+        this.$(".bottom-opinion").toggleClass('hidden', true);
+    },
+    
     passOpinion: function(){
         //Backbone.history.navigate('#/missionPage', true);
     },
