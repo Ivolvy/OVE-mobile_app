@@ -1,6 +1,7 @@
 var map;
 var direction;
 var markerArrayOnMap = [];
+var oldInfoWindow;
 
 function initialize() {
 
@@ -193,7 +194,7 @@ function placePictureMarker(markerLatLngPosition, idMarker, missionExplication){
         position:  new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F),
         map: map
     });
-    map.panTo(new google.maps.LatLng(markerLatLngPosition.A, markerLatLngPosition.F);
+
 }
 
 //set an info window on the selected marker - for existing pictures on server
@@ -241,7 +242,9 @@ function setNewInfoWindowOnMarker(index){
         content: contentString,
         size: new google.maps.Size(1000, 1000)
     });
- 
+
+    oldInfoWindow = infowindow;
+
     google.maps.event.addListener(markerArrayOnMap[index], 'click', function(){
         infowindow.open(map,markerArrayOnMap[index]);
     });
@@ -252,3 +255,20 @@ function setNewInfoWindowOnMarker(index){
     });
     
 }
+
+ //set an existing info window on the selected marker - just replace the content
+ function setExistingInfoWindowOnMarker(index){
+     //the content displayed in the marker
+
+     var contentString = '<div class="infoWindow_'+index+'" style="width:150px">';
+
+     //insert all the marker's pictures in the popup content
+     for(var i=0;i < fileArray[index].length;i++){
+         contentString+='<div><img style="width:150px" src='+fileArray[index][i]+'></div>';
+     }
+
+     contentString+='</div>';
+
+     oldInfoWindow.setContent(contentString);
+     $('.infoWindow_'+index).slick(); //slick is the carousel
+ }

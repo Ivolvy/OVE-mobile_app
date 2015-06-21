@@ -263,7 +263,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                 fileArray[actualMarker].push(fileURL); //add image path in the array
                 
                 //keep the same marker id
-                that.setNewInfoWindow(actualMarker);
+                that.setExistingInfoWindow(actualMarker);
                 that.savedPositionAnimation();
             }
         }
@@ -311,6 +311,13 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         if(fileArray[index]) { //if the pics array with index exists
             if (fileArray[index].length != 0) {
                 setNewInfoWindowOnMarker(index);//the id is the place in markerArray
+            }
+        }
+    },
+    setExistingInfoWindow: function(index){
+         if(fileArray[index]) { //if the pics array with index exists
+            if (fileArray[index].length != 0) {
+                setExistingInfoWindowOnMarker(index);//the id is the place in markerArray
             }
         }
     },
