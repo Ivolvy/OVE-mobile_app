@@ -157,8 +157,8 @@ app.Views.ImageSelectionView = app.Extensions.View.extend({
         Backbone.history.navigate('#/missionPage', true);
     },
     cancelSelection: function(){
-        var missionId = itemPicture.get('missionId');
-        Backbone.history.navigate('#/missionExplication/'+missionId, true);
+      /*  var missionId = itemPicture.get('missionId');
+        Backbone.history.navigate('#/missionExplication/'+missionId, true);*/
     },
     
     //display or not the panel menu

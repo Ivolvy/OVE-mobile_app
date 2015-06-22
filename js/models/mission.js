@@ -14,7 +14,6 @@ app.Mission = Backbone.Model.extend({
 		shared: '0',
 		actualPics: '0',
 		totalPics: '',
-		picsArray: '',
 		actual: 'true',
 		completed: false
 	},

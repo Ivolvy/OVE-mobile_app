@@ -39,6 +39,12 @@ header{
     font-weight: 700;
 }
 
+#reset{
+    bottom: 0;
+    opacity: 0.1;
+    position: absolute;
+}
+
 /*----------------------------------------------*/
 /*------------------HOME VIEW-------------------*/
 /*----------------------------------------------*/
@@ -64,7 +70,7 @@ header{
     font-weight: 400;
     height: 100%;
     /*position: relative;*/
-    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
+    background: url("../img/backgrounds/bg_ombre.png") no-repeat center center fixed;
     background-size: cover;
     overflow: hidden;
 }
@@ -272,7 +278,7 @@ header{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     height: 100%;
-    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center fixed;
+    background: url("../img/backgrounds/bg_ombre.png") no-repeat center center fixed;
     background-size: cover;
     overflow: hidden;
     color: #FFF;
@@ -445,7 +451,7 @@ header{
 
 #oldContent footer{
     width: 100%;
-    margin-top: 176px;
+    margin-top: 228px;
 }
 
 /*----------------------------------------------*/
@@ -646,7 +652,7 @@ header{
 /*----------------------------------------------*/
 
 #image-selection {
-    background: url("../img/backgrounds/bg_img_dog_blurr.jpg") no-repeat center center;
+    background: url("../img/backgrounds/bg_ombre.png") no-repeat center center;
     background-size: cover;
     text-align: center;
     min-height: 620px;
@@ -853,11 +859,12 @@ header{
 .bottom-share .buttonsSelection{
     bottom: -10px;
     position: relative;
-    
+    margin-top: 50px;    
 }
 .bottom-opinion .buttonsSelection{
     padding-bottom: 0px;
     position: relative;
+    margin-top: 50px;
 }
 .buttonsSelection .valid,
 .buttonsSelection .share{
@@ -986,10 +993,10 @@ nav.slide-menu-left {
 /*----------------------------------------------*/
 
 .nav-icon3{
-    width: 30px;
-    height: 45px;
+    width: 25px;
+    height: 25px;
     position: relative;
-    margin: 10px 10px;
+    margin: 12px 10px;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -1025,10 +1032,10 @@ nav.slide-menu-left {
     top: 0px;
 }
 .nav-icon3 span:nth-child(2),.nav-icon3 span:nth-child(3) {
-    top: 9px;
+    top: 7px;
 }
 .nav-icon3 span:nth-child(4) {
-    top: 18px;
+    top: 14px;
 }
 .nav-icon3.open span:nth-child(1) {
     top: 18px;

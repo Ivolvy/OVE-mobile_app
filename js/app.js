@@ -1,5 +1,4 @@
-var ENTER_KEY = 13;
-var fileArray;
+var fileArray; //the pictures saved in the phone
 
 window.app = {
     Views: {},
@@ -9,7 +8,7 @@ window.app = {
     Model: {},
 
     init: function () {
-        fileArray = new Array();
+        fileArray = [];
         // get an instance of the root App view
         this.getInstance();
         new app.Router();

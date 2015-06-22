@@ -3,6 +3,8 @@ var route;
 var that;
 var missionActualId;
 var isOneMissionActual;
+var missionPresentation = "-Jpl8awhl6acQXffUJs-"; //used for the presentation
+
 // The Application
 
 // Our overall **MissionPageView** is the top-level piece of UI.
@@ -23,7 +25,8 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	events: {
 		'click #new-mission': 'createOnEnter',
 		'click .left-menu': 'toggleMenu',
-		'click #accept': 'selectActualMission'
+		'click #accept': 'selectActualMission',
+		'click #reset': 'resetMission'
 	},
 
 	// At initialization we bind to the relevant events on the `Missions`
@@ -80,6 +83,7 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 				else{
 					that.$('#recent').toggleClass('hidden', true);
 					that.$('#old').toggleClass('hidden', false);
+					isOneMissionActual = false;
 				}
 			}			
 		});
@@ -209,6 +213,34 @@ app.Views.MissionPageView = app.Extensions.View.extend({
 	
 	selectActualMission: function(){
 		Backbone.history.navigate('#/missionExplication/'+missionActualId, true);
+	},
+
+	//Use for the presentaiton, if the application or the wifi crash
+	resetMission: function(){
+		var itemMission = app.missions.get(missionPresentation);
+
+		itemMission.save({
+			'actual': true,
+			'actualPics': 0
+		});
+		
+		app.missionsMaps = new MapsCollection();
+		app.missionsMaps.fetch({
+			success: function(model, response) {
+				var mapCollection = app.missionsMaps.where({'missionId': missionPresentation});
+				var mapId = mapCollection[0].id;
+				var itemMap = app.missionsMaps.get(mapId);
+
+				itemMap.save({
+					'markerArray': ''
+				});
+			}
+		});
+		fileArray = [];
+		imageNameArray = [];
+        tempImagesArray = [];
+        markerArrayOnMap = [];
+        markerArray = [];
 	}
 	
 });

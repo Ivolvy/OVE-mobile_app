@@ -139,6 +139,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
                     picsArray = itemPicture.get('picsArray');
                 }
                 //launch the map
+                map = null;
                 that.loadScript();
             }
         });
@@ -159,16 +160,16 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         //used to set the indexNavPage
         this.initClickMenu();
         //add event on swipe
-        this.initSwipeEvent();
+        //this.initSwipeEvent();
 
         return this;
     },
 
     //display the screens with transitions between them
     toggleVisible: function () {
-        var visible;
+
         if(app.DetailFilter == 'explication'){
-            visible = 1;
+            indexNavPage = 1;
 
             if(previousScreen == 'mission') {
                 this.$camera.toggleClass('to-right', true);
@@ -186,7 +187,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             previousScreen = 'explication';
         }
         else if(app.DetailFilter == 'mission'){
-            visible = 2;
+            indexNavPage = 2;
             
             if(previousScreen == 'explication') {
                 this.$explication.toggleClass('to-left', true);
@@ -206,7 +207,7 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
             previousScreen = 'mission';
         }
         else if(app.DetailFilter == 'terminate'){
-            visible = 3;
+            indexNavPage = 3;
 
             if(previousScreen == 'explication') {
                 this.$explication.toggleClass('to-left', true);
@@ -225,13 +226,14 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
         }
         //change the underline of the menu
         for(var i=1;i<=3;i++) {
-            if(i == visible) {
+            if(i == indexNavPage) {
                 this.$('.filters li:nth-child('+i+') a').addClass('selected');
             }
             else{
                 this.$('.filters li:nth-child('+i+') a').removeClass('selected');
             }
         }
+
     },
     //display or not the following pages
     displayExplication: function(){
@@ -477,16 +479,17 @@ app.Views.MissionExplicationView = app.Extensions.View.extend({
     },
     //navigate between screen with swipe
     initSwipeEvent: function(){
+
         this.$page.swipe({
             swipeLeft:function(ev){
-                if(indexNavPage < 3 && indexNavPage != 3) {
+                if(indexNavPage >= 1 && indexNavPage < 3) {
                     indexNavPage+=1;
                     route = $(".filters ." + indexNavPage).attr('href');
                     Backbone.history.navigate(route, true);
                 }
             },
             swipeRight:function(ev){
-                if(indexNavPage > 1 && indexNavPage != 3) {
+                if(indexNavPage > 1 && indexNavPage < 3) {
                     indexNavPage-=1;
                     route = $(".filters ." + indexNavPage).attr('href');
                     Backbone.history.navigate(route, true);
