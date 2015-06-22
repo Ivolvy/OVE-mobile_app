@@ -74,13 +74,8 @@ var cameraApp = {
                 }
              }
         }
-        alert("pictures uploaded");//TODO - completion bar or popup status
         imageSelection.goToMissionOpinion();
     }
 
-
-    // Update DOM on a Received Event
-    /*receivedEvent: function(id) {
-     }*/
 };
 
